@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Karnataka Geography — CBT Examination</title>
+<style>
+  :root{
+    --navy:#1F3A5F; --navy-dark:#16283F;
+    --gold:#B08D57;
+    --cream:#F4F1E8;
+    --ink:#2A2622; --ink-soft:#5A4F3A; --ink-mute:#7A6F5C;
+    --border:#D9D2BE; --border-soft:#E3DCC8;
+    --white:#FFFFFF;
+    --green:#2F6F4E; --green-bg:#E4EFE7;
+    --red:#B23A2E; --red-bg:#F6E6E4;
+    --amber:#8A6D1F; --amber-bg:#F5E7B2; --amber-border:#C9A227;
+    --topicbg:#EFEADA;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{font-family:Georgia,'Tinos',serif;color:var(--ink);background:var(--cream)}
+  button{font-family:inherit}
+  #app{min-height:100vh;display:flex;flex-direction:column}
+
+  /* ---------- START SCREEN ---------- */
+  .start-wrap{max-width:640px;margin:40px auto;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:30px 32px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .start-wrap h1{font-size:19px;color:var(--navy);margin:0 0 4px}
+  .start-wrap h2{font-size:14px;font-weight:normal;color:var(--ink-soft);margin:0 0 22px}
+  .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+  .start-card{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+  .start-card .lbl{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.5px}
+  .start-card .val{font-size:16px;color:var(--navy);margin-top:4px}
+  .instructions{font-size:13.5px;line-height:1.7;color:var(--ink-soft);margin-bottom:22px}
+  .instructions li{margin-bottom:4px}
+  .toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:13.5px}
+  .btn-primary{font-family:Georgia,serif;font-size:15px;background:var(--navy);color:var(--cream);border:none;padding:12px 26px;border-radius:5px;cursor:pointer}
+  .btn-primary:hover{background:var(--navy-dark)}
+  .btn-secondary{font-family:Georgia,serif;font-size:14px;background:var(--gold);color:var(--ink);border:none;padding:9px 20px;border-radius:5px;cursor:pointer}
+  .btn-ghost{font-family:Georgia,serif;font-size:13.5px;background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 16px;border-radius:5px;cursor:pointer}
+
+  /* ---------- EXAM HEADER ---------- */
+  .exam-header{background:var(--navy);color:var(--cream);padding:10px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+  .exam-header .titles h1{font-size:14.5px;font-weight:normal;margin:0;letter-spacing:.2px}
+  .exam-header .titles h2{font-size:12px;font-weight:normal;margin:2px 0 0;color:#D8CBA9}
+  .exam-header .mid{display:flex;align-items:center;gap:16px;font-family:'Courier New',monospace;font-size:12.5px}
+  .exam-header .timer{background:#16283F;padding:5px 12px;border-radius:4px;font-size:14px;letter-spacing:.5px}
+  .exam-header .timer.low{background:var(--red)}
+  .palette-toggle{display:none;background:var(--gold);color:var(--ink);border:none;padding:7px 12px;border-radius:4px;font-size:12.5px;cursor:pointer}
+  .progress-track{height:4px;background:var(--border)}
+  .progress-fill{height:100%;background:var(--gold);transition:width .25s}
+
+  /* ---------- MAIN EXAM LAYOUT ---------- */
+  .exam-body{flex:1;display:flex;gap:0;align-items:flex-start}
+  .qcol{flex:1;padding:22px 26px;max-width:760px}
+  .qmeta{font-family:'Courier New',monospace;font-size:11.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .qmeta .qtopic{background:var(--topicbg);color:var(--ink-soft);padding:2px 8px;border-radius:3px;text-transform:none;letter-spacing:0}
+  .qmeta .qstatus{padding:2px 8px;border-radius:3px}
+  .qtext{font-size:15.5px;line-height:1.6;margin:0 0 18px;white-space:pre-line;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:11px 14px;margin-bottom:9px;background:var(--white);border:1px solid var(--border);border-radius:5px;font-family:Georgia,serif;font-size:14px;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s}
+  .opt:hover{border-color:var(--navy);background:var(--topicbg)}
+  .opt .oletter{font-family:'Courier New',monospace;font-weight:bold;color:var(--navy);flex-shrink:0}
+  .opt.selected{background:#E9EEF4;border-color:var(--navy)}
+  .opt.selected .oletter{color:var(--navy)}
+
+  .bottom-bar{display:flex;flex-wrap:wrap;gap:8px;padding:14px 26px;border-top:1px solid var(--border);background:var(--white)}
+  .bottom-bar button{font-size:13.5px;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--ink)}
+  .bottom-bar .bb-primary{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  .bottom-bar .bb-primary:hover{background:var(--navy-dark)}
+  .bottom-bar .bb-warn{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}
+  .bottom-bar .bb-clear{color:var(--red);border-color:var(--red)}
+  .bottom-bar .bb-submit{background:var(--red);border-color:var(--red);color:var(--white);margin-left:auto}
+  .bottom-bar button:disabled{opacity:.4;cursor:default}
+
+  /* ---------- PALETTE ---------- */
+  .palette{width:270px;flex-shrink:0;background:var(--white);border-left:1px solid var(--border);padding:16px;height:100%}
+  .palette h3{font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px}
+  .legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11.5px;margin-bottom:14px;color:var(--ink-soft)}
+  .legend span.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;border:1px solid var(--border)}
+  .pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .pnum{aspect-ratio:1;border:1px solid var(--border);border-radius:4px;background:var(--white);font-family:'Courier New',monospace;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+  .pnum.notvisited{background:var(--white);color:var(--ink)}
+  .pnum.visited{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .pnum.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+  .pnum.marked{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}
+  .pnum.current{outline:2px solid var(--navy);outline-offset:1px}
+  .palette-summary{margin-top:14px;font-size:12px;color:var(--ink-soft);border-top:1px dashed var(--border-soft);padding-top:10px}
+  .palette-summary div{display:flex;justify-content:space-between;padding:2px 0}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{position:fixed;inset:0;background:rgba(42,38,34,.55);display:flex;align-items:center;justify-content:center;z-index:50}
+  .modal-box{background:var(--white);border-radius:8px;padding:24px 26px;max-width:420px;width:90%;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+  .modal-box p{font-size:14.5px;line-height:1.6;margin:0 0 18px;color:var(--ink)}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px}
+
+  /* ---------- RESULT DASHBOARD ---------- */
+  .result-wrap{max-width:920px;margin:0 auto;padding:24px 20px 60px}
+  .result-head{text-align:center;padding:18px 0 8px}
+  .result-head .big{font-family:'Courier New',monospace;font-size:44px;color:var(--navy);margin:6px 0}
+  .result-head p{color:var(--ink-soft);font-size:14px;margin:2px 0}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center}
+  .stat-card .n{font-family:'Courier New',monospace;font-size:22px;color:var(--navy)}
+  .stat-card .l{font-size:11.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.4px;margin-top:4px}
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:24px 0 14px;border-bottom:1px solid var(--border)}
+  .tab-btn{background:transparent;border:none;border-bottom:3px solid transparent;padding:9px 14px;font-size:13.5px;color:var(--ink-soft);cursor:pointer}
+  .tab-btn.active{color:var(--navy);border-color:var(--navy);font-weight:bold}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+  .abar-row{margin-bottom:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+  .abar-top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px}
+  .abar-top b{color:var(--navy)}
+  .abar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+  .abar-fill{height:100%;background:var(--green)}
+  .review-item{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:12px}
+  .review-item .rmeta{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;margin-bottom:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .review-item .rq{font-size:14.5px;white-space:pre-line;margin-bottom:10px}
+  .review-item .ropt{padding:7px 10px;border-radius:4px;font-size:13.5px;margin-bottom:6px;border:1px solid var(--border)}
+  .review-item .ropt.correctopt{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+  .review-item .ropt.wrongopt{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .tag{padding:2px 8px;border-radius:3px;font-size:11px}
+  .tag.correct{background:var(--green-bg);color:var(--green)}
+  .tag.wrong{background:var(--red-bg);color:var(--red)}
+  .tag.skip{background:var(--border-soft);color:var(--ink-soft)}
+  .explain{font-size:12.5px;color:var(--ink-mute);border-top:1px dashed var(--border-soft);margin-top:8px;padding-top:8px}
+  .perf-block{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-bottom:14px}
+  .perf-block h4{margin:0 0 8px;font-size:13.5px;color:var(--navy)}
+  .perf-block ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.7;color:var(--ink)}
+  .smart-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .filter-btn{background:var(--white);border:1px solid var(--border);padding:6px 12px;border-radius:14px;font-size:12px;cursor:pointer;color:var(--ink-soft)}
+  .filter-btn.active{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  .practice-banner{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);padding:8px 14px;border-radius:5px;font-size:12.5px;text-align:center}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .palette-toggle{display:inline-block}
+    .palette{position:fixed;top:0;right:0;height:100%;width:82%;max-width:320px;transform:translateX(100%);transition:transform .25s;z-index:40;box-shadow:-4px 0 16px rgba(0,0,0,.15)}
+    .palette.open{transform:translateX(0)}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+    .qcol{padding:16px}
+  }
+  @media (max-width:520px){
+    .exam-header .mid{font-size:11px;gap:10px}
+    .bottom-bar{padding:10px 12px}
+    .bottom-bar button{flex:1 1 auto;font-size:12.5px;padding:9px 10px}
+    .bottom-bar .bb-submit{margin-left:0;order:99;flex-basis:100%}
+    .result-wrap{padding:16px 10px 50px}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   CONFIG — change these to reconfigure the exam engine
+========================================================= */
+var CONFIG = {
+  examName: "Karnataka State Competitive Examination — Mock CBT",
+  subjectName: "Karnataka Geography — Advanced + Current Affairs",
+  durationMinutes: 60,     // total exam duration; easy to change
+  marksPerQuestion: 1,
+  negativeMarking: { enabled: false, value: 0.25 }
+};
+
+/* =========================================================
+   QUESTION DATABASE — untouched, exactly as supplied.
+   Format per item: [topic, questionText, [options...], correctIndex]
+========================================================= */
+var Q = [
+["Introduction to Karnataka","In which year was the State of Mysore officially renamed 'Karnataka'?",["1956","1973","1965","1980"],1,"Easy","The State of Mysore was renamed Karnataka on 1 November 1973 during the tenure of Chief Minister D. Devaraj Urs, to better reflect its unified Kannada-speaking identity."],
+["Introduction to Karnataka","Karnataka is the ______ largest state in India by geographical area.",["4th","6th","8th","10th"],1,"Easy","With an area of about 1,91,791 sq km, Karnataka ranks sixth among Indian states by area, after Rajasthan, Madhya Pradesh, Maharashtra, Uttar Pradesh and Gujarat."],
+["Introduction to Karnataka","Consider the statements:\n1. Karnataka was formed under the States Reorganisation Act, 1956.\n2. The new state initially named 'Mysore State' merged Kannada-speaking areas from the erstwhile Bombay, Madras and Hyderabad states, and Coorg, with the old Mysore State.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The States Reorganisation Act, 1956 merged Kannada-speaking regions of Bombay, Madras, Hyderabad and Coorg with the old princely Mysore State to create a unified Mysore State, later renamed Karnataka in 1973."],
+
+["Size, Shape and Geographical Location","Karnataka lies approximately between which latitudes?",["4°N to 8°N","11°30'N to 18°30'N","20°N to 26°N","28°N to 32°N"],1,"Easy","Karnataka extends roughly between 11°30'N and 18°30'N latitude and 74°E to 78°30'E longitude, in the western part of peninsular India."],
+["Size, Shape and Geographical Location","What is the approximate total geographical area of Karnataka?",["1,00,000 sq km","1,50,000 sq km","1,91,791 sq km","2,50,000 sq km"],2,"Easy","Karnataka covers about 1,91,791 sq km, roughly 5.8% of India's total geographical area."],
+["Size, Shape and Geographical Location","Which of the following best describes Karnataka's overall shape?",["A compact square aligned east-west","An elongated shape with greater north-south extent than east-west extent","A perfectly circular shape","A narrow coastal strip with negligible interior extent"],1,"Medium","Karnataka is elongated, stretching further from north (Bidar area) to south (Chamarajanagar area) than from east to west, giving it a wedge-like diagonal orientation."],
+["Size, Shape and Geographical Location","Consider the statements:\n1. Karnataka's coastline extends for about 300 km along the Arabian Sea.\n2. This coastline covers Uttara Kannada, Udupi and Dakshina Kannada districts.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Karnataka has roughly 300 km of coastline along the Arabian Sea, spanning the three coastal districts of Uttara Kannada, Udupi and Dakshina Kannada."],
+
+["Boundaries and Bordering States","With how many states does Karnataka share a land boundary?",["4","5","6","7"],2,"Easy","Karnataka borders six states — Goa, Maharashtra, Telangana, Andhra Pradesh, Tamil Nadu and Kerala — besides having a coastline along the Arabian Sea."],
+["Boundaries and Bordering States","Match: (a) Goa (b) Maharashtra (c) Telangana (d) Kerala\nWith direction from Karnataka: (i) North (ii) North-west (iii) North-east (iv) South",["a-ii,b-i,c-iii,d-iv","a-i,b-ii,c-iv,d-iii","a-iii,b-iv,c-i,d-ii","a-iv,b-iii,c-ii,d-i"],0,"Medium","Goa lies north-west, Maharashtra north, Telangana north-east and Kerala south of Karnataka, reflecting the state's central position among its six neighbours."],
+["Boundaries and Bordering States","Which of the following does NOT share a border with Karnataka?",["Telangana","Tamil Nadu","Odisha","Kerala"],2,"Medium","Odisha lies on India's eastern coast and shares no boundary with Karnataka, whose actual neighbours are Goa, Maharashtra, Telangana, Andhra Pradesh, Tamil Nadu and Kerala."],
+["Boundaries and Bordering States","Assertion (A): Karnataka shares its longest interstate boundary with Maharashtra.\nReason (R): Several northern Karnataka districts, including Belagavi, Bidar and Vijayapura, adjoin Maharashtra along an extended stretch.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Karnataka's longest interstate boundary is with Maharashtra to the north, running along several northern districts such as Belagavi, Bidar and Vijayapura."],
+
+["Administrative Divisions and Districts","As of 2026, how many districts does Karnataka have?",["28","29","30","31"],3,"Easy","Karnataka has 31 districts, the most recent addition being Vijayanagara, carved out of Ballari district in 2021."],
+["Administrative Divisions and Districts","Karnataka's districts are grouped into how many revenue divisions?",["2","3","4","5"],2,"Easy","Karnataka has four revenue divisions — Bengaluru, Mysuru, Belagavi and Kalaburagi — each headed by a Divisional Commissioner."],
+["Administrative Divisions and Districts","Consider the statements:\n1. Vijayanagara district was carved out of Ballari district.\n2. It is administratively part of the Kalaburagi division.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],0,"Medium","Vijayanagara was carved out of Ballari district in 2021, but it falls under the Belagavi revenue division, not Kalaburagi."],
+["Administrative Divisions and Districts","Assertion (A): The erstwhile Bruhat Bengaluru Mahanagara Palike (BBMP) area is now governed by the Greater Bengaluru Authority (GBA) with multiple city corporations.\nReason (R): The Karnataka government replaced the single BBMP structure with five city corporations under the GBA framework around 2025.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The Karnataka government dissolved the BBMP and created the Greater Bengaluru Authority (GBA) with five separate city corporations — Bengaluru Central, North, South, East and West — to manage the capital's civic administration."],
+
+["Mountain Ranges of Karnataka","The Western Ghats in Karnataka are also known by which name?",["Aravalli Range","Sahyadri","Vindhya Range","Satpura Range"],1,"Easy","The Western Ghats, running along Karnataka's western edge, are also known as the Sahyadri range."],
+["Mountain Ranges of Karnataka","Which of the following correctly ranks these peaks from highest to lowest elevation?",["Mullayanagiri > Kudremukh > Kumara Parvatha","Kudremukh > Mullayanagiri > Kumara Parvatha","Kumara Parvatha > Mullayanagiri > Kudremukh","Mullayanagiri > Kumara Parvatha > Kudremukh"],0,"Medium","Mullayanagiri (Karnataka's highest peak, about 1,930 m) is followed by Kudremukh (about 1,894 m) and then Kumara Parvatha (about 1,712 m) in elevation."],
+["Mountain Ranges of Karnataka","The Baba Budangiri range, historically associated with coffee cultivation, is a part of which hill system and district?",["Western Ghats, Chikkamagaluru district","Eastern Ghats, Kolar district","Western Ghats, Kodagu district","Nilgiri Hills, Mysuru district"],0,"Medium","The Baba Budangiri range lies in Chikkamagaluru district as part of the Western Ghats and is historically credited as the region where coffee cultivation began in India."],
+["Mountain Ranges of Karnataka","Match: (a) Kodachadri (b) Mullayanagiri (c) Kumara Parvatha (d) Nandi Hills\nWith district: (i) Shivamogga (ii) Chikkamagaluru (iii) Dakshina Kannada/Kodagu border (iv) Chikkaballapur",["a-i,b-ii,c-iii,d-iv","a-iii,b-i,c-iv,d-ii","a-ii,b-iv,c-i,d-iii","a-iv,b-ii,c-iii,d-i"],0,"Hard","Kodachadri is in Shivamogga district, Mullayanagiri in Chikkamagaluru, Kumara Parvatha near the Dakshina Kannada-Kodagu border, and Nandi Hills in Chikkaballapur district."],
+
+["Western Ghats and Eastern Ghats in Karnataka","Which mountain range forms the natural western boundary of Karnataka's Malnad region?",["Eastern Ghats","Western Ghats","Vindhya Range","Nilgiri Range (independently of Western Ghats)"],1,"Easy","The Western Ghats run along the western edge of Karnataka, separating the humid Malnad hill tracts from the coastal plain and the drier Maidan plateau to the east."],
+["Western Ghats and Eastern Ghats in Karnataka","Consider the statements:\n1. The Western Ghats in Karnataka are a continuous, unbroken mountain wall.\n2. Eastern Ghats in Karnataka appear only as isolated, discontinuous hill ranges in the south-east of the state.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],1,"Medium","The Western Ghats are not perfectly continuous (they have gaps/passes), but statement 2 is broadly correct: in Karnataka, the Eastern Ghats appear only as scattered, low, discontinuous hills in the south-eastern districts rather than a continuous range."],
+["Western Ghats and Eastern Ghats in Karnataka","Which of the following hill ranges in Karnataka is generally associated with the Eastern Ghats system rather than the Western Ghats?",["Baba Budangiri","Nandi Hills","Kudremukh","Kodachadri"],1,"Medium","Nandi Hills, in Chikkaballapur district in south-eastern Karnataka, is associated with the (discontinuous) Eastern Ghats system, unlike the Western Ghats peaks of Baba Budangiri, Kudremukh and Kodachadri."],
+["Western Ghats and Eastern Ghats in Karnataka","Assertion (A): The Western Ghats in Karnataka are ecologically far more significant for biodiversity than the Eastern Ghats stretches in the state.\nReason (R): The Western Ghats are a recognised global biodiversity hotspot with high rainfall and dense evergreen forest cover, unlike the drier, degraded Eastern Ghats hill tracts of Karnataka.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The Western Ghats are a UNESCO-recognised global biodiversity hotspot with rich evergreen forests due to heavy monsoon rainfall, while Karnataka's Eastern Ghats stretches are drier, more fragmented, and comparatively less biodiverse."],
+["Western Ghats and Eastern Ghats in Karnataka","Which of the following statements about the 2026 Western Ghats Ecologically Sensitive Area (ESA) draft notification is correct?",["It proposes an ESA of about 56,825.7 sq km across six Western Ghats states, with Karnataka having the largest share","It applies only to Kerala and Tamil Nadu","It was withdrawn permanently in 2026","It covers only wildlife sanctuaries, not private or revenue land"],0,"Hard","The Union Environment Ministry's latest (seventh) draft ESA notification for the Western Ghats, reissued in 2026, proposes about 56,825.7 sq km as ecologically sensitive across Gujarat, Maharashtra, Goa, Karnataka, Kerala and Tamil Nadu, with Karnataka accounting for the largest area among these states."],
+
+["Relief Features","Karnataka's physiography is broadly divided into which three regions?",["Coastal, Malnad and Maidan","Coastal, Deccan and Konkan","Malnad, Konkan and Vindhyan","Maidan, Sahyadri and Ganga plains"],0,"Easy","Karnataka's relief is broadly divided into the narrow Coastal plain, the hilly, forested Malnad (Western Ghats belt), and the plateau-like Maidan (Bayaluseeme) in the east."],
+["Relief Features","Consider the statements:\n1. The Malnad region has the highest average elevation among Karnataka's three physiographic regions.\n2. The Maidan region lies mostly in the rain-shadow area east of the Western Ghats.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The hilly Malnad region has the highest average elevation of the three regions, while the Maidan plateau lies largely in the rain-shadow zone east of the Western Ghats, receiving comparatively less rainfall."],
+["Relief Features","Which is the correct sequence of physiographic regions moving from west to east across Karnataka?",["Coastal plain → Malnad (Western Ghats) → Maidan (Deccan Plateau)","Maidan → Malnad → Coastal plain","Malnad → Coastal plain → Maidan","Coastal plain → Maidan → Malnad"],0,"Medium","Moving west to east, Karnataka's relief transitions from the narrow Coastal plain, through the hilly Malnad (Western Ghats belt), to the broad Maidan plateau in the east."],
+["Relief Features","Assertion (A): The Maidan region has comparatively low relative relief compared to the Malnad.\nReason (R): The Maidan is farther from the tectonically uplifted Western Ghats and has undergone longer-term erosion, giving it a gently undulating plateau surface.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The Maidan's gentler, more subdued relief compared to the rugged Malnad results from its distance from the uplifted Western Ghats and its long exposure to erosion, unlike the steep, youthful relief nearer the Ghats."],
+
+["Rock System of Karnataka","Which of the following rock types dominates the Bababudan and Chikkamagaluru hill region, hosting iron-ore deposits?",["Dharwar system (schists and banded iron formations)","Deccan Trap basalts","Gondwana sedimentary rocks","Recent alluvium"],0,"Easy","The Dharwar rock system, comprising ancient schists, gneisses and banded iron formations, dominates parts of the Chikkamagaluru-Bababudan hill tract, giving rise to significant iron-ore deposits."],
+["Rock System of Karnataka","Consider the statements:\n1. The Peninsular Gneissic Complex is among the oldest rock formations found in Karnataka.\n2. The Deccan Trap basalts, associated with volcanic activity, are largely confined to northern Karnataka.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The Peninsular Gneissic Complex is one of the oldest crystalline rock formations in Karnataka, while the volcanic Deccan Trap basalts, which give rise to black soil, are largely confined to the northern districts."],
+["Rock System of Karnataka","Why does northern Karnataka show extensive black (regur) soil cover while much of southern and central Karnataka does not?",["Northern Karnataka overlies Deccan Trap basalt, which weathers into black soil, while the south is dominated by granite-gneiss rocks that weather into red soil","Northern Karnataka receives far more rainfall","Southern Karnataka has more rivers","There is no real geological difference between the regions"],0,"Hard","Northern Karnataka is largely underlain by basaltic Deccan Trap rock, which weathers into fertile black (regur) soil, whereas the granite-gneiss rocks dominant in southern and central Karnataka weather into red soil."],
+
+["Soils of Karnataka","Which soil type in Karnataka is derived mainly from the weathering of granite and gneiss rocks?",["Red soil","Black soil","Laterite soil","Alluvial soil"],0,"Easy","Red soil develops chiefly from the weathering of granite and gneiss rocks and is widespread across central and southern Karnataka."],
+["Soils of Karnataka","Match: (a) Black soil (b) Red soil (c) Laterite soil (d) Alluvial soil\nWith characteristic: (i) High moisture retention, suited to cotton (ii) Iron-rich, reddish, moderate fertility (iii) Heavily leached, low natural fertility (iv) Fertile, fine-grained, found in river valleys",["a-i,b-ii,c-iii,d-iv","a-iv,b-iii,c-ii,d-i","a-ii,b-i,c-iv,d-iii","a-iii,b-iv,c-i,d-ii"],0,"Medium","Black soil retains high moisture and suits cotton; red soil is iron-rich with moderate fertility; laterite soil is heavily leached with low fertility; alluvial soil is fertile and fine-grained, occurring in river valleys."],
+["Soils of Karnataka","Assertion (A): Laterite soils are common in Karnataka's coastal and Malnad regions.\nReason (R): High rainfall and temperature in these regions cause intense leaching, concentrating iron and aluminium oxides near the surface.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Medium","Laterite soils form under high rainfall and temperature conditions typical of coastal and Malnad Karnataka, where intense leaching removes soluble minerals and concentrates iron and aluminium oxides."],
+["Soils of Karnataka","Which of the following is NOT a typical characteristic of red soil in Karnataka?",["Reddish colour due to iron oxide content","Widespread occurrence in central and southern districts","Extremely high natural fertility, surpassing black soil","Moderate fertility that benefits from fertiliser and manure inputs"],2,"Hard","Red soil generally has only moderate natural fertility and typically requires fertiliser and organic inputs for good yields; it does not surpass the naturally higher fertility of black (regur) soil."],
+
+["Monsoon","Karnataka's climate is chiefly influenced by which two monsoon systems?",["Southwest and Northeast monsoons","Only the Northeast monsoon","Only the Southwest monsoon","Western disturbances and Southwest monsoon"],0,"Easy","Karnataka's rainfall pattern is shaped mainly by the southwest (June-September) and the retreating northeast (October-December) monsoons."],
+["Monsoon","Consider the statements about the retreating (northeast) monsoon in Karnataka:\n1. It occurs mainly during October-December.\n2. It contributes significant rainfall to south-interior districts such as Kolar and Chikkaballapur.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The retreating northeast monsoon operates mainly from October to December and is an important rainfall source for the drier south-interior districts like Kolar and Chikkaballapur."],
+["Monsoon","Assertion (A): The southwest monsoon contributes a much larger share of Karnataka's annual rainfall than the northeast monsoon.\nReason (R): The southwest monsoon directly strikes the Western Ghats, producing heavy orographic rainfall over Coastal Karnataka and Malnad before moving further inland.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The southwest monsoon delivers the bulk of Karnataka's annual rainfall through orographic uplift along the Western Ghats, contributing far more than the comparatively modest retreating northeast monsoon."],
+
+["Rainfall Distribution","Which region of Karnataka receives the highest average annual rainfall?",["Malnad (Western Ghats belt)","Maidan (interior plateau)","North Interior Karnataka","Bayaluseeme grasslands"],0,"Easy","The Malnad region, lying along the windward Western Ghats, receives the highest average annual rainfall in Karnataka due to strong orographic effects."],
+["Rainfall Distribution","Which of the following correctly ranks these regions from highest to lowest average annual rainfall?",["Malnad > Coastal Karnataka > Maidan/North Karnataka","Coastal Karnataka > Malnad > Maidan","Maidan > Malnad > Coastal Karnataka","Coastal Karnataka > Maidan > Malnad"],0,"Medium","The Malnad (windward Ghats slopes) generally records the highest rainfall, followed by Coastal Karnataka, with the Maidan/North Karnataka interior receiving the least due to the rain-shadow effect."],
+["Rainfall Distribution","Assertion (A): Agumbe in Shivamogga district records among the highest rainfall totals in South India.\nReason (R): It lies on the windward western slope of the Western Ghats, directly facing the southwest monsoon winds.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Agumbe's position on the windward western slope of the Western Ghats exposes it directly to moisture-laden southwest monsoon winds, producing some of the heaviest rainfall totals in South India, earning it the nickname 'Cherrapunji of the South'."],
+
+["Climate of Karnataka","Which of the following pairs correctly matches a region with its dominant climatic character?",["Coastal Karnataka — humid tropical climate","North Interior Karnataka — perpetually humid climate","Malnad — semi-arid climate","Bayaluseeme — heavy year-round rainfall"],0,"Easy","Coastal Karnataka has a humid tropical climate moderated by the Arabian Sea, unlike the semi-arid conditions of much of the Maidan/Bayaluseeme interior."],
+["Climate of Karnataka","Consider the statements:\n1. Coastal Karnataka has a smaller annual temperature range than North Interior Karnataka.\n2. This is mainly due to the moderating effect of the Arabian Sea on coastal temperatures.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The Arabian Sea moderates coastal Karnataka's temperatures, keeping its annual range smaller than the more continental, extreme summer-to-winter swing seen in North Interior Karnataka."],
+["Climate of Karnataka","Which of the following is NOT a typical characteristic of the Bayaluseeme (Maidan) region's climate?",["Hot summers","Low and erratic rainfall","High humidity throughout the year","Large diurnal temperature range"],2,"Medium","The Bayaluseeme (Maidan) region has a generally dry, semi-arid climate with hot summers, erratic rainfall and large diurnal temperature swings — not high year-round humidity, which is more typical of the coast."],
+["Climate of Karnataka","Assertion (A): Landslide risk in Karnataka's Western Ghats increases sharply during peak southwest monsoon months.\nReason (R): Intense, prolonged rainfall saturates hill slopes and reduces soil cohesion, especially where slopes have been destabilised by construction or mining.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Heavy, sustained monsoon rainfall saturates hillslope soils and reduces their cohesion, and this risk is compounded where human activity such as road-cutting, construction or mining has already destabilised slopes in the Western Ghats."],
+
+["Natural Vegetation","Which of the following correctly orders forest types by decreasing canopy density/height in Karnataka?",["Evergreen > Semi-evergreen > Moist deciduous > Dry deciduous > Thorn/scrub","Thorn/scrub > Dry deciduous > Moist deciduous > Semi-evergreen > Evergreen","Moist deciduous > Evergreen > Thorn/scrub > Dry deciduous","Semi-evergreen > Thorn/scrub > Evergreen > Dry deciduous"],0,"Easy","Karnataka's forest types range, in decreasing canopy density, from evergreen through semi-evergreen and moist deciduous to dry deciduous and, finally, sparse thorn/scrub vegetation."],
+["Natural Vegetation","Consider the statements:\n1. Karnataka's natural vegetation broadly correlates with its west-to-east rainfall gradient.\n2. Evergreen forest transitions towards thorn/scrub forest moving from the Western Ghats towards the drier northern plains.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Vegetation type in Karnataka tracks the rainfall gradient closely, shifting from dense evergreen forest near the wet Western Ghats to sparse thorn/scrub vegetation in the drier northern plains."],
+["Natural Vegetation","Which of the following (forest type — dominant tree/product) pairs is NOT correctly matched?",["Moist deciduous — Teak","Evergreen — Rosewood/Dipterocarp species","Thorn/scrub — Acacia","Dry deciduous — Coconut"],3,"Medium","Coconut is a coastal plantation crop, not a characteristic dry deciduous forest tree; dry deciduous forests are typically associated with species such as sandalwood, teak and axlewood."],
+["Natural Vegetation","Assertion (A): Sholas — stunted evergreen forest patches — occur only in the valley folds of high-altitude Western Ghats, surrounded by rolling grasslands.\nReason (R): Cold, moisture-laden conditions in sheltered valleys favour dense tree growth, while exposed slopes above them favour grasses over trees.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Shola forests form in sheltered, moist valley folds of the high Western Ghats where conditions favour tree growth, while the more exposed, wind-swept slopes above them support rolling montane grasslands instead of trees."],
+
+["Natural Ecosystem","Which of the following best describes a 'shola-grassland' ecosystem found in Karnataka's high Western Ghats?",["A mosaic of stunted evergreen forest patches in valleys with grasslands on surrounding slopes","A purely grassland ecosystem with no forest patches","A mangrove ecosystem along the coast","A desert-like ecosystem in North Karnataka"],0,"Easy","The shola-grassland ecosystem is a characteristic high-altitude Western Ghats mosaic of evergreen forest pockets in valleys interspersed with rolling grasslands on adjoining slopes."],
+["Natural Ecosystem","Consider the statements:\n1. Karnataka's coastal ecosystem includes mangroves, estuaries and sandy beaches.\n2. Mangrove cover in Karnataka is comparatively limited relative to states like West Bengal.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Karnataka's coast supports mangroves, estuaries and beaches, but its mangrove cover is limited compared to states with large river deltas, such as West Bengal's Sundarbans."],
+["Natural Ecosystem","Why does Karnataka's coastline have comparatively limited mangrove ecosystems compared to states like West Bengal or Gujarat?",["Karnataka's coastline lacks large river deltas comparable to the Ganga-Brahmaputra or the Gulf of Kutch","Karnataka's coast has no rivers at all","Mangroves cannot survive in tropical climates","Karnataka's coast is entirely rocky with no estuaries"],0,"Hard","Extensive mangrove ecosystems typically develop in large river deltas with extensive tidal mudflats, which Karnataka's relatively short, steep west-flowing rivers and narrow coastline lack compared to the Ganga-Brahmaputra delta or the Gulf of Kutch."],
+
+["Forests of Karnataka","Approximately what share of Karnataka's geographical area is under forest cover?",["Around 5%","Around 20%","Around 45%","Around 70%"],1,"Easy","Roughly one-fifth (about 20%) of Karnataka's geographical area is under forest cover, concentrated mainly in the Western Ghats and adjoining hill districts."],
+["Forests of Karnataka","Consider the statements:\n1. Reserved forests carry the highest level of legal protection, with most activities prohibited unless specifically permitted.\n2. Protected forests allow comparatively more regulated activity, such as grazing and minor forest produce collection.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Reserved forests have the strictest legal protection under forest law, while protected forests permit somewhat more regulated human use, such as controlled grazing and minor forest produce collection."],
+["Forests of Karnataka","Which district group is most closely associated with dense evergreen and semi-evergreen forest cover in Karnataka?",["Uttara Kannada, Shivamogga, Chikkamagaluru, Kodagu","Bidar, Kalaburagi, Yadgir","Vijayapura, Bagalkot, Belagavi (plains)","Kolar, Chikkaballapur, Tumakuru"],0,"Medium","The Western Ghats districts of Uttara Kannada, Shivamogga, Chikkamagaluru and Kodagu carry Karnataka's densest evergreen and semi-evergreen forest cover, unlike the drier northern and south-eastern districts."],
+["Forests of Karnataka","Assertion (A): Bandipur and Nagarahole together with adjoining protected areas form part of a large, contiguous tiger landscape spanning multiple states.\nReason (R): They share similar dry-to-moist deciduous habitat suited to large herbivores and their predators, and connect with Kerala's Wayanad and Tamil Nadu's Mudumalai.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Bandipur and Nagarahole, together with Wayanad (Kerala) and Mudumalai (Tamil Nadu), form a large contiguous deciduous-forest tiger landscape at the Karnataka-Kerala-Tamil Nadu tri-junction, supporting healthy predator-prey populations across state boundaries."],
+
+["Wildlife Sanctuaries","Which river flows through the Dandeli Wildlife Sanctuary in Uttara Kannada district?",["Kali river","Sharavathi river","Netravathi river","Tungabhadra river"],0,"Easy","The Kali river flows through Dandeli Wildlife Sanctuary in Uttara Kannada district, which forms part of the wider Kali Tiger Reserve landscape."],
+["Wildlife Sanctuaries","Ranganathittu Bird Sanctuary, one of Karnataka's most visited bird sanctuaries, is located on the banks of which river?",["Cauvery river","Krishna river","Tungabhadra river","Sharavathi river"],0,"Easy","Ranganathittu Bird Sanctuary lies on a set of islets in the Cauvery river near Srirangapatna and is well known for its breeding colonies of storks, ibises and other waterbirds."],
+["Wildlife Sanctuaries","Consider the statements:\n1. Someshwara Wildlife Sanctuary is located in the Western Ghats, spanning parts of Udupi and Shivamogga districts.\n2. It includes the famous Agumbe locality, known for very heavy rainfall.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Someshwara Wildlife Sanctuary lies across Udupi and Shivamogga districts in the Western Ghats and includes the Agumbe area, famed for exceptionally heavy monsoon rainfall."],
+["Wildlife Sanctuaries","Assertion (A): The Karnataka High Court, in 2026, directed the state government to formally include the full recommended reserve-forest area within the Kappatagudda Wildlife Sanctuary in Gadag district.\nReason (R): The 2019 notification for the sanctuary had covered a smaller area than the State Wildlife Board had originally recommended for protection.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","In 2026, the Karnataka High Court directed the state to include the omitted reserve-forest area within Kappatagudda Wildlife Sanctuary in Gadag district, noting that the 2019 notification (244.15 sq km) fell short of what the State Wildlife Board had earlier recommended."],
+
+["National Parks","How many national parks does Karnataka currently have?",["3","5","7","9"],1,"Easy","Karnataka has five national parks: Bandipur, Nagarahole (Rajiv Gandhi), Bannerghatta, Anshi and Kudremukh."],
+["National Parks","Consider the statements:\n1. Nagarahole National Park is also known as Rajiv Gandhi National Park.\n2. It is located in Mysuru and Kodagu districts, adjoining Bandipur to its south.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Nagarahole National Park, also called Rajiv Gandhi National Park, lies in Mysuru and Kodagu districts and adjoins Bandipur National Park to its south, forming a contiguous protected landscape."],
+["National Parks","Assertion (A): Anshi National Park and Dandeli Wildlife Sanctuary together constitute the Kali Tiger Reserve.\nReason (R): The two contiguous protected areas lie within the biologically sensitive Western Ghats of Uttara Kannada district and are managed as a single tiger conservation unit.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Anshi National Park and Dandeli Wildlife Sanctuary, both in Uttara Kannada district's Western Ghats, are contiguous protected areas that were combined to form the Kali Tiger Reserve, named after the Kali river flowing through it."],
+
+["Tiger Reserves","Which was the first Tiger Reserve to be established in India, located in Karnataka?",["Nagarahole","Bandipur","Bhadra","BRT (Biligiri Rangaswamy Temple)"],1,"Easy","Bandipur National Park in Karnataka was among the first nine Tiger Reserves declared in India in 1973-74 under Project Tiger, and is regarded as the first tiger reserve established in the country."],
+["Tiger Reserves","Consider the statements:\n1. Karnataka has five Tiger Reserves: Bandipur, Nagarahole, BRT, Kali, and Bhadra.\n2. Karnataka consistently ranks among the top few states in India by tiger population.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Karnataka has five Tiger Reserves — Bandipur, Nagarahole, BRT, Kali and Bhadra — and has consistently ranked among India's top states for tiger population in successive tiger census reports."],
+["Tiger Reserves","Assertion (A): The Biligiri Rangaswamy Temple (BRT) Tiger Reserve is ecologically important as a link between the Western and Eastern Ghats.\nReason (R): BRT Hills lie at a transition zone in Chamarajanagar district where Western Ghats-type moist forests meet drier, Eastern Ghats-type vegetation.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","BRT Tiger Reserve in Chamarajanagar district sits at a unique transition zone where Western Ghats moist forest types meet the drier vegetation more typical of Eastern Ghats hill tracts, making it ecologically significant as a biogeographic link."],
+
+["Biosphere Reserves","Bandipur and Nagarahole, along with Wayanad (Kerala) and Mudumalai (Tamil Nadu), form part of which biosphere reserve?",["Nilgiri Biosphere Reserve","Sundarbans Biosphere Reserve","Nanda Devi Biosphere Reserve","Great Nicobar Biosphere Reserve"],0,"Medium","Bandipur and Nagarahole in Karnataka are part of the Nilgiri Biosphere Reserve, India's first biosphere reserve, which also includes Wayanad in Kerala and Mudumalai in Tamil Nadu."],
+["Biosphere Reserves","Assertion (A): The Nilgiri Biosphere Reserve, which includes parts of Karnataka, was the first biosphere reserve designated in India.\nReason (R): It was chosen for its exceptionally high species diversity and endemism across the tri-junction of Karnataka, Kerala and Tamil Nadu.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The Nilgiri Biosphere Reserve, spanning parts of Karnataka, Kerala and Tamil Nadu, was India's first designated biosphere reserve, chosen for its outstanding species diversity and high endemism at this Western Ghats tri-junction."],
+
+["River System","Which river is described as Karnataka's principal west-flowing river responsible for the Jog Falls?",["Sharavathi","Netravathi","Kali","Cauvery"],0,"Easy","The Sharavathi river, flowing westward from the Western Ghats to the Arabian Sea, forms the spectacular Jog Falls in Shivamogga district."],
+["River System","Which of these rivers flows generally eastwards into the Bay of Bengal system rather than the Arabian Sea?",["Cauvery","Sharavathi","Netravathi","Kali"],0,"Easy","The Cauvery is an east-flowing river that ultimately drains into the Bay of Bengal, unlike Sharavathi, Netravathi and Kali, which flow west into the Arabian Sea."],
+["River System","Match: (a) Cauvery (b) Krishna (c) Tungabhadra (d) Sharavathi\nWith source: (i) Talakaveri, Kodagu (ii) Mahabaleshwar, Maharashtra (iii) Confluence of Tunga and Bhadra at Koodli (iv) Western Ghats near Ambutirtha, Shivamogga",["a-i,b-ii,c-iii,d-iv","a-ii,b-i,c-iv,d-iii","a-iii,b-iv,c-i,d-ii","a-iv,b-iii,c-ii,d-i"],0,"Medium","The Cauvery rises at Talakaveri in Kodagu, the Krishna at Mahabaleshwar in Maharashtra, the Tungabhadra at the confluence of the Tunga and Bhadra rivers at Koodli, and the Sharavathi near Ambutirtha in Shivamogga district."],
+["River System","Which is the correct order of these rivers from north to south as they traverse Karnataka?",["Krishna → Tungabhadra → Cauvery","Cauvery → Tungabhadra → Krishna","Tungabhadra → Krishna → Cauvery","Krishna → Cauvery → Tungabhadra"],0,"Medium","Moving from north to south across Karnataka, the Krishna basin lies furthest north, the Tungabhadra (a Krishna tributary) lies in the middle latitudes, and the Cauvery basin lies furthest south."],
+["River System","Why are Karnataka's west-flowing rivers (such as Sharavathi, Netravathi and Kali) typically short and swift compared to the east-flowing rivers?",["They originate close to the Arabian Sea on the steep western slope of the Western Ghats, covering short distances over steep gradients","They flow through flatter terrain than east-flowing rivers","They receive far less rainfall than east-flowing rivers","They are entirely man-made irrigation canals"],0,"Hard","West-flowing rivers originate near the coast on the steep western face of the Western Ghats, so they cover short distances with steep gradients before reaching the Arabian Sea, unlike the longer, gently-graded east-flowing rivers."],
+["River System","Assertion (A): The Krishna river is often cited as having the largest drainage basin area within Karnataka among the state's major rivers.\nReason (R): The Krishna and its major tributaries (Bhima, Ghataprabha, Malaprabha, Tungabhadra) drain a large part of northern Karnataka's plateau.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The Krishna river system, together with its major tributaries such as the Bhima, Ghataprabha, Malaprabha and Tungabhadra, drains an extensive area of the northern Karnataka plateau, giving it the largest basin area within the state among major rivers."],
+
+["Tributaries","Which of the following is a major tributary of the Tungabhadra river system rather than an independent river?",["Bhadra","Bhima","Malaprabha","Ghataprabha"],0,"Easy","The Bhadra river joins the Tunga to form the Tungabhadra at Koodli; Bhima, Malaprabha and Ghataprabha are direct tributaries of the Krishna, not of the Tungabhadra."],
+["Tributaries","Consider the statements:\n1. The Hemavathi is a tributary of the Cauvery river.\n2. It joins the Cauvery near Krishnarajasagar (KRS) reservoir area.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The Hemavathi river, rising in the Western Ghats of Chikkamagaluru district, is a tributary of the Cauvery and joins it near the Krishnarajasagar (KRS) reservoir area in Mandya district."],
+["Tributaries","Which of the following rivers does NOT belong to the Krishna river system in Karnataka?",["Bhima","Ghataprabha","Malaprabha","Netravathi"],3,"Hard","The Netravathi is a short, west-flowing river draining into the Arabian Sea near Mangaluru and has no connection to the east-flowing Krishna system, unlike the Bhima, Ghataprabha and Malaprabha, which are Krishna tributaries."],
+
+["Waterfalls","Jog Falls, among the highest waterfalls in India, is formed by which river?",["Sharavathi","Kali","Cauvery","Tungabhadra"],0,"Easy","Jog Falls in Shivamogga district is formed by the Sharavathi river as it plunges over a steep escarpment of the Western Ghats."],
+["Waterfalls","Consider the statements:\n1. Shivanasamudra Falls is formed by the Cauvery river.\n2. It was historically significant as the site of one of Asia's earliest hydroelectric power stations.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Shivanasamudra Falls on the Cauvery river was the site of one of Asia's first hydroelectric power stations, established in the early 20th century, supplying power to the Kolar Gold Fields."],
+["Waterfalls","Assertion (A): Unchalli Falls and Magod Falls, both in Uttara Kannada district, are formed by different rivers than Jog Falls.\nReason (R): Unchalli Falls is formed by the Aghanashini river and Magod Falls by the Bedti river, distinct west-flowing rivers from the Sharavathi that forms Jog Falls.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Unchalli Falls forms on the Aghanashini river and Magod Falls on the Bedti river, both distinct west-flowing rivers of Uttara Kannada district, separate from the Sharavathi river that creates Jog Falls."],
+
+["Dams and Reservoirs","The Krishna Raja Sagara (KRS) Dam is built across which river?",["Cauvery","Krishna","Tungabhadra","Sharavathi"],0,"Easy","The Krishna Raja Sagara (KRS) Dam near Mysuru is built across the Cauvery river and is a key source of irrigation and drinking water for the region."],
+["Dams and Reservoirs","Match: (a) KRS Dam (b) Almatti Dam (c) Linganamakki Dam (d) Bhadra Dam\nWith river: (i) Cauvery (ii) Krishna (iii) Sharavathi (iv) Bhadra",["a-i,b-ii,c-iii,d-iv","a-iv,b-iii,c-ii,d-i","a-ii,b-i,c-iv,d-iii","a-iii,b-iv,c-i,d-ii"],0,"Medium","KRS Dam is built on the Cauvery, Almatti Dam on the Krishna, Linganamakki Dam on the Sharavathi, and Bhadra Dam on the Bhadra river."],
+["Dams and Reservoirs","Consider the statements:\n1. The Tungabhadra Dam's original designed live storage capacity was significantly higher than its present effective capacity.\n2. Decades of siltation are the primary reason for this reduced effective storage.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The Tungabhadra Dam's live storage capacity has fallen well below its original design figure primarily because of decades of silt accumulation in the reservoir, a long-standing engineering and water-management concern."],
+["Dams and Reservoirs","Which of the following (dam — associated river/feature) is NOT correctly matched?",["Krishna — Almatti Dam","Cauvery — KRS Dam","Tungabhadra — Linganamakki Dam","Sharavathi — Jog Falls"],2,"Hard","Linganamakki Dam is built on the Sharavathi river, not the Tungabhadra; the Tungabhadra's major dam is the Tungabhadra Dam near Hospet/Munirabad."],
+
+["Irrigation Projects","The Upper Krishna Project primarily draws water from which two reservoirs?",["Almatti and Narayanpur","KRS and Kabini","Linganamakki and Supa","Tungabhadra and Bhadra"],0,"Easy","The Upper Krishna Project, one of Karnataka's largest irrigation projects, draws water mainly from the Almatti and Narayanpur reservoirs on the Krishna river."],
+["Irrigation Projects","Consider the statements:\n1. Tank irrigation has traditionally been important in the Maidan region due to its lower, less reliable rainfall.\n2. Canal irrigation fed by Western Ghats rivers is comparatively more dominant in coastal Karnataka than in the Maidan.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Tank irrigation historically compensated for the Maidan's unreliable rainfall, while coastal Karnataka, with its shorter, high-discharge Western Ghats-fed rivers, has relied comparatively more on canal-based irrigation systems."],
+["Irrigation Projects","Assertion (A): The Krishna Bhagya Jala Nigam Limited (KBJNL) plays a central role in implementing Krishna basin irrigation projects in Karnataka.\nReason (R): It coordinates and executes major schemes such as the Upper Krishna Project across northern Karnataka's Krishna basin districts.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","The Krishna Bhagya Jala Nigam Limited (KBJNL) is the state agency responsible for implementing major Krishna basin irrigation schemes in Karnataka, including the Upper Krishna Project spanning several northern Karnataka districts."],
+
+["Environment and Ecology related to Karnataka","How many Ramsar (internationally important wetland) sites does Karnataka currently have?",["2","4","6","8"],1,"Easy","Karnataka has four Ramsar sites: Ranganathittu Bird Sanctuary, Ankasamudra Bird Conservation Reserve, Aghanashini Estuary and Magadi Kere Conservation Reserve."],
+["Environment and Ecology related to Karnataka","Consider the statements:\n1. Ankasamudra Bird Conservation Reserve, a Ramsar site, is located in Ballari district.\n2. It was the first Ramsar site to be designated in the Kalyana-Karnataka region.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","Ankasamudra Bird Conservation Reserve, a small man-made irrigation tank turned Ramsar site in Ballari district, holds the distinction of being the first Ramsar site designated in the Kalyana-Karnataka (Hyderabad-Karnataka) region."],
+["Environment and Ecology related to Karnataka","Why is soil erosion a particular ecological concern in Karnataka's Western Ghats region?",["Steep slopes combined with heavy monsoon rainfall accelerate erosion, especially where vegetation cover has been disturbed","The Western Ghats receive almost no rainfall","The rock beneath the Western Ghats is impermeable and prevents any erosion","Soil erosion is a concern only in the flat Maidan region"],0,"Medium","The combination of steep Western Ghats slopes and intense monsoon rainfall makes the region highly prone to soil erosion, a risk that increases where forest cover has been cleared or slopes disturbed by construction, mining or agriculture."],
+["Environment and Ecology related to Karnataka","Assertion (A): The Western Ghats' Ecologically Sensitive Area proposals have faced repeated opposition from Karnataka's state government over successive draft notifications since 2014.\nReason (R): Local communities, plantation owners and political groups fear that ESA restrictions on mining, construction and other activities would adversely affect livelihoods and development in the region.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Karnataka's government has repeatedly objected to successive Western Ghats ESA draft notifications since 2014, largely because of concerns raised by local communities, plantation owners and political groups about restrictions on mining, construction and other livelihood-related activities."],
+
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","In 2026, the Southwest Monsoon reached Kerala (and subsequently Karnataka) on approximately which date?",["May 24, 2026","June 4, 2026","June 20, 2026","July 1, 2026"],1,"Easy","The Southwest Monsoon of 2026 reached Kerala on 4 June 2026, about three days later than its normal onset date of 1 June, before advancing into Karnataka and Tamil Nadu."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Consider the statements about the 2026 southwest monsoon outlook for Karnataka:\n1. The India Meteorological Department forecast below-normal seasonal rainfall for most Karnataka sub-divisions.\n2. This forecast was linked to developing El Niño conditions during the 2026 monsoon season.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","For the 2026 southwest monsoon season, the IMD forecast below-normal to near-normal rainfall for Karnataka's sub-divisions, attributing this outlook partly to the anticipated strengthening of El Niño conditions over the Pacific."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","The seventh draft notification on the Western Ghats Ecologically Sensitive Area, reissued by the Union Environment Ministry in July 2026, proposes an ESA of approximately how much area, and across how many states?",["About 56,825.7 sq km across six states","About 10,000 sq km across two states","About 1,00,000 sq km across all Indian states","About 25,000 sq km across three states"],0,"Medium","The July 2026 draft notification proposes designating about 56,825.7 sq km of the Western Ghats as an Ecologically Sensitive Area across Gujarat, Maharashtra, Goa, Karnataka, Kerala and Tamil Nadu."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Consider the statements regarding the Kappatagudda Wildlife Sanctuary matter decided by the Karnataka High Court in 2026:\n1. The sanctuary is located in Gadag district.\n2. The court found the 2019 notified area smaller than what the State Wildlife Board had originally recommended for protection.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Medium","The Karnataka High Court, ruling on the Kappatagudda Wildlife Sanctuary matter in Gadag district in 2026, found that the 2019 notification (244.15 sq km) fell short of the larger area the State Wildlife Board had recommended, and directed inclusion of the omitted reserve-forest area."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Which administrative reform replaced the erstwhile Bruhat Bengaluru Mahanagara Palike (BBMP) with a multi-corporation structure ahead of the 2026 civic elections?",["Formation of the Greater Bengaluru Authority (GBA) with five city corporations","Merger of BBMP with the Bengaluru Development Authority","Conversion of BBMP into a single municipal corporation with more wards","Splitting Bengaluru Urban district into two revenue districts"],0,"Medium","The Karnataka government dissolved the single BBMP structure and created the Greater Bengaluru Authority (GBA), under which Bengaluru is now administered through five separate city corporations, ahead of the 2026 civic body elections."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Assertion (A): Karnataka has consistently opposed successive Western Ghats ESA draft notifications, including the one reissued in July 2026.\nReason (R): The draft identifies Karnataka as having the largest ESA area share (over 20,000 sq km) among the six Western Ghats states, raising concerns about restrictions on mining, construction and plantation activity in numerous villages.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],0,"Hard","Karnataka has the largest proposed ESA share (over 20,000 sq km) among the six Western Ghats states in the successive draft notifications, and this scale of coverage across numerous villages is central to why the state government has repeatedly opposed the notification, including the one reissued in July 2026."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Assertion (A): India's total number of Ramsar sites crossed the 100 mark in mid-2026, with Karnataka contributing a modest share of the national total.\nReason (R): Karnataka's four Ramsar sites are all large natural river-fed wetlands rather than small artificial water bodies.",["Both A and R true, R correctly explains A","Both A and R true, R does not explain A","A true, R false","A false, R true"],3,"Hard","India's Ramsar site count reached 100 around mid-2026, and Karnataka does contribute only a modest share (four sites) — but Reason (R) is false, since some of Karnataka's Ramsar sites, such as Ankasamudra and Magadi Kere, are small, man-made irrigation tanks rather than large natural river-fed wetlands."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Which of the following statements about Karnataka's Tiger Reserves in the context of the 2026 national tiger reserve count is correct?",["Karnataka has 5 of India's 58 Tiger Reserves, and consistently ranks among the top states for tiger population","Karnataka has 15 of India's 58 Tiger Reserves","India's total tiger reserve count fell below 50 in 2026","Karnataka's tiger reserves were all merged into a single reserve in 2026"],0,"Hard","As of 2026, India has 58 Tiger Reserves nationally, of which Karnataka has five (Bandipur, Nagarahole, BRT, Kali and Bhadra), and the state continues to rank among the top few in terms of tiger population estimates."],
+["Karnataka Geography Current Affairs (January 2026 to July 2026)","Consider the statements linking current affairs with static geography:\n1. The 2026 Western Ghats ESA draft notification is based substantially on the 2013 Kasturirangan Committee recommendations.\n2. The Kasturirangan Committee had recommended protecting about 37% of the total Western Ghats area as ecologically sensitive.\nWhich is/are correct?",["Only 1","Only 2","Both 1 and 2","Neither 1 nor 2"],2,"Hard","The successive Western Ghats ESA draft notifications, including the 2026 version, remain substantially based on the 2013 K. Kasturirangan Committee report, which had recommended treating about 37% (roughly 60,000 sq km) of the total Western Ghats area as ecologically sensitive."]
+];
+
+var LETTERS = ['A','B','C','D'];
+
+/* =========================================================
+   STATE
+========================================================= */
+var app = document.getElementById('app');
+var status = {};          // per-question status, keyed by qId (index in Q)
+var activeIndices = [];    // ordered list of qIds in the current run
+var currentPos = 0;        // position within activeIndices
+var timerInterval = null;
+var remainingSeconds = 0;
+var examStartTs = null;
+var questionStartTs = null;
+var screen = 'start';      // start | exam | result
+var isPractice = false;    // true when running a retry/practice subset
+var practiceLabel = '';
+var resultData = null;     // cached computed results after submission
+var activeTab = 'summary';
+var reviewFilter = 'all';
+
+function freshStatus(){
+  return { selected:null, visited:false, answered:false, marked:false, timeSpent:0, attempts:0 };
+}
+
+function initStatuses(){
+  status = {};
+  for(var i=0;i<Q.length;i++){ status[i] = freshStatus(); }
+}
+
+/* =========================================================
+   DIFFICULTY CLASSIFIER (derived at runtime from question
+   wording — the question database itself is never altered)
+========================================================= */
+function classifyDifficulty(item){
+  return item[4] || 'Medium';
+}
+
+/* =========================================================
+   RANDOMIZATION — shuffles question order and, within each
+   question, the option order (remapping the correct index so
+   scoring stays accurate). Runs fresh each time a full test is
+   started, so every attempt sees a different arrangement.
+========================================================= */
+function shuffleArray(arr){
+  for(var i=arr.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+  }
+  return arr;
+}
+function shuffleQuestionOptions(){
+  Q.forEach(function(item){
+    var opts = item[2], correct = item[3];
+    var order = opts.map(function(_,i){return i;});
+    shuffleArray(order);
+    item[2] = order.map(function(i){return opts[i];});
+    item[3] = order.indexOf(correct);
+  });
+}
+
+/* =========================================================
+   UTIL
+========================================================= */
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fmtTime(sec){
+  sec = Math.max(0, Math.round(sec));
+  var m = Math.floor(sec/60), s = sec%60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+function el(html){
+  var d=document.createElement('div');
+  d.innerHTML=html.trim();
+  return d.firstChild;
+}
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+function renderStart(){
+  screen='start';
+  var negChecked = CONFIG.negativeMarking.enabled ? 'checked' : '';
+  app.innerHTML =
+  '<div class="start-wrap">'+
+    '<h1>'+esc(CONFIG.examName)+'</h1>'+
+    '<h2>'+esc(CONFIG.subjectName)+'</h2>'+
+    '<div class="start-grid">'+
+      '<div class="start-card"><div class="lbl">Total Questions</div><div class="val">'+Q.length+'</div></div>'+
+      '<div class="start-card"><div class="lbl">Duration</div><div class="val">'+CONFIG.durationMinutes+' minutes</div></div>'+
+      '<div class="start-card"><div class="lbl">Marks / Question</div><div class="val">+'+CONFIG.marksPerQuestion+'</div></div>'+
+      '<div class="start-card"><div class="lbl">Negative Marking</div><div class="val" id="neg-val">'+(CONFIG.negativeMarking.enabled?('-'+CONFIG.negativeMarking.value):'Off')+'</div></div>'+
+    '</div>'+
+    '<ul class="instructions">'+
+      '<li>The test contains '+Q.length+' multiple-choice questions across several topics.</li>'+
+      '<li>Each question has four options (A–D); choose the single best answer.</li>'+
+      '<li>Use <b>Save &amp; Next</b> / <b>Next</b> / <b>Previous</b> to move between questions, or click any number on the palette to jump directly.</li>'+
+      '<li><b>Mark for Review</b> flags a question and moves you to the next one; you can return to it any time.</li>'+
+      '<li>The test will auto-submit when the timer reaches zero.</li>'+
+      '<li>Keyboard shortcuts: <b>1–4</b> select an option, <b>←/→</b> move between questions, <b>N</b> next, <b>P</b> previous, <b>M</b> mark for review.</li>'+
+    '</ul>'+
+    '<div class="toggle-row"><label><input type="checkbox" id="neg-toggle" '+negChecked+'> Enable negative marking (-'+CONFIG.negativeMarking.value+' per wrong answer)</label></div>'+
+    '<button class="btn-primary" id="start-btn">Start Test</button>'+
+  '</div>';
+  document.getElementById('neg-toggle').addEventListener('change', function(e){
+    CONFIG.negativeMarking.enabled = e.target.checked;
+    document.getElementById('neg-val').textContent = CONFIG.negativeMarking.enabled ? ('-'+CONFIG.negativeMarking.value) : 'Off';
+  });
+  document.getElementById('start-btn').addEventListener('click', startFullExam);
+}
+
+function startFullExam(){
+  shuffleQuestionOptions();
+  initStatuses();
+  activeIndices = shuffleArray(Q.map(function(_,i){return i;}));
+  currentPos = 0;
+  isPractice = false;
+  practiceLabel = '';
+  remainingSeconds = CONFIG.durationMinutes*60;
+  examStartTs = Date.now();
+  startTimer();
+  renderExamScreen();
+}
+
+/* =========================================================
+   TIMER
+========================================================= */
+function startTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  if(isPractice) return; // practice/retry mode is untimed
+  timerInterval = setInterval(function(){
+    remainingSeconds--;
+    updateTimerDisplay();
+    if(remainingSeconds<=0){
+      clearInterval(timerInterval);
+      submitTest(true);
+    }
+  },1000);
+}
+function stopTimer(){ if(timerInterval) clearInterval(timerInterval); }
+function updateTimerDisplay(){
+  var t = document.getElementById('timer-display');
+  if(!t) return;
+  t.textContent = isPractice ? 'PRACTICE (untimed)' : fmtTime(remainingSeconds);
+  t.classList.toggle('low', !isPractice && remainingSeconds<=120);
+}
+
+/* =========================================================
+   EXAM SCREEN
+========================================================= */
+function currentQid(){ return activeIndices[currentPos]; }
+
+function commitTimeSpent(){
+  if(questionStartTs!==null){
+    var qid = currentQid();
+    if(qid!==undefined && status[qid]){
+      status[qid].timeSpent += (Date.now()-questionStartTs)/1000;
+    }
+  }
+  questionStartTs = Date.now();
+}
+
+function renderExamScreen(){
+  screen='exam';
+  var qid = currentQid();
+  status[qid].visited = true;
+  questionStartTs = Date.now();
+
+  var answeredCount=0, visitedCount=0, markedCount=0, notVisited=0;
+  activeIndices.forEach(function(id){
+    var st=status[id];
+    if(st.marked) markedCount++;
+    else if(st.answered) answeredCount++;
+    else if(st.visited) visitedCount++;
+    else notVisited++;
+  });
+
+  var html = '';
+  html += '<div class="exam-header">';
+  html +=   '<div class="titles"><h1>'+esc(CONFIG.examName)+'</h1><h2>'+esc(CONFIG.subjectName)+(isPractice?(' — '+esc(practiceLabel)):'')+'</h2></div>';
+  html +=   '<div class="mid">';
+  html +=     '<span>Question <b>'+(currentPos+1)+'</b> / '+activeIndices.length+'</span>';
+  html +=     '<span class="timer" id="timer-display">'+(isPractice?'PRACTICE (untimed)':fmtTime(remainingSeconds))+'</span>';
+  html +=     '<button class="palette-toggle" id="palette-toggle-btn">Palette</button>';
+  html +=   '</div>';
+  html += '</div>';
+  html += '<div class="progress-track"><div class="progress-fill" style="width:'+Math.round(((currentPos+1)/activeIndices.length)*100)+'%"></div></div>';
+  if(isPractice){
+    html += '<div class="practice-banner">Practice mode — '+esc(practiceLabel)+'. This run is untimed and separate from your main result.</div>';
+  }
+  html += '<div class="exam-body">';
+  html +=   '<div class="qcol" id="qcol"></div>';
+  html +=   '<div class="palette" id="palette"></div>';
+  html += '</div>';
+  html += '<div class="bottom-bar">';
+  html +=   '<button id="btn-prev" '+(currentPos===0?'disabled':'')+'>Previous</button>';
+  html +=   '<button id="btn-clear" class="bb-clear">Clear Response</button>';
+  html +=   '<button id="btn-mark" class="bb-warn">Mark for Review</button>';
+  html +=   '<button id="btn-save" class="bb-primary">Save &amp; Next</button>';
+  html +=   '<button id="btn-next" '+(currentPos===activeIndices.length-1?'disabled':'')+'>Next</button>';
+  html +=   '<button id="btn-submit" class="bb-submit">Submit Test</button>';
+  html += '</div>';
+
+  app.innerHTML = html;
+  renderQuestion();
+  renderPalette();
+
+  document.getElementById('btn-prev').addEventListener('click', goPrev);
+  document.getElementById('btn-next').addEventListener('click', goNext);
+  document.getElementById('btn-save').addEventListener('click', goNext);
+  document.getElementById('btn-clear').addEventListener('click', clearResponse);
+  document.getElementById('btn-mark').addEventListener('click', markForReview);
+  document.getElementById('btn-submit').addEventListener('click', requestSubmit);
+  var pt = document.getElementById('palette-toggle-btn');
+  if(pt) pt.addEventListener('click', function(){
+    document.getElementById('palette').classList.toggle('open');
+  });
+}
+
+function renderQuestion(){
+  var qid = currentQid();
+  var item = Q[qid];
+  var st = status[qid];
+  var qcol = document.getElementById('qcol');
+
+  var statusLabel = st.marked ? '<span class="qstatus" style="background:var(--amber-bg);color:var(--amber)">Marked for review</span>'
+    : st.answered ? '<span class="qstatus" style="background:var(--green-bg);color:var(--green)">Answered</span>'
+    : '<span class="qstatus" style="background:var(--red-bg);color:var(--red)">Not answered</span>';
+
+  var html = '<div class="qmeta">Question '+(currentPos+1)+' of '+activeIndices.length+'<span class="qtopic">'+esc(item[0])+'</span>'+statusLabel+'</div>';
+  html += '<div class="qtext">'+esc(item[1])+'</div>';
+  item[2].forEach(function(optText,i){
+    var sel = (st.selected===i) ? ' selected' : '';
+    html += '<button class="opt'+sel+'" data-i="'+i+'"><span class="oletter">'+LETTERS[i]+'.</span><span>'+esc(optText)+'</span></button>';
+  });
+  qcol.innerHTML = html;
+
+  qcol.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      selectOption(parseInt(btn.getAttribute('data-i'),10));
+    });
+  });
+}
+
+function renderPalette(){
+  var pal = document.getElementById('palette');
+  if(!pal) return;
+  var answeredCount=0, visitedCount=0, markedCount=0, notVisited=0;
+  var html = '<h3>Question Palette</h3>';
+  html += '<div class="legend">'+
+    '<div><span class="sw" style="background:var(--white)"></span>Not visited</div>'+
+    '<div><span class="sw" style="background:var(--red-bg);border-color:var(--red)"></span>Not answered</div>'+
+    '<div><span class="sw" style="background:var(--green-bg);border-color:var(--green)"></span>Answered</div>'+
+    '<div><span class="sw" style="background:var(--amber-bg);border-color:var(--amber-border)"></span>Marked</div>'+
+  '</div>';
+  html += '<div class="pgrid">';
+  activeIndices.forEach(function(id,pos){
+    var st = status[id];
+    var cls = 'notvisited';
+    if(st.marked){ cls='marked'; markedCount++; }
+    else if(st.answered){ cls='answered'; answeredCount++; }
+    else if(st.visited){ cls='visited'; visitedCount++; }
+    else { notVisited++; }
+    var cur = (pos===currentPos) ? ' current' : '';
+    html += '<button class="pnum '+cls+cur+'" data-pos="'+pos+'">'+(pos+1)+'</button>';
+  });
+  html += '</div>';
+  html += '<div class="palette-summary">'+
+    '<div><span>Answered</span><span>'+answeredCount+'</span></div>'+
+    '<div><span>Not answered</span><span>'+visitedCount+'</span></div>'+
+    '<div><span>Marked</span><span>'+markedCount+'</span></div>'+
+    '<div><span>Not visited</span><span>'+notVisited+'</span></div>'+
+  '</div>';
+  pal.innerHTML = html;
+  pal.querySelectorAll('.pnum').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goToPosition(parseInt(btn.getAttribute('data-pos'),10));
+      pal.classList.remove('open');
+    });
+  });
+}
+
+function selectOption(i){
+  var qid = currentQid();
+  var st = status[qid];
+  st.selected = i;
+  st.answered = true;
+  st.attempts++;
+  renderQuestion();
+  renderPalette();
+}
+
+function clearResponse(){
+  var qid = currentQid();
+  var st = status[qid];
+  st.selected = null;
+  st.answered = false;
+  renderQuestion();
+  renderPalette();
+}
+
+function markForReview(){
+  var qid = currentQid();
+  status[qid].marked = !status[qid].marked;
+  goNext(true);
+}
+
+function goToPosition(pos){
+  if(pos<0 || pos>=activeIndices.length) return;
+  commitTimeSpent();
+  currentPos = pos;
+  renderExamScreen();
+}
+
+function goNext(fromMark){
+  commitTimeSpent();
+  if(currentPos < activeIndices.length-1){
+    currentPos++;
+    renderExamScreen();
+  } else if(!fromMark){
+    renderExamScreen();
+  } else {
+    renderExamScreen();
+  }
+}
+
+function goPrev(){
+  commitTimeSpent();
+  if(currentPos>0){
+    currentPos--;
+    renderExamScreen();
+  }
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+function showModal(message, onConfirm, confirmLabel, cancelLabel){
+  var overlay = el('<div class="modal-overlay"><div class="modal-box"><p></p><div class="modal-actions"><button class="btn-ghost" id="modal-cancel">'+esc(cancelLabel||'Cancel')+'</button><button class="btn-primary" id="modal-confirm">'+esc(confirmLabel||'Confirm')+'</button></div></div></div>');
+  overlay.querySelector('p').textContent = message;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#modal-cancel').addEventListener('click', function(){ document.body.removeChild(overlay); });
+  overlay.querySelector('#modal-confirm').addEventListener('click', function(){
+    document.body.removeChild(overlay);
+    onConfirm();
+  });
+}
+
+/* =========================================================
+   SUBMISSION
+========================================================= */
+function countUnanswered(){
+  var n=0;
+  activeIndices.forEach(function(id){ if(!status[id].answered) n++; });
+  return n;
+}
+
+function requestSubmit(){
+  var unanswered = countUnanswered();
+  var msg = unanswered>0
+    ? ('You still have '+unanswered+' unanswered question'+(unanswered===1?'':'s')+'. Do you want to submit the test now?')
+    : 'All questions are answered. Submit the test now?';
+  showModal(msg, function(){ submitTest(false); }, 'Submit Test', 'Continue Test');
+}
+
+function submitTest(auto){
+  commitTimeSpent();
+  stopTimer();
+  resultData = computeResults();
+  if(isPractice){
+    renderPracticeResult();
+  } else {
+    activeTab = 'summary';
+    reviewFilter = 'all';
+    renderResultDashboard();
+  }
+}
+
+/* =========================================================
+   RESULTS COMPUTATION
+========================================================= */
+function computeResults(){
+  var total = activeIndices.length;
+  var correct=0, wrong=0, attempted=0, timeTotal=0;
+  var topicStats = {};
+  var diffStats = { Easy:{c:0,w:0,t:0}, Medium:{c:0,w:0,t:0}, Hard:{c:0,w:0,t:0} };
+
+  activeIndices.forEach(function(id){
+    var item = Q[id], st = status[id];
+    var topic = item[0];
+    if(!topicStats[topic]) topicStats[topic] = {c:0,w:0,t:0};
+    topicStats[topic].t++;
+    var diff = classifyDifficulty(item);
+    diffStats[diff].t++;
+    timeTotal += st.timeSpent;
+    if(st.answered){
+      attempted++;
+      if(st.selected===item[3]){
+        correct++; topicStats[topic].c++; diffStats[diff].c++;
+      } else {
+        wrong++; topicStats[topic].w++; diffStats[diff].w++;
+      }
+    }
+  });
+
+  var unattempted = total - attempted;
+  var rawScore = correct*CONFIG.marksPerQuestion - (CONFIG.negativeMarking.enabled ? wrong*CONFIG.negativeMarking.value : 0);
+  var maxScore = total*CONFIG.marksPerQuestion;
+  var percentage = maxScore>0 ? (rawScore/maxScore*100) : 0;
+  var accuracy = attempted>0 ? (correct/attempted*100) : 0;
+  var timeTakenSec = isPractice ? timeTotal : Math.max(0, CONFIG.durationMinutes*60 - remainingSeconds);
+  var avgTimePerQ = attempted>0 ? (timeTakenSec/attempted) : 0;
+
+  return {
+    total: total, correct: correct, wrong: wrong, attempted: attempted, unattempted: unattempted,
+    rawScore: rawScore, maxScore: maxScore, percentage: percentage, accuracy: accuracy,
+    timeTakenSec: timeTakenSec, avgTimePerQ: avgTimePerQ,
+    topicStats: topicStats, diffStats: diffStats
+  };
+}
+
+/* =========================================================
+   PRACTICE (RETRY) RESULT — lightweight summary
+========================================================= */
+function renderPracticeResult(){
+  screen='result';
+  var r = resultData;
+  var html = '<div class="result-wrap">';
+  html += '<div class="result-head"><p>Practice complete — '+esc(practiceLabel)+'</p><div class="big">'+r.correct+' / '+r.total+'</div><p>'+Math.round(r.percentage)+'% correct in this practice set</p></div>';
+  html += '<div class="smart-row" style="justify-content:center;margin-top:20px">';
+  html += '<button class="btn-primary" id="back-dash">Back to Full Result</button>';
+  html += '<button class="btn-secondary" id="retry-again">Retry This Set Again</button>';
+  html += '</div></div>';
+  app.innerHTML = html;
+  document.getElementById('back-dash').addEventListener('click', function(){
+    isPractice=false; practiceLabel=''; renderResultDashboard();
+  });
+  document.getElementById('retry-again').addEventListener('click', function(){
+    var ids = activeIndices.slice();
+    startPracticeRun(ids, practiceLabel);
+  });
+}
+
+function startPracticeRun(ids, label){
+  ids.forEach(function(id){ status[id] = freshStatus(); });
+  activeIndices = ids;
+  currentPos = 0;
+  isPractice = true;
+  practiceLabel = label;
+  remainingSeconds = 0;
+  startTimer();
+  renderExamScreen();
+}
+
+/* =========================================================
+   RESULT DASHBOARD (main test)
+========================================================= */
+function readinessLabel(pct){
+  if(pct>=80) return 'Exam ready — strong overall command of the syllabus.';
+  if(pct>=60) return 'Good foundation — a bit more revision will get you exam-ready.';
+  if(pct>=40) return 'Moderate — focused revision of weak topics is recommended.';
+  return 'Needs significant revision before attempting the real exam.';
+}
+
+function renderResultDashboard(){
+  screen='result';
+  var r = resultData;
+  var html = '<div class="result-wrap">';
+  html += '<div class="result-head"><p>Test complete</p><div class="big">'+r.rawScore.toFixed(2)+' / '+r.maxScore+'</div><p>'+Math.round(r.percentage)+'% overall</p></div>';
+
+  html += '<div class="stat-grid">';
+  html += statCard(r.correct,'Correct');
+  html += statCard(r.wrong,'Wrong');
+  html += statCard(r.attempted,'Attempted');
+  html += statCard(r.unattempted,'Unattempted');
+  html += statCard(Math.round(r.accuracy)+'%','Accuracy');
+  html += statCard(Math.round(r.percentage)+'%','Percentage');
+  html += statCard(fmtTime(r.timeTakenSec),'Time Taken');
+  html += statCard(fmtTime(r.avgTimePerQ),'Avg / Question');
+  html += '</div>';
+
+  html += '<div class="tabs">'+
+    tabBtn('summary','Summary')+
+    tabBtn('topic','Topic Analysis')+
+    tabBtn('difficulty','Difficulty Analysis')+
+    tabBtn('review','Question Review')+
+    tabBtn('performance','Performance Analysis')+
+    tabBtn('actions','Smart Actions')+
+  '</div>';
+
+  html += '<div class="tab-panel'+(activeTab==='summary'?' active':'')+'" id="panel-summary">'+summaryPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='topic'?' active':'')+'" id="panel-topic">'+topicPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='difficulty'?' active':'')+'" id="panel-difficulty">'+difficultyPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='review'?' active':'')+'" id="panel-review">'+reviewPanelHtml()+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='performance'?' active':'')+'" id="panel-performance">'+performancePanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='actions'?' active':'')+'" id="panel-actions">'+actionsPanelHtml(r)+'</div>';
+
+  html += '</div>';
+  app.innerHTML = html;
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      activeTab = btn.getAttribute('data-tab');
+      renderResultDashboard();
+    });
+  });
+
+  wireActionButtons(r);
+  wireReviewFilters();
+}
+
+function statCard(n,l){
+  return '<div class="stat-card"><div class="n">'+n+'</div><div class="l">'+esc(l)+'</div></div>';
+}
+function tabBtn(key,label){
+  return '<button class="tab-btn'+(activeTab===key?' active':'')+'" data-tab="'+key+'">'+esc(label)+'</button>';
+}
+
+function summaryPanelHtml(r){
+  var negNote = CONFIG.negativeMarking.enabled ? ('Negative marking is ON (-'+CONFIG.negativeMarking.value+' per wrong answer).') : 'Negative marking is OFF.';
+  return '<div class="perf-block"><h4>Overview</h4><ul>'+
+    '<li>Total questions: '+r.total+'</li>'+
+    '<li>Correct: '+r.correct+' &nbsp;|&nbsp; Wrong: '+r.wrong+' &nbsp;|&nbsp; Unattempted: '+r.unattempted+'</li>'+
+    '<li>Accuracy (of attempted): '+r.accuracy.toFixed(1)+'%</li>'+
+    '<li>Overall percentage: '+r.percentage.toFixed(1)+'%</li>'+
+    '<li>Time taken: '+fmtTime(r.timeTakenSec)+' &nbsp;|&nbsp; Average time per question: '+fmtTime(r.avgTimePerQ)+'</li>'+
+    '<li>'+negNote+'</li>'+
+  '</ul></div>';
+}
+
+function topicPanelHtml(r){
+  var html='';
+  Object.keys(r.topicStats).forEach(function(topic){
+    var s = r.topicStats[topic];
+    var pct = s.t>0 ? Math.round((s.c/s.t)*100) : 0;
+    html += '<div class="abar-row"><div class="abar-top"><span>'+esc(topic)+'</span><b>'+s.c+' correct / '+s.w+' wrong / '+s.t+' total — '+pct+'%</b></div>'+
+      '<div class="abar-track"><div class="abar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  return html || '<p>No data.</p>';
+}
+
+function difficultyPanelHtml(r){
+  var html='';
+  ['Easy','Medium','Hard'].forEach(function(d){
+    var s = r.diffStats[d];
+    var pct = s.t>0 ? Math.round((s.c/s.t)*100) : 0;
+    html += '<div class="abar-row"><div class="abar-top"><span>'+d+'</span><b>'+s.c+' correct / '+s.w+' wrong / '+s.t+' total — '+pct+'%</b></div>'+
+      '<div class="abar-track"><div class="abar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  html += '<p style="font-size:12px;color:var(--ink-mute);margin-top:10px">Each question in the bank carries an explicit Easy / Medium / Hard tag set by the paper-setter.</p>';
+  return html;
+}
+
+function reviewPanelHtml(){
+  var html = '<div class="filter-row">'+
+    filterBtn('all','All')+filterBtn('correct','Correct')+filterBtn('wrong','Wrong')+filterBtn('unattempted','Unattempted')+filterBtn('marked','Marked')+
+  '</div><div id="review-list">'+reviewListHtml()+'</div>';
+  return html;
+}
+function filterBtn(key,label){
+  return '<button class="filter-btn'+(reviewFilter===key?' active':'')+'" data-filter="'+key+'">'+esc(label)+'</button>';
+}
+function reviewListHtml(){
+  var html='';
+  activeIndices.forEach(function(id,pos){
+    var item=Q[id], st=status[id];
+    var wasCorrect = st.answered && st.selected===item[3];
+    var wasWrong = st.answered && st.selected!==item[3];
+    var unattempted = !st.answered;
+    if(reviewFilter==='correct' && !wasCorrect) return;
+    if(reviewFilter==='wrong' && !wasWrong) return;
+    if(reviewFilter==='unattempted' && !unattempted) return;
+    if(reviewFilter==='marked' && !st.marked) return;
+
+    var tag = wasCorrect ? '<span class="tag correct">Correct</span>' : wasWrong ? '<span class="tag wrong">Wrong</span>' : '<span class="tag skip">Not attempted</span>';
+    html += '<div class="review-item">';
+    html += '<div class="rmeta"><span class="qtopic" style="background:var(--topicbg);padding:2px 8px;border-radius:3px">'+esc(item[0])+'</span>Q'+(pos+1)+tag+(st.marked?'<span class="tag" style="background:var(--amber-bg);color:var(--amber)">Marked</span>':'')+'</div>';
+    html += '<div class="rq">'+esc(item[1])+'</div>';
+    item[2].forEach(function(opt,i){
+      var cls='';
+      if(i===item[3]) cls='correctopt';
+      else if(i===st.selected) cls='wrongopt';
+      html += '<div class="ropt'+(cls?(' '+cls):'')+'">'+LETTERS[i]+'. '+esc(opt)+(i===st.selected?' (Your answer)':'')+(i===item[3]?' (Correct answer)':'')+'</div>';
+    });
+    html += '<div class="explain">Explanation: '+esc(item[5]||'')+'</div>';
+    html += '</div>';
+  });
+  return html || '<p style="color:var(--ink-mute)">No questions match this filter.</p>';
+}
+function wireReviewFilters(){
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      reviewFilter = btn.getAttribute('data-filter');
+      document.getElementById('review-list').innerHTML = reviewListHtml();
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active', b===btn); });
+    });
+  });
+}
+
+function performancePanelHtml(r){
+  var topics = Object.keys(r.topicStats).map(function(t){
+    var s=r.topicStats[t];
+    return { topic:t, pct: s.t>0?(s.c/s.t*100):0, total:s.t };
+  });
+  var strong = topics.filter(function(t){return t.pct>=75;}).sort(function(a,b){return b.pct-a.pct;});
+  var weak = topics.filter(function(t){return t.pct<50;}).sort(function(a,b){return a.pct-b.pct;});
+  var revisionOrder = weak.slice();
+
+  var html='';
+  html += '<div class="perf-block"><h4>Strong Areas</h4><ul>'+(strong.length?strong.map(function(t){return '<li>'+esc(t.topic)+' — '+Math.round(t.pct)+'%</li>';}).join(''):'<li>None yet — accuracy across topics is still developing.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Weak Areas</h4><ul>'+(weak.length?weak.map(function(t){return '<li>'+esc(t.topic)+' — '+Math.round(t.pct)+'%</li>';}).join(''):'<li>No topic fell below 50% — solid overall performance.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Topics To Revise</h4><ul>'+(weak.length?weak.map(function(t){return '<li>'+esc(t.topic)+'</li>';}).join(''):'<li>No specific topic flagged for urgent revision.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Accuracy Analysis</h4><ul><li>Overall accuracy on attempted questions: '+r.accuracy.toFixed(1)+'%</li><li>Overall percentage (of full paper): '+r.percentage.toFixed(1)+'%</li></ul></div>';
+  html += '<div class="perf-block"><h4>Suggested Revision Order</h4><ul>'+(revisionOrder.length?revisionOrder.map(function(t,i){return '<li>'+(i+1)+'. '+esc(t.topic)+' ('+Math.round(t.pct)+'%)</li>';}).join(''):'<li>No priority order needed — no weak topics detected.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Estimated Readiness</h4><ul><li>'+readinessLabel(r.percentage)+'</li></ul></div>';
+  return html;
+}
+
+function actionsPanelHtml(r){
+  var wrongCount = 0, unansCount = 0;
+  activeIndices.forEach(function(id){
+    var item=Q[id], st=status[id];
+    if(st.answered && st.selected!==item[3]) wrongCount++;
+    if(!st.answered) unansCount++;
+  });
+  return '<div class="perf-block"><h4>Smart Actions</h4>'+
+    '<div class="smart-row">'+
+      '<button class="btn-secondary" id="retry-wrong" '+(wrongCount===0?'disabled':'')+'>Retry Wrong Questions ('+wrongCount+')</button>'+
+      '<button class="btn-secondary" id="retry-unanswered" '+(unansCount===0?'disabled':'')+'>Retry Unanswered Questions ('+unansCount+')</button>'+
+      '<button class="btn-ghost" id="restart-test">Restart Full Test</button>'+
+    '</div></div>';
+}
+
+function wireActionButtons(r){
+  var rw = document.getElementById('retry-wrong');
+  var ru = document.getElementById('retry-unanswered');
+  var rt = document.getElementById('restart-test');
+  if(rw) rw.addEventListener('click', function(){
+    var ids = activeIndices.filter(function(id){
+      var item=Q[id], st=status[id];
+      return st.answered && st.selected!==item[3];
+    });
+    startPracticeRun(ids, 'Retry — Wrong Questions');
+  });
+  if(ru) ru.addEventListener('click', function(){
+    var ids = activeIndices.filter(function(id){ return !status[id].answered; });
+    startPracticeRun(ids, 'Retry — Unanswered Questions');
+  });
+  if(rt) rt.addEventListener('click', function(){
+    renderStart();
+  });
+}
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+document.addEventListener('keydown', function(e){
+  if(screen!=='exam') return;
+  var tag = (e.target && e.target.tagName) || '';
+  if(tag==='INPUT' || tag==='TEXTAREA') return;
+
+  if(e.key>='1' && e.key<='4'){
+    var i = parseInt(e.key,10)-1;
+    var item = Q[currentQid()];
+    if(i < item[2].length){ selectOption(i); }
+  } else if(e.key==='ArrowRight'){
+    goNext();
+  } else if(e.key==='ArrowLeft'){
+    goPrev();
+  } else if(e.key==='n' || e.key==='N'){
+    goNext();
+  } else if(e.key==='p' || e.key==='P'){
+    goPrev();
+  } else if(e.key==='m' || e.key==='M'){
+    markForReview();
+  }
+});
+
+/* =========================================================
+   BOOT
+========================================================= */
+renderStart();
+
+})();
+</script>
+</body>
+</html>
