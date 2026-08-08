@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sunday Grand Assessment — Session 1 — CBT Examination</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#1F3A5F; --navy-dark:#16283F;
+    --gold:#B08D57;
+    --cream:#F4F1E8;
+    --ink:#2A2622; --ink-soft:#5A4F3A; --ink-mute:#7A6F5C;
+    --border:#D9D2BE; --border-soft:#E3DCC8;
+    --white:#FFFFFF;
+    --green:#2F6F4E; --green-bg:#E4EFE7;
+    --red:#B23A2E; --red-bg:#F6E6E4;
+    --amber:#8A6D1F; --amber-bg:#F5E7B2; --amber-border:#C9A227;
+    --topicbg:#EFEADA;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{font-family:Georgia,'Tinos',serif;color:var(--ink);background:var(--cream)}
+  button{font-family:inherit}
+  #app{min-height:100vh;display:flex;flex-direction:column}
+
+  /* ---------- START SCREEN ---------- */
+  .start-wrap{max-width:640px;margin:40px auto;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:30px 32px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .start-wrap h1{font-size:19px;color:var(--navy);margin:0 0 4px}
+  .start-wrap h2{font-size:14px;font-weight:normal;color:var(--ink-soft);margin:0 0 22px}
+  .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+  .start-card{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+  .start-card .lbl{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.5px}
+  .start-card .val{font-size:16px;color:var(--navy);margin-top:4px}
+  .instructions{font-size:13.5px;line-height:1.7;color:var(--ink-soft);margin-bottom:22px}
+  .instructions li{margin-bottom:4px}
+  .toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:13.5px}
+  .btn-primary{font-family:Georgia,serif;font-size:15px;background:var(--navy);color:var(--cream);border:none;padding:12px 26px;border-radius:5px;cursor:pointer}
+  .btn-primary:hover{background:var(--navy-dark)}
+  .btn-secondary{font-family:Georgia,serif;font-size:14px;background:var(--gold);color:var(--ink);border:none;padding:9px 20px;border-radius:5px;cursor:pointer}
+  .btn-ghost{font-family:Georgia,serif;font-size:13.5px;background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 16px;border-radius:5px;cursor:pointer}
+
+  /* ---------- EXAM HEADER ---------- */
+  .exam-header{background:var(--navy);color:var(--cream);padding:10px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+  .exam-header .titles h1{font-size:14.5px;font-weight:normal;margin:0;letter-spacing:.2px}
+  .exam-header .titles h2{font-size:12px;font-weight:normal;margin:2px 0 0;color:#D8CBA9}
+  .exam-header .mid{display:flex;align-items:center;gap:16px;font-family:'Courier New',monospace;font-size:12.5px}
+  .exam-header .timer{background:#16283F;padding:5px 12px;border-radius:4px;font-size:14px;letter-spacing:.5px}
+  .exam-header .timer.low{background:var(--red)}
+  .palette-toggle{display:none;background:var(--gold);color:var(--ink);border:none;padding:7px 12px;border-radius:4px;font-size:12.5px;cursor:pointer}
+  .progress-track{height:4px;background:var(--border)}
+  .progress-fill{height:100%;background:var(--gold);transition:width .25s}
+
+  /* ---------- MAIN EXAM LAYOUT ---------- */
+  .exam-body{flex:1;display:flex;gap:0;align-items:flex-start}
+  .qcol{flex:1;padding:22px 26px;max-width:760px}
+  .qmeta{font-family:'Courier New',monospace;font-size:11.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .qmeta .qtopic{background:var(--topicbg);color:var(--ink-soft);padding:2px 8px;border-radius:3px;text-transform:none;letter-spacing:0}
+  .qmeta .qstatus{padding:2px 8px;border-radius:3px}
+  .qtext{font-size:15.5px;line-height:1.6;margin:0 0 18px;white-space:pre-line;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:11px 14px;margin-bottom:9px;background:var(--white);border:1px solid var(--border);border-radius:5px;font-family:Georgia,serif;font-size:14px;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s}
+  .opt:hover{border-color:var(--navy);background:var(--topicbg)}
+  .opt .oletter{font-family:'Courier New',monospace;font-weight:bold;color:var(--navy);flex-shrink:0}
+  .opt.selected{background:#E9EEF4;border-color:var(--navy)}
+  .opt.selected .oletter{color:var(--navy)}
+
+  .bottom-bar{display:flex;flex-wrap:wrap;gap:8px;padding:14px 26px;border-top:1px solid var(--border);background:var(--white)}
+  .bottom-bar button{font-size:13.5px;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--ink)}
+  .bottom-bar .bb-primary{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  .bottom-bar .bb-primary:hover{background:var(--navy-dark)}
+  .bottom-bar .bb-warn{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}
+  .bottom-bar .bb-clear{color:var(--red);border-color:var(--red)}
+  .bottom-bar .bb-submit{background:var(--red);border-color:var(--red);color:var(--white);margin-left:auto}
+  .bottom-bar button:disabled{opacity:.4;cursor:default}
+
+  /* ---------- PALETTE ---------- */
+  .palette{width:270px;flex-shrink:0;background:var(--white);border-left:1px solid var(--border);padding:16px;height:100%}
+  .palette h3{font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px}
+  .legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11.5px;margin-bottom:14px;color:var(--ink-soft)}
+  .legend span.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;border:1px solid var(--border)}
+  .pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .pnum{aspect-ratio:1;border:1px solid var(--border);border-radius:4px;background:var(--white);font-family:'Courier New',monospace;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+  .pnum.notvisited{background:var(--white);color:var(--ink)}
+  .pnum.visited{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .pnum.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+  .pnum.marked{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}
+  .pnum.current{outline:2px solid var(--navy);outline-offset:1px}
+  .palette-summary{margin-top:14px;font-size:12px;color:var(--ink-soft);border-top:1px dashed var(--border-soft);padding-top:10px}
+  .palette-summary div{display:flex;justify-content:space-between;padding:2px 0}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{position:fixed;inset:0;background:rgba(42,38,34,.55);display:flex;align-items:center;justify-content:center;z-index:50}
+  .modal-box{background:var(--white);border-radius:8px;padding:24px 26px;max-width:420px;width:90%;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+  .modal-box p{font-size:14.5px;line-height:1.6;margin:0 0 18px;color:var(--ink)}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px}
+
+  /* ---------- RESULT DASHBOARD ---------- */
+  .result-wrap{max-width:920px;margin:0 auto;padding:24px 20px 60px}
+  .result-head{text-align:center;padding:18px 0 8px}
+  .result-head .big{font-family:'Courier New',monospace;font-size:44px;color:var(--navy);margin:6px 0}
+  .result-head p{color:var(--ink-soft);font-size:14px;margin:2px 0}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center}
+  .stat-card .n{font-family:'Courier New',monospace;font-size:22px;color:var(--navy)}
+  .stat-card .l{font-size:11.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.4px;margin-top:4px}
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:24px 0 14px;border-bottom:1px solid var(--border)}
+  .tab-btn{background:transparent;border:none;border-bottom:3px solid transparent;padding:9px 14px;font-size:13.5px;color:var(--ink-soft);cursor:pointer}
+  .tab-btn.active{color:var(--navy);border-color:var(--navy);font-weight:bold}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+  .abar-row{margin-bottom:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+  .abar-top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px}
+  .abar-top b{color:var(--navy)}
+  .abar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+  .abar-fill{height:100%;background:var(--green)}
+  .review-item{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:12px}
+  .review-item .rmeta{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;margin-bottom:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .review-item .rq{font-size:14.5px;white-space:pre-line;margin-bottom:10px}
+  .review-item .ropt{padding:7px 10px;border-radius:4px;font-size:13.5px;margin-bottom:6px;border:1px solid var(--border)}
+  .review-item .ropt.correctopt{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+  .review-item .ropt.wrongopt{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .tag{padding:2px 8px;border-radius:3px;font-size:11px}
+  .tag.correct{background:var(--green-bg);color:var(--green)}
+  .tag.wrong{background:var(--red-bg);color:var(--red)}
+  .tag.skip{background:var(--border-soft);color:var(--ink-soft)}
+  .explain{font-size:12.5px;color:var(--ink-mute);border-top:1px dashed var(--border-soft);margin-top:8px;padding-top:8px}
+  .perf-block{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-bottom:14px}
+  .perf-block h4{margin:0 0 8px;font-size:13.5px;color:var(--navy)}
+  .perf-block ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.7;color:var(--ink)}
+  .smart-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .filter-btn{background:var(--white);border:1px solid var(--border);padding:6px 12px;border-radius:14px;font-size:12px;cursor:pointer;color:var(--ink-soft)}
+  .filter-btn.active{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  .practice-banner{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);padding:8px 14px;border-radius:5px;font-size:12.5px;text-align:center}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .palette-toggle{display:inline-block}
+    .palette{position:fixed;top:0;right:0;height:100%;width:82%;max-width:320px;transform:translateX(100%);transition:transform .25s;z-index:40;box-shadow:-4px 0 16px rgba(0,0,0,.15)}
+    .palette.open{transform:translateX(0)}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+    .qcol{padding:16px}
+  }
+  @media (max-width:520px){
+    .exam-header .mid{font-size:11px;gap:10px}
+    .bottom-bar{padding:10px 12px}
+    .bottom-bar button{flex:1 1 auto;font-size:12.5px;padding:9px 10px}
+    .bottom-bar .bb-submit{margin-left:0;order:99;flex-basis:100%}
+    .result-wrap{padding:16px 10px 50px}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   CONFIG — change these to reconfigure the exam engine
+========================================================= */
+var CONFIG = {
+  examName: "SUNDAY GRAND ASSESSMENT — SESSION 1",
+  subjectName: "Physics + January 2026 Current Affairs + Number System + Computer Awareness",
+  durationMinutes: 90,     // total exam duration; easy to change
+  marksPerQuestion: 1,
+  negativeMarking: { enabled: false, value: 0.25 }
+};
+
+/* =========================================================
+   PDF SECTION MAP — used only for the downloadable question
+   paper + answer key. Reflects the fixed layout of the
+   Grand Assessment: 25 questions per section, section order
+   matching the original Q array order (NOT the shuffled
+   in-exam order).
+========================================================= */
+var PDF_SECTIONS = [
+  { title: "SECTION 1 — GENERAL SCIENCE (PHYSICS)", start: 0,  end: 25 },
+  { title: "SECTION 2 — CURRENT AFFAIRS (JANUARY 2026)", start: 25, end: 50 },
+  { title: "SECTION 3 — VAO NUMBER SYSTEM", start: 50, end: 75 },
+  { title: "SECTION 4 — COMPUTER AWARENESS", start: 75, end: 100 }
+];
+
+/* =========================================================
+   QUESTION DATABASE — untouched, exactly as supplied.
+   Format per item: [topic, questionText, [options...], correctIndex]
+========================================================= */
+var Q = [
+["Physics: Mechanics & Units","The SI unit of force is:",["Joule","Newton","Watt","Pascal"],1,"Easy","Force in the SI system is measured in Newton (N), named after Sir Isaac Newton. 1 N = 1 kg m/s^2, the force needed to accelerate a 1 kg mass at 1 m/s^2."],
+["Physics: Mechanics & Units","A Vernier caliper is mainly used to measure:",["Only the mass of large objects","Small lengths and diameters with greater precision than an ordinary metre scale","Only angles between two surfaces","Atmospheric pressure"],1,"Medium","A Vernier caliper measures small lengths, diameters and depths with a typical least count of 0.01 cm (0.1 mm), which is far more precise than an ordinary metre scale."],
+["Physics: Mechanics & Units","A body starts from rest and moves with a uniform acceleration of 2 m/s^2 for 5 seconds. Its final velocity is:",["5 m/s","8 m/s","10 m/s","12 m/s"],2,"Easy","Using v = u + at, with u = 0, a = 2 m/s^2 and t = 5 s, v = 0 + 2x5 = 10 m/s."],
+["Physics: Mechanics & Units","Which of the following best illustrates Newton's Third Law of Motion?",["A ball rolling down a slope under gravity","A rocket moving forward by expelling exhaust gases backward","A stone falling freely towards the Earth","A car moving at constant speed on a straight road"],1,"Medium","Newton's Third Law states that every action has an equal and opposite reaction. A rocket pushes gas backward (action) and the gas pushes the rocket forward (reaction), illustrating this law directly."],
+["Physics: Mechanics & Units","Banking of roads at curves is done mainly to:",["Increase friction between tyres and road only","Provide the necessary centripetal force for safe turning and reduce dependence on friction","Automatically reduce a vehicle's speed","Improve the vehicle's fuel efficiency"],1,"Medium","Banking tilts the road surface so that a component of the normal reaction supplies the centripetal force needed for circular motion, reducing reliance on friction alone and making high-speed turns safer."],
+["Physics: Gravitation","As one moves from the Earth's surface towards its centre, the acceleration due to gravity (g):",["Increases continuously and becomes infinite at the centre","Decreases and becomes zero at the centre","Remains exactly constant throughout","Increases up to a fixed depth and then remains constant"],1,"Medium","Below the Earth's surface, g decreases linearly with depth (assuming uniform density) and becomes zero at the centre, since the effective mass pulling the body decreases as depth increases."],
+["Physics: Gravitation","The escape velocity of the Earth is approximately:",["7.9 km/s","9.8 km/s","11.2 km/s","25 km/s"],2,"Medium","Escape velocity is the minimum speed needed to escape Earth's gravitational pull without further propulsion, and for Earth this value is approximately 11.2 km/s."],
+["Physics: Gravitation","Astronauts orbiting the Earth in a satellite experience weightlessness mainly because:",["There is no gravitational force acting on them in space","The satellite and the astronaut are in continuous free fall around the Earth, both accelerating at the same rate","Their body mass becomes zero in orbit","The satellite travels faster than the speed of light"],1,"Hard","In orbit, gravity still acts, but the satellite and everything inside it are in continuous free fall towards the Earth, curving with it. Since both fall at the same rate, there is no relative force between the astronaut and the satellite floor, causing apparent weightlessness."],
+["Physics: Work, Energy and Power","The work-energy theorem states that the work done by the net force on a body is equal to:",["The change in its kinetic energy","The change in its potential energy only","Its total mechanical energy","Its momentum"],0,"Medium","The work-energy theorem states that the net work done on an object equals the change produced in its kinetic energy, linking force, displacement and motion directly."],
+["Physics: Work, Energy and Power","In a simple pendulum, at the lowest point of its swing, the energy of the bob is:",["Entirely potential energy","Entirely kinetic energy, which is at its maximum","Completely dissipated as heat","Exactly zero"],1,"Easy","At the lowest point, the height (and hence potential energy) is minimum, so by conservation of mechanical energy, kinetic energy — and therefore speed — is at its maximum at this point."],
+["Physics: Work, Energy and Power","One horsepower is approximately equal to:",["100 watts","250 watts","746 watts","1000 watts"],2,"Easy","One horsepower (hp), a traditional unit of power, is defined as approximately 746 watts in the SI system."],
+["Physics: Fluids and Properties of Matter","According to Archimedes' Principle, the buoyant force on a body submerged in a fluid equals:",["The weight of the body itself","The weight of the fluid displaced by the body","The volume of the body","The density of the fluid alone"],1,"Easy","Archimedes' Principle states that a body submerged in a fluid experiences an upward buoyant force equal to the weight of the fluid it displaces, which explains flotation and apparent loss of weight in liquids."],
+["Physics: Fluids and Properties of Matter","The working of a hydraulic lift and hydraulic brakes is based on:",["Pascal's Principle","Bernoulli's Principle","Archimedes' Principle","Newton's Law of Cooling"],0,"Easy","Pascal's Principle states that pressure applied to an enclosed fluid is transmitted equally in all directions, allowing a small force on a small piston to produce a large force on a bigger piston, as in hydraulic lifts and brakes."],
+["Physics: Fluids and Properties of Matter","The rise of kerosene through the wick of a lamp is best explained by:",["Gravity","Capillarity (capillary action)","Viscosity","Diffusion of gases"],1,"Easy","Capillarity is the rise (or fall) of a liquid in a narrow tube or porous material due to surface tension and adhesive forces; it is this effect that draws kerosene up through a lamp wick."],
+["Physics: Heat and Thermodynamics","Water shows its maximum density at a temperature of:",["0 degree C","4 degree C","100 degree C","-4 degree C"],1,"Medium","Due to the anomalous expansion of water, its density is maximum at 4 degree C; it expands (becomes less dense) both on cooling below and heating above this temperature, which is why ice floats and lakes freeze from the top."],
+["Physics: Heat and Thermodynamics","The heat absorbed or released by a substance during a change of state, without any change in its temperature, is called:",["Specific heat capacity","Latent heat","Sensible heat","Radiant heat"],1,"Easy","Latent heat is the energy absorbed or released during a phase change (such as melting or vaporisation) at constant temperature, used to change molecular arrangement rather than temperature."],
+["Physics: Heat and Thermodynamics","A refrigerator works by transferring heat from its cold interior to the warmer surroundings with the help of external work. This is consistent with:",["Only the Zeroth Law of Thermodynamics","The Second Law of Thermodynamics, since heat does not flow spontaneously from a colder to a hotter body","Only Newton's Law of Cooling","The principle of conservation of momentum"],1,"Hard","The Second Law of Thermodynamics states heat cannot flow spontaneously from a colder to a hotter body; a refrigerator achieves this transfer only by doing external work (via the compressor), consistent with that law."],
+["Physics: Sound and Wave Motion","The apparent change in the frequency of sound due to relative motion between the source and the listener is called:",["Resonance","The Doppler Effect","Reverberation","Echo"],1,"Easy","The Doppler Effect is the change in observed frequency (pitch) of a wave when the source and observer move relative to each other, such as a siren sounding higher-pitched as it approaches and lower as it recedes."],
+["Physics: Sound and Wave Motion","SONAR, used for underwater detection and depth measurement, works using:",["Radio waves","Ultrasonic waves","Infrared waves","Visible light"],1,"Easy","SONAR (Sound Navigation and Ranging) uses ultrasonic waves, which are reflected off underwater objects; the time delay of the echo is used to calculate distance and depth."],
+["Physics: Light and Optics","Optical fibres, widely used in telecommunications, work on the principle of:",["Diffraction","Total Internal Reflection","Polarisation","Dispersion"],1,"Medium","Optical fibres transmit light along their length through repeated Total Internal Reflection at the core-cladding boundary, allowing signals to travel long distances with minimal loss."],
+["Physics: Light and Optics","Convex mirrors are commonly used as rear-view mirrors in vehicles because they:",["Form real, inverted, magnified images","Form erect, diminished, virtual images that give a wider field of view","Always magnify distant objects","Reverse only the top-to-bottom orientation of the image"],1,"Medium","A convex mirror always forms an erect, virtual and diminished image, which lets a driver view a much wider area behind the vehicle compared to a plane mirror, improving road safety."],
+["Physics: Light and Optics","Myopia (short-sightedness), where distant objects appear blurred, is corrected using a:",["Convex lens","Concave lens","Cylindrical lens only","Bifocal lens only"],1,"Easy","In myopia, the image of a distant object forms in front of the retina. A concave (diverging) lens spreads the light rays out before they enter the eye, shifting the focal point back onto the retina."],
+["Physics: Electricity and Magnetism","Ohm's Law states that, at constant temperature, the current through a conductor is directly proportional to the potential difference across it, expressed as:",["V = IR","P = VI","F = QE","E = mc^2"],0,"Easy","Ohm's Law is expressed as V = IR, where V is potential difference, I is current and R is resistance, and it holds for conductors at constant physical conditions such as temperature."],
+["Physics: Electricity and Magnetism","Fleming's Right-Hand Rule is used to determine the direction of:",["The force on a current-carrying conductor placed in a magnetic field (as in a motor)","The induced current in a conductor moving through a magnetic field (as in a generator)","The magnetic field around a straight current-carrying wire","The direction of electron flow in a vacuum tube"],1,"Hard","Fleming's Right-Hand Rule (for generators/dynamos) gives the direction of induced current when a conductor moves through a magnetic field, while the Left-Hand Rule is used for the force on a current-carrying conductor in a motor."],
+["Physics: Modern Physics","In a p-type semiconductor, the majority charge carriers are:",["Electrons","Holes","Protons","Neutrons"],1,"Medium","A p-type semiconductor is formed by doping with trivalent impurity atoms, creating an excess of holes (absence of electrons), which act as the majority charge carriers responsible for conduction."],
+["Current Affairs: Karnataka","India's first Startup and Technology Museum, reported in January 2026 current affairs, has been set up in:",["Mysuru","Bengaluru","Hubballi","Mangaluru"],1,"Easy","As per January 2026 Karnataka current affairs, India's first Startup and Technology Museum has been established in Bengaluru, the state's technology capital."],
+["Current Affairs: Karnataka","A dedicated testing laboratory for KFD (Kyasanur Forest Disease / Monkey Fever) was reported to be set up at which Karnataka location in January 2026?",["Sirsi","Madikeri","Chikkamagaluru","Shivamogga town"],0,"Medium","January 2026 Karnataka current affairs reported that a KFD (Monkey Fever) testing laboratory is to be established at Sirsi in Uttara Kannada district, an area associated with periodic KFD outbreaks."],
+["Current Affairs: Karnataka","The Sharavathi Pumped Storage Project, featured in January 2026 Karnataka current affairs, is a project related to:",["Pumped hydro energy storage","A new international airport","A coastal shipping corridor","A semiconductor fabrication unit"],0,"Medium","The Sharavathi Pumped Storage Project, reported under Karnataka current affairs for January 2026, is a pumped hydro storage initiative on the Sharavathi river system used to store and generate electricity."],
+["Current Affairs: Karnataka","In January 2026 news, which state announced job reservation for sportspersons in government recruitment?",["Kerala","Tamil Nadu","Karnataka","Telangana"],2,"Easy","Karnataka current affairs for January 2026 reported the announcement of job reservation for sportspersons, aimed at encouraging and rewarding achievement in sports within the state."],
+["Current Affairs: Polity","The Karnataka Hate Speech and Hate Crimes (Prevention) Bill, 2025, reported in recent current affairs, is aimed at:",["Regulating cryptocurrency trading","Preventing hate speech and hate crimes","Reforming municipal taxation","Reservation in private sector jobs"],1,"Medium","The Karnataka Hate Speech and Hate Crimes (Prevention) Bill, 2025 is state legislation intended to curb and penalise hate speech and hate-crime related offences."],
+["Current Affairs: Schemes","RAMP, a scheme supported by the World Bank to strengthen MSMEs in India, stands for:",["Raising and Accelerating MSME Performance","Rural Area MSME Promotion","Rapid Assessment of Manufacturing Progress","Registered Assistance for Micro Producers"],0,"Medium","RAMP (Raising and Accelerating MSME Performance) is a World Bank-supported flagship scheme aimed at enhancing the competitiveness of India's Micro, Small and Medium Enterprises."],
+["Current Affairs: Reports","The 'Global Value Chain Development Report 2025' was jointly released by the World Trade Organization, Asian Development Bank and:",["World Economic Forum","International Monetary Fund","United Nations Development Programme","World Health Organization"],0,"Medium","The Global Value Chain Development Report 2025, focused on the reconfiguration of global value chains, was jointly released by the WTO, the Asian Development Bank (ADB) and the World Economic Forum (WEF)."],
+["Current Affairs: Economy","As per recent economic rankings cited in current affairs, India has become the world's ______ largest economy by GDP, overtaking Japan.",["Third","Fourth","Fifth","Sixth"],1,"Medium","India has officially become the world's fourth-largest economy by overtaking Japan, with its Gross Domestic Product reaching approximately USD 4.18 trillion, behind only the United States, China and Germany."],
+["Current Affairs: Economy","As per India's current crude oil import profile cited in recent Press Information Bureau updates, which country/region accounts for the largest single-country share (about 35%) of India's crude oil imports?",["Russia","Iraq","Saudi Arabia","United Arab Emirates"],0,"Medium","India has diversified its crude oil sources since 2005; recent data shows Russia now accounts for roughly 35% of India's crude oil imports, compared to a traditional heavy dependence on West Asian suppliers."],
+["Current Affairs: Environment","The 17th Conference of the Parties (COP) to the Convention on Biological Diversity (CBD) was hosted by which country, as per recent current affairs?",["Armenia","Colombia","Egypt","Canada"],0,"Medium","The 17th Conference of the Convention on Biological Diversity (CBD) was held in Armenia, forming part of the environment and geography current affairs coverage."],
+["Current Affairs: Science and Technology","DHRUV64, launched by C-DAC, is significant because it is India's first:",["Indigenously developed 1.0 GHz dual-core microprocessor","Reusable launch vehicle","Quantum communication satellite","5G smartphone chipset"],0,"Medium","DHRUV64 is India's first indigenously developed 1.0 GHz dual-core microprocessor, launched by C-DAC as a step towards semiconductor self-reliance, particularly for defence and embedded systems."],
+["Current Affairs: Science and Technology","QpiAI-Indus, developed by a Bengaluru-based company, is notable as India's first:",["Full-stack superconducting quantum computer","Indigenous supercomputer cluster","AI-based weather satellite","3D-printed rocket engine"],0,"Medium","QpiAI-Indus, developed by Bengaluru-based QpiAI, is a 25-qubit superconducting quantum computing system and India's first full-stack quantum computer integrating hardware and software, developed under the National Quantum Mission."],
+["Current Affairs: Internal Security","The Organised Crime Network Database (OCND), launched recently, has been developed by the Ministry of Home Affairs in collaboration with NIA and:",["NATGRID","SEBI","RBI","TRAI"],0,"Medium","The OCND is India's first AI-driven Organised Crime Network Database, developed by the Ministry of Home Affairs jointly with the NIA and NATGRID, to enable real-time tracking of organised crime networks."],
+["Current Affairs: Defence","'Samudra Pratap', inducted recently by the Indian Coast Guard, is India's largest indigenously designed and built:",["Pollution control vessel","Aircraft carrier","Submarine","Amphibious tank"],0,"Medium","Samudra Pratap is India's largest indigenously designed and built pollution control vessel, inducted by the Indian Coast Guard to strengthen marine oil-spill response and pollution management capability."],
+["Current Affairs: Infrastructure","As part of the Udhampur-Srinagar-Baramulla Rail Link (USBRL) project, the world's highest railway arch bridge is the:",["Chenab Rail Bridge","Anji Railway Bridge","New Pamban Bridge","Bandra-Worli Sea Link"],0,"Easy","The Chenab Rail Bridge, part of the USBRL project, stands 359 metres above the Chenab river and is the world's highest railway arch bridge, engineered to withstand strong earthquakes and high wind speeds."],
+["Current Affairs: Infrastructure","India's first hydrogen-powered train, developed under the 'Hydrogen for Heritage' initiative, is set to operate on which route?",["Jind-Sonipat route in Haryana","Kalka-Shimla route in Himachal Pradesh","Nilgiri Mountain Railway in Tamil Nadu","Matheran Hill Railway in Maharashtra"],0,"Medium","Under the 'Hydrogen for Heritage' initiative, India's first hydrogen-powered train, using a 1,200 HP fuel-cell engine, has been developed to operate on the Jind-Sonipat route in Haryana."],
+["Current Affairs: International Relations","India and Italy recently signed a sports cooperation agreement between which two national sporting bodies, providing a structured 5-year framework for joint promotion of sports?",["Indian Olympic Association and Italian National Olympic Committee (CONI)","Sports Authority of India and Italian Sports Ministry","BCCI and Italian Cricket Federation","Ministry of Youth Affairs and Italian Olympic Committee"],0,"Medium","The Indian Olympic Association (IOA) and the Italian National Olympic Committee (CONI) signed a 5-year MoU in New Delhi for joint promotion of sports, exchange of expertise and shared access to elite sports infrastructure."],
+["Current Affairs: International Relations","The International Big Cat Alliance (IBCA), a global coalition of big cat range and non-range countries, is headquartered in:",["New Delhi, India","Nairobi, Kenya","Geneva, Switzerland","Bangkok, Thailand"],0,"Medium","The IBCA, launched in April 2023 to mark the 50th anniversary of Project Tiger, is headquartered in New Delhi and covers seven major big cat species; India has invited all member nations to attend the IBCA Summit to be held in New Delhi in 2026."],
+["Current Affairs: Appointments and Resignations","Sangeeta Barooah Pisharoty made history in January 2026 by becoming the first woman to be elected as:",["President of the Press Club of India","Chief Election Commissioner of India","Chairperson of the Press Council of India","Director General of Doordarshan"],0,"Medium","Veteran journalist Sangeeta Barooah Pisharoty was elected as the first-ever woman President of the Press Club of India (PCI), a historic moment for Indian journalism."],
+["Current Affairs: Appointments and Resignations","Vivek Chaturvedi, a 1990-batch Indian Revenue Service officer, was appointed as Chairman of which apex body?",["Central Board of Indirect Taxes and Customs (CBIC)","Central Board of Direct Taxes (CBDT)","Securities and Exchange Board of India (SEBI)","Insurance Regulatory and Development Authority (IRDAI)"],0,"Medium","Vivek Chaturvedi, a 1990-batch IRS (Customs and Indirect Taxes) officer, was appointed Chairman of the Central Board of Indirect Taxes and Customs (CBIC), effective 1 December 2025, heading indirect tax administration in India."],
+["Current Affairs: Awards","Raveena Tandon was named 'Person of the Year 2025' by which animal welfare organisation, for her advocacy work?",["PETA India","World Wildlife Fund","Wildlife Trust of India","Humane Society International"],0,"Easy","Actor Raveena Tandon was named PETA India's Person of the Year 2025 in recognition of her advocacy for animal welfare."],
+["Current Affairs: Awards","Supriya Sahu, an Additional Chief Secretary from Tamil Nadu, received the UNEP Champions of the Earth Award 2025 under which category?",["Inspiration and Action","Science and Innovation","Policy Leadership","Entrepreneurial Vision"],0,"Medium","Supriya Sahu was honoured with the UNEP Champions of the Earth Award 2025 under the 'Inspiration and Action' category for her leadership in sustainable cooling technologies and climate resilience initiatives at the state level."],
+["Current Affairs: Awards","Which airport was named the World's Best International Airport for 2025 in the Travel + Leisure India's Best Awards?",["Singapore Changi Airport","Indira Gandhi International Airport, Delhi","Dubai International Airport","Hamad International Airport, Doha"],0,"Easy","Singapore Changi Airport was honoured as the World's Best International Airport for 2025 at the Travel + Leisure India's Best Awards, based on global reader voting."],
+["Current Affairs: Persons in News","30 December is observed every year as the death anniversary of which noted Indian scientist regarded as the founder of India's space programme?",["Dr. Vikram Sarabhai","Dr. Homi J. Bhabha","Dr. APJ Abdul Kalam","Dr. Satish Dhawan"],0,"Medium","30 December is observed as the death anniversary of Dr. Vikram Sarabhai, who founded the Indian Space Research Organisation (ISRO) and played a key role in setting up India's rocket launching infrastructure, including TERLS near Thiruvananthapuram."],
+["Current Affairs: Sports","Jasprit Bumrah achieved a historic bowling feat by becoming the first Indian bowler, and the fifth bowler globally, to take:",["100 wickets in all three international formats","500 international wickets","10 wickets in a single Test match twice","A hat-trick in three different formats"],0,"Medium","Jasprit Bumrah became the first Indian bowler, and only the fifth bowler globally, to take 100 wickets across all three international formats — Tests, ODIs and T20Is."],
+["Number System: Classification","Which of the following is an irrational number?",["Square root of 16","22/7","0.101001000100001...","-5"],2,"Medium","0.101001000100001... is non-terminating and non-repeating, making it irrational. Square root of 16 = 4, 22/7 and -5 are all rational numbers (they can be expressed as a ratio of integers)."],
+["Number System: Classification","Which of the following is a rational number but not an integer?",["7/2","9","Square root of 4","-3"],0,"Easy","7/2 equals 3.5, which is a rational number (expressible as p/q) but not a whole integer. The other options (9, square root of 4 = 2, -3) are all integers."],
+["Number System: Classification","The number 0 is classified as a:",["Natural number only","Whole number, but not a natural number","Integer, but not a whole number","Neither an integer nor a whole number"],1,"Medium","By convention, natural numbers begin from 1 (1, 2, 3, ...), while whole numbers include 0 along with all natural numbers (0, 1, 2, 3, ...). So 0 is a whole number but not a natural number."],
+["Number System: Divisibility Rules","Which of the following numbers is exactly divisible by 11?",["2354","4567","8765","6789"],0,"Medium","By the divisibility rule for 11, the difference between the sum of digits at odd places and even places must be 0 or a multiple of 11. For 2354: (4+3) - (5+2) = 0, so it is divisible by 11 (2354 = 11 x 214)."],
+["Number System: Divisibility Rules","A number is divisible by 6 if it is divisible by both:",["2 and 3","3 and 4","2 and 4","3 and 5"],0,"Easy","Since 6 = 2 x 3, a number is divisible by 6 only if it is divisible by both 2 (even number) and 3 (sum of digits divisible by 3)."],
+["Number System: Divisibility Rules","Which of the following numbers is divisible by 8?",["145","624","532","918"],1,"Medium","A number is divisible by 8 if its last three digits form a number divisible by 8. 624 divided by 8 = 78 exactly, so 624 is divisible by 8; the other options are not."],
+["Number System: Divisibility Rules","Which of the following numbers is exactly divisible by 9?",["2358","4562","7891","3344"],0,"Easy","A number is divisible by 9 if the sum of its digits is divisible by 9. For 2358: 2+3+5+8 = 18, which is divisible by 9, so 2358 is divisible by 9 (2358 = 9 x 262)."],
+["Number System: Unit Digit and Cyclicity","What is the unit digit of 7 raised to the power 95?",["1","3","7","9"],1,"Medium","The unit digits of powers of 7 follow a repeating cycle of 4: 7, 9, 3, 1. Since 95 mod 4 = 3, the unit digit corresponds to the 3rd term in the cycle, which is 3."],
+["Number System: Unit Digit and Cyclicity","What is the unit digit of 2 raised to the power 71?",["2","4","6","8"],3,"Medium","Powers of 2 have a repeating unit-digit cycle of 4: 2, 4, 8, 6. Since 71 mod 4 = 3, the unit digit corresponds to the 3rd term in the cycle, which is 8."],
+["Number System: Unit Digit and Cyclicity","What is the unit digit of the sum: 8^1 + 8^2 + 8^3 + 8^4?",["0","2","4","6"],0,"Hard","The unit digits of powers of 8 cycle every 4 terms as 8, 4, 2, 6. Adding one full cycle (8+4+2+6 = 20) always gives a unit digit of 0, regardless of the starting power."],
+["Number System: Factors","How many total factors does 360 have?",["16","20","24","28"],2,"Medium","360 = 2^3 x 3^2 x 5^1. The number of factors is found by adding 1 to each exponent and multiplying: (3+1)(2+1)(1+1) = 4 x 3 x 2 = 24."],
+["Number System: HCF","The HCF of 84 and 126 is:",["21","42","63","84"],1,"Easy","84 = 2^2 x 3 x 7 and 126 = 2 x 3^2 x 7. Taking the lowest powers of common prime factors: HCF = 2 x 3 x 7 = 42."],
+["Number System: LCM","The LCM of 12, 18 and 24 is:",["36","48","72","144"],2,"Medium","12 = 2^2 x 3, 18 = 2 x 3^2, 24 = 2^3 x 3. Taking the highest powers of all prime factors: LCM = 2^3 x 3^2 = 72."],
+["Number System: HCF and LCM Application","The product of two numbers is 2028 and their HCF is 13. Their LCM is:",["156","169","182","196"],0,"Medium","For any two numbers, the product of the numbers equals the product of their HCF and LCM. So LCM = 2028 / 13 = 156."],
+["Number System: HCF and LCM Application","The HCF of two numbers is 12 and their LCM is 336. If one of the numbers is 48, the other number is:",["72","84","96","108"],1,"Hard","Since Product of numbers = HCF x LCM, the product is 12 x 336 = 4032. Dividing by the known number: 4032 / 48 = 84, which is the other number."],
+["Number System: HCF and LCM Application","The LCM of two co-prime numbers is always equal to:",["The product of the two numbers","Their HCF","The sum of the two numbers","The difference of the two numbers"],0,"Medium","Two co-prime numbers have an HCF of 1. Since the product of two numbers always equals HCF x LCM, when HCF = 1, the LCM must equal the product of the numbers."],
+["Number System: Summation Formulas","The sum of the first 40 natural numbers is:",["780","800","820","840"],2,"Easy","Using the formula n(n+1)/2 for the sum of the first n natural numbers: 40 x 41 / 2 = 820."],
+["Number System: Summation Formulas","The sum of the squares of the first 10 natural numbers is:",["355","375","385","405"],2,"Medium","Using the formula n(n+1)(2n+1)/6 for the sum of squares of the first n natural numbers: 10 x 11 x 21 / 6 = 385."],
+["Number System: Summation Formulas","The sum of the first 15 odd natural numbers is:",["196","210","225","240"],2,"Easy","The sum of the first n odd natural numbers is always n^2. For n = 15, the sum is 15^2 = 225."],
+["Number System: Recurring Decimals","The recurring decimal 0.333... (0.3 repeating) expressed as a fraction is:",["1/3","3/10","1/9","3/100"],0,"Easy","For a purely recurring decimal with a single repeating digit, the fraction is formed by placing the repeating digit over 9. So 0.333... = 3/9 = 1/3."],
+["Number System: Recurring Decimals","The recurring decimal 0.454545... (0.45 repeating) expressed as a fraction in lowest terms is:",["5/11","9/20","45/100","4/9"],0,"Medium","For a purely recurring decimal with a two-digit repeating block, the fraction is the repeating block over 99. So 0.454545... = 45/99, which simplifies to 5/11."],
+["Number System: Recurring Decimals","The mixed recurring decimal 0.1666... (0.1 followed by 6 repeating) expressed as a fraction is:",["1/6","1/5","3/20","2/11"],0,"Hard","For a mixed recurring decimal, the fraction is formed as (all digits up to the first repeat, minus the non-repeating part) over (9s for repeating digits followed by 0s for non-repeating digits). Here (16-1)/90 = 15/90 = 1/6."],
+["Number System: Trailing Zeros","The number of trailing zeros in 100! (100 factorial) is:",["20","22","24","26"],2,"Medium","Trailing zeros come from factors of 5 (since factors of 2 are more abundant). Count = floor(100/5) + floor(100/25) + floor(100/125) = 20 + 4 + 0 = 24."],
+["Number System: Trailing Zeros","The number of trailing zeros in 50! (50 factorial) is:",["10","12","14","16"],1,"Medium","Count of trailing zeros = floor(50/5) + floor(50/25) = 10 + 2 = 12."],
+["Number System: Trailing Zeros","The number of trailing zeros in 25! (25 factorial) is:",["4","5","6","7"],2,"Medium","Count of trailing zeros = floor(25/5) + floor(25/25) = 5 + 1 = 6."],
+["Computer Awareness: Fundamentals","CPU stands for:",["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing Utility"],0,"Easy","CPU (Central Processing Unit) is the primary component of a computer that executes instructions, performing arithmetic, logic, control and input/output operations."],
+["Computer Awareness: Fundamentals","Inside the CPU, the component responsible for performing arithmetic and logical operations is the:",["Control Unit","Arithmetic and Logic Unit (ALU)","Register","Bus"],1,"Easy","The Arithmetic and Logic Unit (ALU) is the part of the CPU that carries out arithmetic operations (addition, subtraction) and logical operations (AND, OR, comparisons)."],
+["Computer Awareness: Fundamentals","RAM (Random Access Memory) is best described as:",["Non-volatile memory that retains data even without power","Volatile memory that loses its data when power is switched off","A type of secondary storage like a hard disk","Read-only memory that cannot be modified"],1,"Easy","RAM is volatile memory used for temporary storage of data and instructions actively being used by the CPU; its contents are lost as soon as the computer is powered off."],
+["Computer Awareness: Fundamentals","Which type of ROM can be erased and reprogrammed electrically, without removing it from the circuit?",["PROM","EPROM","EEPROM","Cache memory"],2,"Medium","EEPROM (Electrically Erasable Programmable Read-Only Memory) can be erased and rewritten electrically while still installed in a device, unlike PROM (programmable only once) or EPROM (needs UV light to erase)."],
+["Computer Awareness: Fundamentals","MICR technology, used widely for processing bank cheques, stands for:",["Magnetic Ink Character Recognition","Multiple Input Character Reader","Machine Integrated Circuit Recognition","Magnetic Information Coding Register"],0,"Easy","MICR (Magnetic Ink Character Recognition) allows machines to read specially printed characters (in magnetic ink) on cheques quickly and accurately, and is used extensively in the banking sector."],
+["Computer Awareness: Fundamentals","OCR, a technology used to convert scanned images of text into editable digital text, stands for:",["Optical Character Recognition","Online Character Retrieval","Output Character Reader","Optical Coding Register"],0,"Easy","OCR (Optical Character Recognition) is a technology that recognises printed or handwritten text within a scanned image and converts it into machine-readable, editable text."],
+["Computer Awareness: Fundamentals","Which of the following is an example of a non-impact printer?",["Dot Matrix printer","Laser printer","Daisy Wheel printer","Line printer"],1,"Easy","Non-impact printers, such as laser and inkjet printers, print without any mechanical striking action, unlike impact printers like dot matrix or daisy wheel printers, which physically strike an ink ribbon."],
+["Computer Awareness: Fundamentals","In computer memory measurement, 1 Kilobyte (KB) is equal to:",["1000 bytes","1024 bytes","1000000 bytes","100 bytes"],1,"Easy","In computing, storage units are typically based on powers of 2, so 1 Kilobyte (KB) = 2^10 = 1024 bytes, rather than exactly 1000 bytes as in the decimal (SI) system."],
+["Computer Awareness: Hardware, Software and OS","Which of the following is a widely used open-source operating system?",["Windows","macOS","Linux","MS-DOS"],2,"Easy","Linux is a popular open-source operating system whose source code is freely available for anyone to view, modify and distribute, unlike proprietary systems such as Windows and macOS."],
+["Computer Awareness: Hardware, Software and OS","A compiler differs from an interpreter mainly because a compiler:",["Translates the entire source program into machine code at once before execution","Executes the program line by line without producing an object file","Only works with assembly language","Is a type of hardware device"],0,"Medium","A compiler translates the entire high-level program into machine code in one pass before execution, generating an executable file; an interpreter, in contrast, translates and executes the program line by line."],
+["Computer Awareness: MS Office","In MS Word, the keyboard shortcut to make selected text bold is:",["Ctrl+B","Ctrl+I","Ctrl+U","Ctrl+S"],0,"Easy","Ctrl+B applies (or removes) bold formatting to selected text in MS Word; Ctrl+I is for italics, Ctrl+U for underline, and Ctrl+S is for saving the document."],
+["Computer Awareness: MS Office","In MS Excel, the VLOOKUP function is primarily used to:",["Search for a value in the first column of a range and return a value in the same row from another column","Sort a range of cells alphabetically","Merge two or more cells into one","Calculate the standard deviation of a data set"],0,"Medium","VLOOKUP (Vertical Lookup) searches for a specified value in the leftmost column of a table and returns a corresponding value from another specified column in the same row."],
+["Computer Awareness: MS Office","In MS Excel, an absolute cell reference is denoted by placing which symbol before the column and row identifiers, e.g. $A$1?",["Dollar sign ($)","Hash symbol (#)","Percentage sign (%)","Asterisk (*)"],0,"Easy","An absolute reference in Excel is created using the dollar sign ($) before the column letter and/or row number, e.g. $A$1, so the reference does not change when the formula is copied to other cells."],
+["Computer Awareness: MS Office","In MS PowerPoint, which function key is used to start a slideshow presentation from the very first slide?",["F2","F5","F9","F12"],1,"Easy","Pressing F5 in MS PowerPoint starts the slideshow from the first slide, while Shift+F5 starts the presentation from the currently selected slide."],
+["Computer Awareness: Networking, Internet and Web","LAN, a network typically confined to a single building or campus, stands for:",["Local Area Network","Large Access Network","Linked Area Node","Long Access Network"],0,"Easy","A LAN (Local Area Network) connects computers and devices within a limited geographical area such as an office, school or building, allowing fast and direct data sharing."],
+["Computer Awareness: Networking, Internet and Web","HTTPS, used for secure communication over the internet, differs from HTTP mainly by adding:",["Encryption and data security through SSL/TLS","Faster download speed only","Support for larger file sizes only","Compatibility with older browsers only"],0,"Easy","HTTPS (HyperText Transfer Protocol Secure) encrypts data exchanged between a browser and a website using SSL/TLS, protecting sensitive information such as passwords and payment details during transmission."],
+["Computer Awareness: Networking, Internet and Web","Which networking device is primarily used to connect different networks and direct data packets between them based on IP addresses?",["Hub","Switch","Router","Repeater"],2,"Medium","A router connects multiple networks (such as a home network and the internet) and forwards data packets between them based on IP addressing, unlike a hub or switch which typically operate within a single network."],
+["Computer Awareness: Networking, Internet and Web","An IPv4 address is made up of how many bits?",["16 bits","32 bits","64 bits","128 bits"],1,"Medium","An IPv4 address consists of 32 bits, usually represented as four decimal numbers (0-255) separated by dots, e.g. 192.168.1.1. IPv6, its successor, uses 128-bit addresses."],
+["Computer Awareness: Cyber Security","Malicious software that encrypts a victim's files and demands payment for their release is known as:",["Ransomware","Spyware","Adware","A worm"],0,"Easy","Ransomware is malicious software that locks or encrypts a victim's data and demands a ransom payment, typically in cryptocurrency, in exchange for restoring access."],
+["Computer Awareness: Cyber Security","The fraudulent practice of sending emails or messages that appear to be from a trusted source, to trick recipients into revealing personal information, is called:",["Phishing","Spoofing","Firewalling","Encryption"],0,"Easy","Phishing involves fraudulent communications, often emails, designed to appear legitimate in order to trick recipients into revealing sensitive information such as passwords or banking details."],
+["Computer Awareness: Cyber Security","Two-Factor Authentication (2FA) improves account security mainly by:",["Requiring a second, independent form of verification in addition to the password","Automatically deleting weak passwords","Encrypting all files on the device","Blocking all incoming network traffic"],0,"Easy","2FA adds a second layer of verification, such as an OTP or biometric check, beyond the password alone, making unauthorised access significantly harder even if the password is compromised."],
+["Computer Awareness: Cyber Security","The Information Technology (IT) Act, which provides the legal framework for cyber activities and electronic commerce in India, was enacted in the year:",["1998","2000","2005","2011"],1,"Easy","The Information Technology Act, 2000 is the primary law in India dealing with cybercrime and electronic commerce, later amended in 2008 to address emerging cyber threats."],
+["Computer Awareness: Karnataka E-Governance","'Bhoomi', a pioneering Karnataka e-governance initiative, is primarily related to computerisation of:",["Land records","Vehicle registration","Ration card distribution","Court case management"],0,"Easy","Bhoomi is a Karnataka e-governance project that computerised land records, enabling farmers and citizens to access and update Records of Rights, Tenancy and Crops (RTC) online."],
+["Computer Awareness: Karnataka E-Governance","FRUITS, a Karnataka government e-governance portal, is mainly used for:",["Farmer registration and unified beneficiary information for agricultural schemes","Urban property tax collection only","Vehicle fitness certification","Passport application processing"],0,"Medium","FRUITS (Farmer Registration and Unified Beneficiary Information System) is a Karnataka portal used to register farmers and streamline delivery of benefits under various agricultural schemes."],
+["Computer Awareness: Technical Fundamentals","Which of the following logic gates is known as a 'universal gate', since any other logic gate can be constructed using only that gate?",["AND gate","OR gate","NAND gate","NOT gate"],2,"Medium","The NAND gate (along with the NOR gate) is called a universal gate because any other basic logic gate — AND, OR, NOT — can be built using only NAND gates in different combinations."]
+];
+
+var LETTERS = ['A','B','C','D'];
+
+/* =========================================================
+   STATE
+========================================================= */
+var app = document.getElementById('app');
+var status = {};          // per-question status, keyed by qId (index in Q)
+var activeIndices = [];    // ordered list of qIds in the current run
+var currentPos = 0;        // position within activeIndices
+var timerInterval = null;
+var remainingSeconds = 0;
+var examStartTs = null;
+var questionStartTs = null;
+var screen = 'start';      // start | exam | result
+var isPractice = false;    // true when running a retry/practice subset
+var practiceLabel = '';
+var resultData = null;     // cached computed results after submission
+var activeTab = 'summary';
+var reviewFilter = 'all';
+
+function freshStatus(){
+  return { selected:null, visited:false, answered:false, marked:false, timeSpent:0, attempts:0 };
+}
+
+function initStatuses(){
+  status = {};
+  for(var i=0;i<Q.length;i++){ status[i] = freshStatus(); }
+}
+
+/* =========================================================
+   DIFFICULTY CLASSIFIER (derived at runtime from question
+   wording — the question database itself is never altered)
+========================================================= */
+function classifyDifficulty(item){
+  return item[4] || 'Medium';
+}
+
+/* =========================================================
+   RANDOMIZATION — shuffles question order and, within each
+   question, the option order (remapping the correct index so
+   scoring stays accurate). Runs fresh each time a full test is
+   started, so every attempt sees a different arrangement.
+========================================================= */
+function shuffleArray(arr){
+  for(var i=arr.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+  }
+  return arr;
+}
+function shuffleQuestionOptions(){
+  Q.forEach(function(item){
+    var opts = item[2], correct = item[3];
+    var order = opts.map(function(_,i){return i;});
+    shuffleArray(order);
+    item[2] = order.map(function(i){return opts[i];});
+    item[3] = order.indexOf(correct);
+  });
+}
+
+/* =========================================================
+   UTIL
+========================================================= */
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fmtTime(sec){
+  sec = Math.max(0, Math.round(sec));
+  var m = Math.floor(sec/60), s = sec%60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+function el(html){
+  var d=document.createElement('div');
+  d.innerHTML=html.trim();
+  return d.firstChild;
+}
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+function renderStart(){
+  screen='start';
+  var negChecked = CONFIG.negativeMarking.enabled ? 'checked' : '';
+  app.innerHTML =
+  '<div class="start-wrap">'+
+    '<h1>'+esc(CONFIG.examName)+'</h1>'+
+    '<h2>'+esc(CONFIG.subjectName)+'</h2>'+
+    '<div class="start-grid">'+
+      '<div class="start-card"><div class="lbl">Total Questions</div><div class="val">'+Q.length+'</div></div>'+
+      '<div class="start-card"><div class="lbl">Duration</div><div class="val">'+CONFIG.durationMinutes+' minutes</div></div>'+
+      '<div class="start-card"><div class="lbl">Marks / Question</div><div class="val">+'+CONFIG.marksPerQuestion+'</div></div>'+
+      '<div class="start-card"><div class="lbl">Negative Marking</div><div class="val" id="neg-val">'+(CONFIG.negativeMarking.enabled?('-'+CONFIG.negativeMarking.value):'Off')+'</div></div>'+
+    '</div>'+
+    '<ul class="instructions">'+
+      '<li>The test contains '+Q.length+' multiple-choice questions across several topics.</li>'+
+      '<li>Each question has four options (A–D); choose the single best answer.</li>'+
+      '<li>Use <b>Save &amp; Next</b> / <b>Next</b> / <b>Previous</b> to move between questions, or click any number on the palette to jump directly.</li>'+
+      '<li><b>Mark for Review</b> flags a question and moves you to the next one; you can return to it any time.</li>'+
+      '<li>The test will auto-submit when the timer reaches zero.</li>'+
+      '<li>Keyboard shortcuts: <b>1–4</b> select an option, <b>←/→</b> move between questions, <b>N</b> next, <b>P</b> previous, <b>M</b> mark for review.</li>'+
+    '</ul>'+
+    '<div class="toggle-row"><label><input type="checkbox" id="neg-toggle" '+negChecked+'> Enable negative marking (-'+CONFIG.negativeMarking.value+' per wrong answer)</label></div>'+
+    '<button class="btn-primary" id="start-btn">Start Test</button>'+
+  '</div>';
+  document.getElementById('neg-toggle').addEventListener('change', function(e){
+    CONFIG.negativeMarking.enabled = e.target.checked;
+    document.getElementById('neg-val').textContent = CONFIG.negativeMarking.enabled ? ('-'+CONFIG.negativeMarking.value) : 'Off';
+  });
+  document.getElementById('start-btn').addEventListener('click', startFullExam);
+}
+
+function startFullExam(){
+  shuffleQuestionOptions();
+  initStatuses();
+  activeIndices = shuffleArray(Q.map(function(_,i){return i;}));
+  currentPos = 0;
+  isPractice = false;
+  practiceLabel = '';
+  remainingSeconds = CONFIG.durationMinutes*60;
+  examStartTs = Date.now();
+  startTimer();
+  renderExamScreen();
+}
+
+/* =========================================================
+   TIMER
+========================================================= */
+function startTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  if(isPractice) return; // practice/retry mode is untimed
+  timerInterval = setInterval(function(){
+    remainingSeconds--;
+    updateTimerDisplay();
+    if(remainingSeconds<=0){
+      clearInterval(timerInterval);
+      submitTest(true);
+    }
+  },1000);
+}
+function stopTimer(){ if(timerInterval) clearInterval(timerInterval); }
+function updateTimerDisplay(){
+  var t = document.getElementById('timer-display');
+  if(!t) return;
+  t.textContent = isPractice ? 'PRACTICE (untimed)' : fmtTime(remainingSeconds);
+  t.classList.toggle('low', !isPractice && remainingSeconds<=120);
+}
+
+/* =========================================================
+   EXAM SCREEN
+========================================================= */
+function currentQid(){ return activeIndices[currentPos]; }
+
+function commitTimeSpent(){
+  if(questionStartTs!==null){
+    var qid = currentQid();
+    if(qid!==undefined && status[qid]){
+      status[qid].timeSpent += (Date.now()-questionStartTs)/1000;
+    }
+  }
+  questionStartTs = Date.now();
+}
+
+function renderExamScreen(){
+  screen='exam';
+  var qid = currentQid();
+  status[qid].visited = true;
+  questionStartTs = Date.now();
+
+  var answeredCount=0, visitedCount=0, markedCount=0, notVisited=0;
+  activeIndices.forEach(function(id){
+    var st=status[id];
+    if(st.marked) markedCount++;
+    else if(st.answered) answeredCount++;
+    else if(st.visited) visitedCount++;
+    else notVisited++;
+  });
+
+  var html = '';
+  html += '<div class="exam-header">';
+  html +=   '<div class="titles"><h1>'+esc(CONFIG.examName)+'</h1><h2>'+esc(CONFIG.subjectName)+(isPractice?(' — '+esc(practiceLabel)):'')+'</h2></div>';
+  html +=   '<div class="mid">';
+  html +=     '<span>Question <b>'+(currentPos+1)+'</b> / '+activeIndices.length+'</span>';
+  html +=     '<span class="timer" id="timer-display">'+(isPractice?'PRACTICE (untimed)':fmtTime(remainingSeconds))+'</span>';
+  html +=     '<button class="palette-toggle" id="palette-toggle-btn">Palette</button>';
+  html +=   '</div>';
+  html += '</div>';
+  html += '<div class="progress-track"><div class="progress-fill" style="width:'+Math.round(((currentPos+1)/activeIndices.length)*100)+'%"></div></div>';
+  if(isPractice){
+    html += '<div class="practice-banner">Practice mode — '+esc(practiceLabel)+'. This run is untimed and separate from your main result.</div>';
+  }
+  html += '<div class="exam-body">';
+  html +=   '<div class="qcol" id="qcol"></div>';
+  html +=   '<div class="palette" id="palette"></div>';
+  html += '</div>';
+  html += '<div class="bottom-bar">';
+  html +=   '<button id="btn-prev" '+(currentPos===0?'disabled':'')+'>Previous</button>';
+  html +=   '<button id="btn-clear" class="bb-clear">Clear Response</button>';
+  html +=   '<button id="btn-mark" class="bb-warn">Mark for Review</button>';
+  html +=   '<button id="btn-save" class="bb-primary">Save &amp; Next</button>';
+  html +=   '<button id="btn-next" '+(currentPos===activeIndices.length-1?'disabled':'')+'>Next</button>';
+  html +=   '<button id="btn-submit" class="bb-submit">Submit Test</button>';
+  html += '</div>';
+
+  app.innerHTML = html;
+  renderQuestion();
+  renderPalette();
+
+  document.getElementById('btn-prev').addEventListener('click', goPrev);
+  document.getElementById('btn-next').addEventListener('click', goNext);
+  document.getElementById('btn-save').addEventListener('click', goNext);
+  document.getElementById('btn-clear').addEventListener('click', clearResponse);
+  document.getElementById('btn-mark').addEventListener('click', markForReview);
+  document.getElementById('btn-submit').addEventListener('click', requestSubmit);
+  var pt = document.getElementById('palette-toggle-btn');
+  if(pt) pt.addEventListener('click', function(){
+    document.getElementById('palette').classList.toggle('open');
+  });
+}
+
+function renderQuestion(){
+  var qid = currentQid();
+  var item = Q[qid];
+  var st = status[qid];
+  var qcol = document.getElementById('qcol');
+
+  var statusLabel = st.marked ? '<span class="qstatus" style="background:var(--amber-bg);color:var(--amber)">Marked for review</span>'
+    : st.answered ? '<span class="qstatus" style="background:var(--green-bg);color:var(--green)">Answered</span>'
+    : '<span class="qstatus" style="background:var(--red-bg);color:var(--red)">Not answered</span>';
+
+  var html = '<div class="qmeta">Question '+(currentPos+1)+' of '+activeIndices.length+'<span class="qtopic">'+esc(item[0])+'</span>'+statusLabel+'</div>';
+  html += '<div class="qtext">'+esc(item[1])+'</div>';
+  item[2].forEach(function(optText,i){
+    var sel = (st.selected===i) ? ' selected' : '';
+    html += '<button class="opt'+sel+'" data-i="'+i+'"><span class="oletter">'+LETTERS[i]+'.</span><span>'+esc(optText)+'</span></button>';
+  });
+  qcol.innerHTML = html;
+
+  qcol.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      selectOption(parseInt(btn.getAttribute('data-i'),10));
+    });
+  });
+}
+
+function renderPalette(){
+  var pal = document.getElementById('palette');
+  if(!pal) return;
+  var answeredCount=0, visitedCount=0, markedCount=0, notVisited=0;
+  var html = '<h3>Question Palette</h3>';
+  html += '<div class="legend">'+
+    '<div><span class="sw" style="background:var(--white)"></span>Not visited</div>'+
+    '<div><span class="sw" style="background:var(--red-bg);border-color:var(--red)"></span>Not answered</div>'+
+    '<div><span class="sw" style="background:var(--green-bg);border-color:var(--green)"></span>Answered</div>'+
+    '<div><span class="sw" style="background:var(--amber-bg);border-color:var(--amber-border)"></span>Marked</div>'+
+  '</div>';
+  html += '<div class="pgrid">';
+  activeIndices.forEach(function(id,pos){
+    var st = status[id];
+    var cls = 'notvisited';
+    if(st.marked){ cls='marked'; markedCount++; }
+    else if(st.answered){ cls='answered'; answeredCount++; }
+    else if(st.visited){ cls='visited'; visitedCount++; }
+    else { notVisited++; }
+    var cur = (pos===currentPos) ? ' current' : '';
+    html += '<button class="pnum '+cls+cur+'" data-pos="'+pos+'">'+(pos+1)+'</button>';
+  });
+  html += '</div>';
+  html += '<div class="palette-summary">'+
+    '<div><span>Answered</span><span>'+answeredCount+'</span></div>'+
+    '<div><span>Not answered</span><span>'+visitedCount+'</span></div>'+
+    '<div><span>Marked</span><span>'+markedCount+'</span></div>'+
+    '<div><span>Not visited</span><span>'+notVisited+'</span></div>'+
+  '</div>';
+  pal.innerHTML = html;
+  pal.querySelectorAll('.pnum').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goToPosition(parseInt(btn.getAttribute('data-pos'),10));
+      pal.classList.remove('open');
+    });
+  });
+}
+
+function selectOption(i){
+  var qid = currentQid();
+  var st = status[qid];
+  st.selected = i;
+  st.answered = true;
+  st.attempts++;
+  renderQuestion();
+  renderPalette();
+}
+
+function clearResponse(){
+  var qid = currentQid();
+  var st = status[qid];
+  st.selected = null;
+  st.answered = false;
+  renderQuestion();
+  renderPalette();
+}
+
+function markForReview(){
+  var qid = currentQid();
+  status[qid].marked = !status[qid].marked;
+  goNext(true);
+}
+
+function goToPosition(pos){
+  if(pos<0 || pos>=activeIndices.length) return;
+  commitTimeSpent();
+  currentPos = pos;
+  renderExamScreen();
+}
+
+function goNext(fromMark){
+  commitTimeSpent();
+  if(currentPos < activeIndices.length-1){
+    currentPos++;
+    renderExamScreen();
+  } else if(!fromMark){
+    renderExamScreen();
+  } else {
+    renderExamScreen();
+  }
+}
+
+function goPrev(){
+  commitTimeSpent();
+  if(currentPos>0){
+    currentPos--;
+    renderExamScreen();
+  }
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+function showModal(message, onConfirm, confirmLabel, cancelLabel){
+  var overlay = el('<div class="modal-overlay"><div class="modal-box"><p></p><div class="modal-actions"><button class="btn-ghost" id="modal-cancel">'+esc(cancelLabel||'Cancel')+'</button><button class="btn-primary" id="modal-confirm">'+esc(confirmLabel||'Confirm')+'</button></div></div></div>');
+  overlay.querySelector('p').textContent = message;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#modal-cancel').addEventListener('click', function(){ document.body.removeChild(overlay); });
+  overlay.querySelector('#modal-confirm').addEventListener('click', function(){
+    document.body.removeChild(overlay);
+    onConfirm();
+  });
+}
+
+/* =========================================================
+   SUBMISSION
+========================================================= */
+function countUnanswered(){
+  var n=0;
+  activeIndices.forEach(function(id){ if(!status[id].answered) n++; });
+  return n;
+}
+
+function requestSubmit(){
+  var unanswered = countUnanswered();
+  var msg = unanswered>0
+    ? ('You still have '+unanswered+' unanswered question'+(unanswered===1?'':'s')+'. Do you want to submit the test now?')
+    : 'All questions are answered. Submit the test now?';
+  showModal(msg, function(){ submitTest(false); }, 'Submit Test', 'Continue Test');
+}
+
+function submitTest(auto){
+  commitTimeSpent();
+  stopTimer();
+  resultData = computeResults();
+  if(isPractice){
+    renderPracticeResult();
+  } else {
+    activeTab = 'summary';
+    reviewFilter = 'all';
+    renderResultDashboard();
+  }
+}
+
+/* =========================================================
+   RESULTS COMPUTATION
+========================================================= */
+function computeResults(){
+  var total = activeIndices.length;
+  var correct=0, wrong=0, attempted=0, timeTotal=0;
+  var topicStats = {};
+  var diffStats = { Easy:{c:0,w:0,t:0}, Medium:{c:0,w:0,t:0}, Hard:{c:0,w:0,t:0} };
+
+  activeIndices.forEach(function(id){
+    var item = Q[id], st = status[id];
+    var topic = item[0];
+    if(!topicStats[topic]) topicStats[topic] = {c:0,w:0,t:0};
+    topicStats[topic].t++;
+    var diff = classifyDifficulty(item);
+    diffStats[diff].t++;
+    timeTotal += st.timeSpent;
+    if(st.answered){
+      attempted++;
+      if(st.selected===item[3]){
+        correct++; topicStats[topic].c++; diffStats[diff].c++;
+      } else {
+        wrong++; topicStats[topic].w++; diffStats[diff].w++;
+      }
+    }
+  });
+
+  var unattempted = total - attempted;
+  var rawScore = correct*CONFIG.marksPerQuestion - (CONFIG.negativeMarking.enabled ? wrong*CONFIG.negativeMarking.value : 0);
+  var maxScore = total*CONFIG.marksPerQuestion;
+  var percentage = maxScore>0 ? (rawScore/maxScore*100) : 0;
+  var accuracy = attempted>0 ? (correct/attempted*100) : 0;
+  var timeTakenSec = isPractice ? timeTotal : Math.max(0, CONFIG.durationMinutes*60 - remainingSeconds);
+  var avgTimePerQ = attempted>0 ? (timeTakenSec/attempted) : 0;
+
+  return {
+    total: total, correct: correct, wrong: wrong, attempted: attempted, unattempted: unattempted,
+    rawScore: rawScore, maxScore: maxScore, percentage: percentage, accuracy: accuracy,
+    timeTakenSec: timeTakenSec, avgTimePerQ: avgTimePerQ,
+    topicStats: topicStats, diffStats: diffStats
+  };
+}
+
+/* =========================================================
+   PRACTICE (RETRY) RESULT — lightweight summary
+========================================================= */
+function renderPracticeResult(){
+  screen='result';
+  var r = resultData;
+  var html = '<div class="result-wrap">';
+  html += '<div class="result-head"><p>Practice complete — '+esc(practiceLabel)+'</p><div class="big">'+r.correct+' / '+r.total+'</div><p>'+Math.round(r.percentage)+'% correct in this practice set</p></div>';
+  html += '<div class="smart-row" style="justify-content:center;margin-top:20px">';
+  html += '<button class="btn-primary" id="back-dash">Back to Full Result</button>';
+  html += '<button class="btn-secondary" id="retry-again">Retry This Set Again</button>';
+  html += '</div></div>';
+  app.innerHTML = html;
+  document.getElementById('back-dash').addEventListener('click', function(){
+    isPractice=false; practiceLabel=''; renderResultDashboard();
+  });
+  document.getElementById('retry-again').addEventListener('click', function(){
+    var ids = activeIndices.slice();
+    startPracticeRun(ids, practiceLabel);
+  });
+}
+
+function startPracticeRun(ids, label){
+  ids.forEach(function(id){ status[id] = freshStatus(); });
+  activeIndices = ids;
+  currentPos = 0;
+  isPractice = true;
+  practiceLabel = label;
+  remainingSeconds = 0;
+  startTimer();
+  renderExamScreen();
+}
+
+/* =========================================================
+   RESULT DASHBOARD (main test)
+========================================================= */
+function readinessLabel(pct){
+  if(pct>=80) return 'Exam ready — strong overall command of the syllabus.';
+  if(pct>=60) return 'Good foundation — a bit more revision will get you exam-ready.';
+  if(pct>=40) return 'Moderate — focused revision of weak topics is recommended.';
+  return 'Needs significant revision before attempting the real exam.';
+}
+
+function renderResultDashboard(){
+  screen='result';
+  var r = resultData;
+  var html = '<div class="result-wrap">';
+  html += '<div class="result-head"><p>Test complete</p><div class="big">'+r.rawScore.toFixed(2)+' / '+r.maxScore+'</div><p>'+Math.round(r.percentage)+'% overall</p></div>';
+
+  html += '<div style="text-align:center;margin:6px 0 18px"><button class="btn-secondary" id="btn-download-pdf">📄 DOWNLOAD QUESTION PAPER &amp; ANSWER KEY</button></div>';
+
+  html += '<div class="stat-grid">';
+  html += statCard(r.correct,'Correct');
+  html += statCard(r.wrong,'Wrong');
+  html += statCard(r.attempted,'Attempted');
+  html += statCard(r.unattempted,'Unattempted');
+  html += statCard(Math.round(r.accuracy)+'%','Accuracy');
+  html += statCard(Math.round(r.percentage)+'%','Percentage');
+  html += statCard(fmtTime(r.timeTakenSec),'Time Taken');
+  html += statCard(fmtTime(r.avgTimePerQ),'Avg / Question');
+  html += '</div>';
+
+  html += '<div class="tabs">'+
+    tabBtn('summary','Summary')+
+    tabBtn('topic','Topic Analysis')+
+    tabBtn('difficulty','Difficulty Analysis')+
+    tabBtn('review','Question Review')+
+    tabBtn('performance','Performance Analysis')+
+    tabBtn('actions','Smart Actions')+
+  '</div>';
+
+  html += '<div class="tab-panel'+(activeTab==='summary'?' active':'')+'" id="panel-summary">'+summaryPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='topic'?' active':'')+'" id="panel-topic">'+topicPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='difficulty'?' active':'')+'" id="panel-difficulty">'+difficultyPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='review'?' active':'')+'" id="panel-review">'+reviewPanelHtml()+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='performance'?' active':'')+'" id="panel-performance">'+performancePanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='actions'?' active':'')+'" id="panel-actions">'+actionsPanelHtml(r)+'</div>';
+
+  html += '</div>';
+  app.innerHTML = html;
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      activeTab = btn.getAttribute('data-tab');
+      renderResultDashboard();
+    });
+  });
+
+  wireActionButtons(r);
+  wireReviewFilters();
+  var pdfBtn = document.getElementById('btn-download-pdf');
+  if(pdfBtn) pdfBtn.addEventListener('click', downloadQuestionPaperPdf);
+}
+
+function statCard(n,l){
+  return '<div class="stat-card"><div class="n">'+n+'</div><div class="l">'+esc(l)+'</div></div>';
+}
+function tabBtn(key,label){
+  return '<button class="tab-btn'+(activeTab===key?' active':'')+'" data-tab="'+key+'">'+esc(label)+'</button>';
+}
+
+function summaryPanelHtml(r){
+  var negNote = CONFIG.negativeMarking.enabled ? ('Negative marking is ON (-'+CONFIG.negativeMarking.value+' per wrong answer).') : 'Negative marking is OFF.';
+  return '<div class="perf-block"><h4>Overview</h4><ul>'+
+    '<li>Total questions: '+r.total+'</li>'+
+    '<li>Correct: '+r.correct+' &nbsp;|&nbsp; Wrong: '+r.wrong+' &nbsp;|&nbsp; Unattempted: '+r.unattempted+'</li>'+
+    '<li>Accuracy (of attempted): '+r.accuracy.toFixed(1)+'%</li>'+
+    '<li>Overall percentage: '+r.percentage.toFixed(1)+'%</li>'+
+    '<li>Time taken: '+fmtTime(r.timeTakenSec)+' &nbsp;|&nbsp; Average time per question: '+fmtTime(r.avgTimePerQ)+'</li>'+
+    '<li>'+negNote+'</li>'+
+  '</ul></div>';
+}
+
+function topicPanelHtml(r){
+  var html='';
+  Object.keys(r.topicStats).forEach(function(topic){
+    var s = r.topicStats[topic];
+    var pct = s.t>0 ? Math.round((s.c/s.t)*100) : 0;
+    html += '<div class="abar-row"><div class="abar-top"><span>'+esc(topic)+'</span><b>'+s.c+' correct / '+s.w+' wrong / '+s.t+' total — '+pct+'%</b></div>'+
+      '<div class="abar-track"><div class="abar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  return html || '<p>No data.</p>';
+}
+
+function difficultyPanelHtml(r){
+  var html='';
+  ['Easy','Medium','Hard'].forEach(function(d){
+    var s = r.diffStats[d];
+    var pct = s.t>0 ? Math.round((s.c/s.t)*100) : 0;
+    html += '<div class="abar-row"><div class="abar-top"><span>'+d+'</span><b>'+s.c+' correct / '+s.w+' wrong / '+s.t+' total — '+pct+'%</b></div>'+
+      '<div class="abar-track"><div class="abar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  html += '<p style="font-size:12px;color:var(--ink-mute);margin-top:10px">Each question in the bank carries an explicit Easy / Medium / Hard tag set by the paper-setter.</p>';
+  return html;
+}
+
+function reviewPanelHtml(){
+  var html = '<div class="filter-row">'+
+    filterBtn('all','All')+filterBtn('correct','Correct')+filterBtn('wrong','Wrong')+filterBtn('unattempted','Unattempted')+filterBtn('marked','Marked')+
+  '</div><div id="review-list">'+reviewListHtml()+'</div>';
+  return html;
+}
+function filterBtn(key,label){
+  return '<button class="filter-btn'+(reviewFilter===key?' active':'')+'" data-filter="'+key+'">'+esc(label)+'</button>';
+}
+function reviewListHtml(){
+  var html='';
+  activeIndices.forEach(function(id,pos){
+    var item=Q[id], st=status[id];
+    var wasCorrect = st.answered && st.selected===item[3];
+    var wasWrong = st.answered && st.selected!==item[3];
+    var unattempted = !st.answered;
+    if(reviewFilter==='correct' && !wasCorrect) return;
+    if(reviewFilter==='wrong' && !wasWrong) return;
+    if(reviewFilter==='unattempted' && !unattempted) return;
+    if(reviewFilter==='marked' && !st.marked) return;
+
+    var tag = wasCorrect ? '<span class="tag correct">Correct</span>' : wasWrong ? '<span class="tag wrong">Wrong</span>' : '<span class="tag skip">Not attempted</span>';
+    html += '<div class="review-item">';
+    html += '<div class="rmeta"><span class="qtopic" style="background:var(--topicbg);padding:2px 8px;border-radius:3px">'+esc(item[0])+'</span>Q'+(pos+1)+tag+(st.marked?'<span class="tag" style="background:var(--amber-bg);color:var(--amber)">Marked</span>':'')+'</div>';
+    html += '<div class="rq">'+esc(item[1])+'</div>';
+    item[2].forEach(function(opt,i){
+      var cls='';
+      if(i===item[3]) cls='correctopt';
+      else if(i===st.selected) cls='wrongopt';
+      html += '<div class="ropt'+(cls?(' '+cls):'')+'">'+LETTERS[i]+'. '+esc(opt)+(i===st.selected?' (Your answer)':'')+(i===item[3]?' (Correct answer)':'')+'</div>';
+    });
+    html += '<div class="explain">Explanation: '+esc(item[5]||'')+'</div>';
+    html += '</div>';
+  });
+  return html || '<p style="color:var(--ink-mute)">No questions match this filter.</p>';
+}
+function wireReviewFilters(){
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      reviewFilter = btn.getAttribute('data-filter');
+      document.getElementById('review-list').innerHTML = reviewListHtml();
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active', b===btn); });
+    });
+  });
+}
+
+function performancePanelHtml(r){
+  var topics = Object.keys(r.topicStats).map(function(t){
+    var s=r.topicStats[t];
+    return { topic:t, pct: s.t>0?(s.c/s.t*100):0, total:s.t };
+  });
+  var strong = topics.filter(function(t){return t.pct>=75;}).sort(function(a,b){return b.pct-a.pct;});
+  var weak = topics.filter(function(t){return t.pct<50;}).sort(function(a,b){return a.pct-b.pct;});
+  var revisionOrder = weak.slice();
+
+  var html='';
+  html += '<div class="perf-block"><h4>Strong Areas</h4><ul>'+(strong.length?strong.map(function(t){return '<li>'+esc(t.topic)+' — '+Math.round(t.pct)+'%</li>';}).join(''):'<li>None yet — accuracy across topics is still developing.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Weak Areas</h4><ul>'+(weak.length?weak.map(function(t){return '<li>'+esc(t.topic)+' — '+Math.round(t.pct)+'%</li>';}).join(''):'<li>No topic fell below 50% — solid overall performance.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Topics To Revise</h4><ul>'+(weak.length?weak.map(function(t){return '<li>'+esc(t.topic)+'</li>';}).join(''):'<li>No specific topic flagged for urgent revision.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Accuracy Analysis</h4><ul><li>Overall accuracy on attempted questions: '+r.accuracy.toFixed(1)+'%</li><li>Overall percentage (of full paper): '+r.percentage.toFixed(1)+'%</li></ul></div>';
+  html += '<div class="perf-block"><h4>Suggested Revision Order</h4><ul>'+(revisionOrder.length?revisionOrder.map(function(t,i){return '<li>'+(i+1)+'. '+esc(t.topic)+' ('+Math.round(t.pct)+'%)</li>';}).join(''):'<li>No priority order needed — no weak topics detected.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Estimated Readiness</h4><ul><li>'+readinessLabel(r.percentage)+'</li></ul></div>';
+  return html;
+}
+
+function actionsPanelHtml(r){
+  var wrongCount = 0, unansCount = 0;
+  activeIndices.forEach(function(id){
+    var item=Q[id], st=status[id];
+    if(st.answered && st.selected!==item[3]) wrongCount++;
+    if(!st.answered) unansCount++;
+  });
+  return '<div class="perf-block"><h4>Smart Actions</h4>'+
+    '<div class="smart-row">'+
+      '<button class="btn-secondary" id="retry-wrong" '+(wrongCount===0?'disabled':'')+'>Retry Wrong Questions ('+wrongCount+')</button>'+
+      '<button class="btn-secondary" id="retry-unanswered" '+(unansCount===0?'disabled':'')+'>Retry Unanswered Questions ('+unansCount+')</button>'+
+      '<button class="btn-ghost" id="restart-test">Restart Full Test</button>'+
+    '</div></div>';
+}
+
+function wireActionButtons(r){
+  var rw = document.getElementById('retry-wrong');
+  var ru = document.getElementById('retry-unanswered');
+  var rt = document.getElementById('restart-test');
+  if(rw) rw.addEventListener('click', function(){
+    var ids = activeIndices.filter(function(id){
+      var item=Q[id], st=status[id];
+      return st.answered && st.selected!==item[3];
+    });
+    startPracticeRun(ids, 'Retry — Wrong Questions');
+  });
+  if(ru) ru.addEventListener('click', function(){
+    var ids = activeIndices.filter(function(id){ return !status[id].answered; });
+    startPracticeRun(ids, 'Retry — Unanswered Questions');
+  });
+  if(rt) rt.addEventListener('click', function(){
+    renderStart();
+  });
+}
+
+/* =========================================================
+   PDF DOWNLOAD — QUESTION PAPER + ANSWER KEY
+   Generated entirely client-side (jsPDF, loaded via CDN),
+   so it works on a static GitHub Pages deployment with no
+   backend, login or database. Pulls straight from the Q
+   array in its original section order (not the shuffled
+   in-exam order), and never includes the student's answers.
+========================================================= */
+function pdfWrapText(doc, text, x, y, maxWidth, lineHeight, pageHeight, marginBottom){
+  var lines = doc.splitTextToSize(text, maxWidth);
+  for(var i=0;i<lines.length;i++){
+    if(y > pageHeight - marginBottom){
+      doc.addPage();
+      y = 20;
+    }
+    doc.text(lines[i], x, y);
+    y += lineHeight;
+  }
+  return y;
+}
+
+function downloadQuestionPaperPdf(){
+  if(typeof window.jspdf === 'undefined'){
+    alert('PDF library is still loading — please try again in a moment.');
+    return;
+  }
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  var pageWidth = doc.internal.pageSize.getWidth();
+  var pageHeight = doc.internal.pageSize.getHeight();
+  var margin = 40;
+  var maxWidth = pageWidth - margin*2;
+  var y = 60;
+
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.text('SUNDAY GRAND ASSESSMENT', pageWidth/2, y, {align:'center'}); y += 24;
+  doc.setFontSize(14);
+  doc.text('SESSION 1', pageWidth/2, y, {align:'center'}); y += 20;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+  doc.text('100 MCQs  |  90 Minutes', pageWidth/2, y, {align:'center'}); y += 14;
+  doc.text('Question Paper & Answer Key (for revision — does not show your responses)', pageWidth/2, y, {align:'center'});
+
+  PDF_SECTIONS.forEach(function(section){
+    doc.addPage();
+    y = 50;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    y = pdfWrapText(doc, section.title, margin, y, maxWidth, 18, pageHeight, 40);
+    doc.setFontSize(10.5);
+    doc.setFont('helvetica','normal');
+    doc.text('Questions '+(section.start+1)+'–'+section.end, margin, y); y += 20;
+
+    for(var i=section.start; i<section.end; i++){
+      var item = Q[i];
+      var qNum = i+1;
+
+      if(y > pageHeight - 90){ doc.addPage(); y = 50; }
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(11);
+      y = pdfWrapText(doc, qNum+'. '+item[1], margin, y, maxWidth, 14, pageHeight, 40);
+      y += 2;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10.5);
+      item[2].forEach(function(optText, oi){
+        y = pdfWrapText(doc, LETTERS[oi]+'. '+optText, margin+14, y, maxWidth-14, 13, pageHeight, 40);
+      });
+      y += 2;
+
+      doc.setFont('helvetica','bold');
+      y = pdfWrapText(doc, 'Correct Answer: '+LETTERS[item[3]], margin, y, maxWidth, 13, pageHeight, 40);
+
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(9.5);
+      y = pdfWrapText(doc, 'Explanation: '+(item[5]||''), margin, y, maxWidth, 12, pageHeight, 40);
+      doc.setFont('helvetica','normal');
+
+      y += 12;
+    }
+  });
+
+  doc.save('Sunday_Grand_Assessment_Session1_QuestionPaper_AnswerKey.pdf');
+}
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+document.addEventListener('keydown', function(e){
+  if(screen!=='exam') return;
+  var tag = (e.target && e.target.tagName) || '';
+  if(tag==='INPUT' || tag==='TEXTAREA') return;
+
+  if(e.key>='1' && e.key<='4'){
+    var i = parseInt(e.key,10)-1;
+    var item = Q[currentQid()];
+    if(i < item[2].length){ selectOption(i); }
+  } else if(e.key==='ArrowRight'){
+    goNext();
+  } else if(e.key==='ArrowLeft'){
+    goPrev();
+  } else if(e.key==='n' || e.key==='N'){
+    goNext();
+  } else if(e.key==='p' || e.key==='P'){
+    goPrev();
+  } else if(e.key==='m' || e.key==='M'){
+    markForReview();
+  }
+});
+
+/* =========================================================
+   BOOT
+========================================================= */
+renderStart();
+
+})();
+</script>
+</body>
+</html>
