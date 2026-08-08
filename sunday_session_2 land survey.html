@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sunday Grand Assessment — Session 2 — CBT Examination</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#1F3A5F; --navy-dark:#16283F;
+    --gold:#B08D57;
+    --cream:#F4F1E8;
+    --ink:#2A2622; --ink-soft:#5A4F3A; --ink-mute:#7A6F5C;
+    --border:#D9D2BE; --border-soft:#E3DCC8;
+    --white:#FFFFFF;
+    --green:#2F6F4E; --green-bg:#E4EFE7;
+    --red:#B23A2E; --red-bg:#F6E6E4;
+    --amber:#8A6D1F; --amber-bg:#F5E7B2; --amber-border:#C9A227;
+    --topicbg:#EFEADA;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{font-family:Georgia,'Tinos',serif;color:var(--ink);background:var(--cream)}
+  button{font-family:inherit}
+  #app{min-height:100vh;display:flex;flex-direction:column}
+
+  /* ---------- START SCREEN ---------- */
+  .start-wrap{max-width:640px;margin:40px auto;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:30px 32px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .start-wrap h1{font-size:19px;color:var(--navy);margin:0 0 4px}
+  .start-wrap h2{font-size:14px;font-weight:normal;color:var(--ink-soft);margin:0 0 22px}
+  .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+  .start-card{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+  .start-card .lbl{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.5px}
+  .start-card .val{font-size:16px;color:var(--navy);margin-top:4px}
+  .instructions{font-size:13.5px;line-height:1.7;color:var(--ink-soft);margin-bottom:22px}
+  .instructions li{margin-bottom:4px}
+  .toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:13.5px}
+  .btn-primary{font-family:Georgia,serif;font-size:15px;background:var(--navy);color:var(--cream);border:none;padding:12px 26px;border-radius:5px;cursor:pointer}
+  .btn-primary:hover{background:var(--navy-dark)}
+  .btn-secondary{font-family:Georgia,serif;font-size:14px;background:var(--gold);color:var(--ink);border:none;padding:9px 20px;border-radius:5px;cursor:pointer}
+  .btn-ghost{font-family:Georgia,serif;font-size:13.5px;background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 16px;border-radius:5px;cursor:pointer}
+
+  /* ---------- EXAM HEADER ---------- */
+  .exam-header{background:var(--navy);color:var(--cream);padding:10px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+  .exam-header .titles h1{font-size:14.5px;font-weight:normal;margin:0;letter-spacing:.2px}
+  .exam-header .titles h2{font-size:12px;font-weight:normal;margin:2px 0 0;color:#D8CBA9}
+  .exam-header .mid{display:flex;align-items:center;gap:16px;font-family:'Courier New',monospace;font-size:12.5px}
+  .exam-header .timer{background:#16283F;padding:5px 12px;border-radius:4px;font-size:14px;letter-spacing:.5px}
+  .exam-header .timer.low{background:var(--red)}
+  .palette-toggle{display:none;background:var(--gold);color:var(--ink);border:none;padding:7px 12px;border-radius:4px;font-size:12.5px;cursor:pointer}
+  .progress-track{height:4px;background:var(--border)}
+  .progress-fill{height:100%;background:var(--gold);transition:width .25s}
+
+  /* ---------- MAIN EXAM LAYOUT ---------- */
+  .exam-body{flex:1;display:flex;gap:0;align-items:flex-start}
+  .qcol{flex:1;padding:22px 26px;max-width:760px}
+  .qmeta{font-family:'Courier New',monospace;font-size:11.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .qmeta .qtopic{background:var(--topicbg);color:var(--ink-soft);padding:2px 8px;border-radius:3px;text-transform:none;letter-spacing:0}
+  .qmeta .qstatus{padding:2px 8px;border-radius:3px}
+  .qtext{font-size:15.5px;line-height:1.6;margin:0 0 18px;white-space:pre-line;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:11px 14px;margin-bottom:9px;background:var(--white);border:1px solid var(--border);border-radius:5px;font-family:Georgia,serif;font-size:14px;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s}
+  .opt:hover{border-color:var(--navy);background:var(--topicbg)}
+  .opt .oletter{font-family:'Courier New',monospace;font-weight:bold;color:var(--navy);flex-shrink:0}
+  .opt.selected{background:#E9EEF4;border-color:var(--navy)}
+  .opt.selected .oletter{color:var(--navy)}
+
+  .bottom-bar{display:flex;flex-wrap:wrap;gap:8px;padding:14px 26px;border-top:1px solid var(--border);background:var(--white)}
+  .bottom-bar button{font-size:13.5px;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--ink)}
+  .bottom-bar .bb-primary{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  .bottom-bar .bb-primary:hover{background:var(--navy-dark)}
+  .bottom-bar .bb-warn{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}
+  .bottom-bar .bb-clear{color:var(--red);border-color:var(--red)}
+  .bottom-bar .bb-submit{background:var(--red);border-color:var(--red);color:var(--white);margin-left:auto}
+  .bottom-bar button:disabled{opacity:.4;cursor:default}
+
+  /* ---------- PALETTE ---------- */
+  .palette{width:270px;flex-shrink:0;background:var(--white);border-left:1px solid var(--border);padding:16px;height:100%}
+  .palette h3{font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px}
+  .legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11.5px;margin-bottom:14px;color:var(--ink-soft)}
+  .legend span.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;border:1px solid var(--border)}
+  .pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .pnum{aspect-ratio:1;border:1px solid var(--border);border-radius:4px;background:var(--white);font-family:'Courier New',monospace;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+  .pnum.notvisited{background:var(--white);color:var(--ink)}
+  .pnum.visited{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .pnum.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+  .pnum.marked{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}
+  .pnum.current{outline:2px solid var(--navy);outline-offset:1px}
+  .palette-summary{margin-top:14px;font-size:12px;color:var(--ink-soft);border-top:1px dashed var(--border-soft);padding-top:10px}
+  .palette-summary div{display:flex;justify-content:space-between;padding:2px 0}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{position:fixed;inset:0;background:rgba(42,38,34,.55);display:flex;align-items:center;justify-content:center;z-index:50}
+  .modal-box{background:var(--white);border-radius:8px;padding:24px 26px;max-width:420px;width:90%;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+  .modal-box p{font-size:14.5px;line-height:1.6;margin:0 0 18px;color:var(--ink)}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px}
+
+  /* ---------- RESULT DASHBOARD ---------- */
+  .result-wrap{max-width:920px;margin:0 auto;padding:24px 20px 60px}
+  .result-head{text-align:center;padding:18px 0 8px}
+  .result-head .big{font-family:'Courier New',monospace;font-size:44px;color:var(--navy);margin:6px 0}
+  .result-head p{color:var(--ink-soft);font-size:14px;margin:2px 0}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center}
+  .stat-card .n{font-family:'Courier New',monospace;font-size:22px;color:var(--navy)}
+  .stat-card .l{font-size:11.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.4px;margin-top:4px}
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:24px 0 14px;border-bottom:1px solid var(--border)}
+  .tab-btn{background:transparent;border:none;border-bottom:3px solid transparent;padding:9px 14px;font-size:13.5px;color:var(--ink-soft);cursor:pointer}
+  .tab-btn.active{color:var(--navy);border-color:var(--navy);font-weight:bold}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+  .abar-row{margin-bottom:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+  .abar-top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px}
+  .abar-top b{color:var(--navy)}
+  .abar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+  .abar-fill{height:100%;background:var(--green)}
+  .review-item{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:12px}
+  .review-item .rmeta{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;margin-bottom:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .review-item .rq{font-size:14.5px;white-space:pre-line;margin-bottom:10px}
+  .review-item .ropt{padding:7px 10px;border-radius:4px;font-size:13.5px;margin-bottom:6px;border:1px solid var(--border)}
+  .review-item .ropt.correctopt{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+  .review-item .ropt.wrongopt{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+  .tag{padding:2px 8px;border-radius:3px;font-size:11px}
+  .tag.correct{background:var(--green-bg);color:var(--green)}
+  .tag.wrong{background:var(--red-bg);color:var(--red)}
+  .tag.skip{background:var(--border-soft);color:var(--ink-soft)}
+  .explain{font-size:12.5px;color:var(--ink-mute);border-top:1px dashed var(--border-soft);margin-top:8px;padding-top:8px}
+  .perf-block{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-bottom:14px}
+  .perf-block h4{margin:0 0 8px;font-size:13.5px;color:var(--navy)}
+  .perf-block ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.7;color:var(--ink)}
+  .smart-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .filter-btn{background:var(--white);border:1px solid var(--border);padding:6px 12px;border-radius:14px;font-size:12px;cursor:pointer;color:var(--ink-soft)}
+  .filter-btn.active{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  .practice-banner{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);padding:8px 14px;border-radius:5px;font-size:12.5px;text-align:center}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .palette-toggle{display:inline-block}
+    .palette{position:fixed;top:0;right:0;height:100%;width:82%;max-width:320px;transform:translateX(100%);transition:transform .25s;z-index:40;box-shadow:-4px 0 16px rgba(0,0,0,.15)}
+    .palette.open{transform:translateX(0)}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+    .qcol{padding:16px}
+  }
+  @media (max-width:520px){
+    .exam-header .mid{font-size:11px;gap:10px}
+    .bottom-bar{padding:10px 12px}
+    .bottom-bar button{flex:1 1 auto;font-size:12.5px;padding:9px 10px}
+    .bottom-bar .bb-submit{margin-left:0;order:99;flex-basis:100%}
+    .result-wrap{padding:16px 10px 50px}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   CONFIG — change these to reconfigure the exam engine
+========================================================= */
+var CONFIG = {
+  examName: "SUNDAY GRAND ASSESSMENT — SESSION 2",
+  subjectName: "Set Theory + Surveying",
+  durationMinutes: 90,     // total exam duration; easy to change
+  marksPerQuestion: 1,
+  negativeMarking: { enabled: false, value: 0.25 }
+};
+
+/* =========================================================
+   PDF SECTION MAP — used only for the downloadable question
+   paper + answer key. Reflects the fixed layout of the
+   Grand Assessment: 50 questions per section, section order
+   matching the original Q array order (NOT the shuffled
+   in-exam order).
+========================================================= */
+var PDF_SECTIONS = [
+  { title: "SECTION 1 — SET THEORY", start: 0,  end: 50 },
+  { title: "SECTION 2 — SURVEYING", start: 50, end: 100 }
+];
+
+/* =========================================================
+   QUESTION DATABASE — untouched, exactly as supplied.
+   Format per item: [topic, questionText, [options...], correctIndex]
+========================================================= */
+var Q = [
+["Set Theory: Basics", "Which of the following best defines a set?", ["A well-defined collection of distinct objects", "Any group of objects, defined or not", "A list that may contain repeated elements", "A collection of numbers only"], 0, "Easy", "A set is a well-defined collection of distinct objects, meaning it must be possible to decide clearly whether any given object belongs to it or not."],
+["Set Theory: Basics", "Which of the following collections is a well-defined set?", ["The collection of all vowels in the English alphabet", "The collection of intelligent students in a class", "The collection of tall buildings in Bengaluru", "The collection of beautiful paintings"], 0, "Easy", "Vowels (a, e, i, o, u) are precisely defined, so the collection is a set. 'Intelligent', 'tall' and 'beautiful' are subjective and not well-defined, so those collections are not sets."],
+["Set Theory: Basics", "If x is an element of set A, this is written as:", ["x is an element of A (x ∈ A)", "x ∉ A", "x ⊂ A", "x = A"], 0, "Easy", "The symbol ∈ denotes 'belongs to' or 'is an element of'; x ∈ A means x is a member of set A."],
+["Set Theory: Basics", "If A = {a, e, i, o, u}, the cardinal number n(A) is:", ["4", "5", "6", "0"], 1, "Easy", "A has five distinct elements (the five vowels), so its cardinal number n(A) = 5."],
+["Set Theory: Basics", "The set of even natural numbers less than 10, written in roster form, is:", ["{2, 4, 6, 8}", "{1, 3, 5, 7, 9}", "{2, 4, 6, 8, 10}", "{0, 2, 4, 6, 8}"], 0, "Easy", "Even natural numbers less than 10 are 2, 4, 6 and 8 (natural numbers start from 1, so 0 is excluded)."],
+["Set Theory: Basics", "The set-builder form of A = {1, 4, 9, 16, 25} is:", ["A = {x : x = n^2, n is a natural number, 1 ≤ n ≤ 5}", "A = {x : x is a natural number less than 25}", "A = {x : x is an even number less than 25}", "A = {x : x = 2n, n ≤ 5}"], 0, "Medium", "Each element is the square of a natural number from 1 to 5 (1^2, 2^2, 3^2, 4^2, 5^2), so the rule form is x = n^2 for n = 1 to 5."],
+["Set Theory: Basics", "If A = {x : x is a prime number less than 12}, the roster form of A is:", ["{2, 3, 5, 7, 11}", "{1, 2, 3, 5, 7}", "{2, 3, 5, 7, 9}", "{3, 5, 7, 11}"], 0, "Easy", "Prime numbers less than 12 are 2, 3, 5, 7 and 11; 1 is not prime and 9 is not prime (3×3), so option A correctly lists all of them."],
+["Set Theory: Basics", "The number of distinct elements in a finite set is called its:", ["Cardinal number", "Power set", "Complement", "Universal set"], 0, "Easy", "The cardinal number (or cardinality) of a finite set is the count of its distinct elements, denoted n(A)."],
+["Set Theory: Types of Sets", "A set having no elements at all is called a:", ["Empty set", "Singleton set", "Finite set", "Universal set"], 0, "Easy", "A set with no elements is called an empty set (or null/void set) and is denoted by the symbol for the empty set or { }."],
+["Set Theory: Types of Sets", "Which of the following is an example of a singleton set?", ["{x : x is an even prime number}", "{x : x is a natural number less than 5}", "{x : x is a vowel in the word 'orange'}", "{x : x is a whole number less than 5}"], 0, "Medium", "The only even prime number is 2, so this set contains exactly one element, {2}, making it a singleton set. The other sets each contain more than one element."],
+["Set Theory: Types of Sets", "Which of the following is a finite set?", ["The set of days in a week", "The set of all natural numbers", "The set of points on a line", "The set of all integers"], 0, "Easy", "The set of days in a week has exactly 7 elements, making it finite. Natural numbers, points on a line, and integers are all infinite."],
+["Set Theory: Types of Sets", "Which of the following is an infinite set?", ["The set of prime numbers", "The set of letters in the English alphabet", "The set of states in India", "The set of continents on Earth"], 0, "Medium", "There are infinitely many prime numbers, a fact proved by Euclid, so the set of primes is infinite, unlike the other finite, countable sets listed."],
+["Set Theory: Types of Sets", "Two sets A and B are said to be equal if:", ["They contain exactly the same elements, regardless of order", "They have the same number of elements only", "A is a subset of B only", "They have at least one common element"], 0, "Medium", "Equal sets contain precisely the same elements; the order or repetition of listing does not matter. Having the same number of elements alone only makes them equivalent, not necessarily equal."],
+["Set Theory: Types of Sets", "Two sets A and B are said to be equivalent if:", ["n(A) = n(B), even if their elements are different", "A and B contain exactly the same elements", "A is a proper subset of B", "Both A and B are empty sets"], 0, "Medium", "Equivalent sets have the same cardinal number (same number of elements), even though the actual elements may differ; equal sets, by contrast, must have identical elements."],
+["Set Theory: Types of Sets", "If A = {1, 2, 3} and B = {p, q, r}, then A and B are:", ["Equivalent sets but not equal sets", "Equal sets but not equivalent sets", "Both equal and equivalent sets", "Neither equal nor equivalent sets"], 0, "Medium", "A and B both have 3 elements (n(A) = n(B) = 3), so they are equivalent; but their elements are different, so they are not equal."],
+["Set Theory: Types of Sets", "If every element of set A is also an element of set B, then A is called a:", ["Subset of B", "Superset of B", "Complement of B", "Power set of B"], 0, "Easy", "A is a subset of B (written A is contained in B) when every element of A also belongs to B."],
+["Set Theory: Types of Sets", "A is called a proper subset of B if:", ["A is a subset of B and A is not equal to B (B has at least one element not in A)", "A = B", "B is a subset of A", "A and B are disjoint"], 0, "Medium", "A proper subset means every element of A is in B, but B contains at least one element that is not in A, so A and B are not identical."],
+["Set Theory: Types of Sets", "The power set of a set A is:", ["The set of all possible subsets of A, including A itself and the empty set", "The set of all elements that are not in A", "The set formed by squaring every element of A", "The largest element in A"], 0, "Medium", "The power set P(A) is the collection of all subsets of A, including the empty set and A itself."],
+["Set Theory: Types of Sets", "If A = {1, 2}, then P(A), the power set of A, is:", ["{empty set, {1}, {2}, {1,2}}", "{{1}, {2}}", "{empty set, {1,2}}", "{1, 2, empty set}"], 0, "Medium", "A has 2 elements, so it has 2^2 = 4 subsets: the empty set, {1}, {2}, and {1,2} itself, all of which form P(A)."],
+["Set Theory: Types of Sets", "If a set A has 4 elements, the total number of subsets of A is:", ["8", "12", "16", "20"], 2, "Medium", "A set with n elements has 2^n subsets. For n = 4, the number of subsets is 2^4 = 16."],
+["Set Theory: Types of Sets", "If n(A) = 5, the number of proper subsets of A is:", ["31", "32", "25", "30"], 0, "Medium", "The number of subsets of a set with n elements is 2^n, and the number of proper subsets excludes the set itself: 2^5 minus 1 = 31."],
+["Set Theory: Types of Sets", "In a given context, the set that contains all the elements under consideration, of which every other set is a subset, is called the:", ["Universal set", "Power set", "Empty set", "Complement set"], 0, "Easy", "The universal set (U) contains all objects relevant to a particular discussion, and every other set considered is treated as a subset of U."],
+["Set Theory: Types of Sets", "If a set A has 6 elements, the number of elements in its power set P(A) is:", ["12", "36", "64", "720"], 2, "Medium", "The number of elements in the power set of a set with n elements is 2^n. For n = 6, n(P(A)) = 2^6 = 64."],
+["Set Theory: Operations", "The union of two sets A and B, written A union B, is the set of elements that:", ["Belong to A or B or both", "Belong to both A and B only", "Belong to A but not B", "Belong to neither A nor B"], 0, "Easy", "A union B contains all elements that are in A, or in B, or in both, each common element being listed only once."],
+["Set Theory: Operations", "If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, then A union B is:", ["{1, 2, 3, 4, 5, 6}", "{3, 4}", "{1, 2, 5, 6}", "{1, 2, 3, 4, 5, 6, 3, 4}"], 0, "Easy", "A union B combines all elements from both sets without repetition: {1, 2, 3, 4, 5, 6}."],
+["Set Theory: Operations", "The intersection of two sets A and B, written A intersection B, is the set of elements that:", ["Belong to both A and B", "Belong to A or B", "Belong to A only", "Belong to neither set"], 0, "Easy", "A intersection B consists only of the elements common to both A and B."],
+["Set Theory: Operations", "If A = {2, 4, 6, 8, 10} and B = {4, 8, 12, 16}, then A intersection B is:", ["{4, 8}", "{2, 4, 6, 8, 10, 12, 16}", "{2, 6, 10}", "{12, 16}"], 0, "Easy", "The elements common to both A and B are 4 and 8, so A intersection B = {4, 8}."],
+["Set Theory: Operations", "Two sets A and B are called disjoint sets if:", ["A intersection B is the empty set (they have no common elements)", "A union B is the empty set", "A = B", "A is a subset of B"], 0, "Easy", "Disjoint sets have no elements in common, so their intersection is the empty set."],
+["Set Theory: Operations", "Which pair of sets is disjoint?", ["A = {1, 3, 5} and B = {2, 4, 6}", "A = {1, 2, 3} and B = {3, 4, 5}", "A = {a, b, c} and B = {b, c, d}", "A = {2, 4} and B = {4, 6}"], 0, "Medium", "A = {1,3,5} and B = {2,4,6} share no common element, so their intersection is empty, making them disjoint; all other pairs share at least one element."],
+["Set Theory: Operations", "The difference A minus B of two sets is the set of elements that:", ["Belong to A but not to B", "Belong to B but not to A", "Belong to both A and B", "Belong to neither A nor B"], 0, "Easy", "A minus B contains elements that are in A but are removed if they also appear in B."],
+["Set Theory: Operations", "If A = {1, 2, 3, 4, 5} and B = {3, 4, 5, 6, 7}, then A minus B is:", ["{1, 2}", "{6, 7}", "{3, 4, 5}", "{1, 2, 6, 7}"], 0, "Medium", "A minus B keeps only the elements of A that are not in B. Removing 3, 4, 5 (common to both) from A leaves {1, 2}."],
+["Set Theory: Operations", "Using A = {1, 2, 3, 4, 5} and B = {3, 4, 5, 6, 7}, the set B minus A is:", ["{6, 7}", "{1, 2}", "{3, 4, 5}", "{1, 2, 3, 4, 5, 6, 7}"], 0, "Medium", "B minus A keeps only the elements of B that are not in A. Removing 3, 4, 5 (common to both) from B leaves {6, 7}."],
+["Set Theory: Operations", "If U is the universal set and A is a subset of U, the complement of A (A') is the set of elements that:", ["Belong to U but not to A", "Belong to A but not to U", "Belong to both A and U", "Are common to A and its subsets"], 0, "Easy", "The complement A' consists of all elements of the universal set U that are not in A."],
+["Set Theory: Operations", "If U = {1,2,3,4,5,6,7,8,9,10} and A = {2,4,6,8,10}, then A' is:", ["{1, 3, 5, 7, 9}", "{2, 4, 6, 8, 10}", "{1, 2, 3, 4, 5}", "The empty set"], 0, "Easy", "A' contains all elements of U not in A. Removing the even numbers 2,4,6,8,10 from U leaves the odd numbers {1,3,5,7,9}."],
+["Set Theory: Operations", "According to De Morgan's Laws, (A union B)' is equal to:", ["A' intersection B'", "A' union B'", "A intersection B", "(A intersection B)'"], 0, "Medium", "De Morgan's first law states that the complement of a union equals the intersection of the complements: (A union B)' = A' intersection B'."],
+["Set Theory: Operations", "According to De Morgan's Laws, (A intersection B)' is equal to:", ["A' union B'", "A' intersection B'", "A union B", "(A union B)'"], 0, "Medium", "De Morgan's second law states that the complement of an intersection equals the union of the complements: (A intersection B)' = A' union B'."],
+["Set Theory: Operations", "For any set A within a universal set U, which of the following is always true?", ["A union A' = U and A intersection A' = empty set", "A union A' = empty set and A intersection A' = U", "A union A' = A and A intersection A' = A", "A union A' = U' and A intersection A' = U"], 0, "Medium", "A set together with its complement covers the entire universal set (A union A' = U), and a set can never share an element with its own complement (A intersection A' = empty set)."],
+["Set Theory: Venn Diagrams", "In a Venn diagram, the region representing A intersection B is shown as:", ["The overlapping region common to both circles A and B", "The entire area covered by both circles", "The area inside circle A only", "The area outside both circles"], 0, "Easy", "The intersection A intersection B is represented by the overlapping (shared) region of the two circles in a Venn diagram."],
+["Set Theory: Venn Diagrams", "In a Venn diagram, the shaded region representing A union B covers:", ["The entire area covered by circles A and B together", "Only the overlapping part of A and B", "Only the part of A that is outside B", "The area outside both circles, within the universal set"], 0, "Easy", "A union B is represented by the total area covered by both circles A and B, including their overlapping region."],
+["Set Theory: Venn Diagrams", "For any two finite sets A and B, the formula for n(A union B) is:", ["n(A) + n(B) minus n(A intersection B)", "n(A) + n(B) + n(A intersection B)", "n(A) minus n(B) + n(A intersection B)", "n(A) times n(B)"], 0, "Easy", "Since elements common to A and B are counted twice when n(A) and n(B) are simply added, the intersection n(A intersection B) is subtracted once to get the correct total."],
+["Set Theory: Venn Diagrams", "If n(A) = 20, n(B) = 15 and n(A intersection B) = 5, then n(A union B) is:", ["30", "35", "40", "25"], 0, "Easy", "Using n(A union B) = n(A) + n(B) minus n(A intersection B) = 20 + 15 minus 5 = 30."],
+["Set Theory: Venn Diagrams", "If n(A) = 25, n(B) = 18 and n(A union B) = 35, then n(A intersection B) is:", ["8", "10", "12", "15"], 0, "Medium", "Rearranging the formula gives n(A intersection B) = n(A) + n(B) minus n(A union B) = 25 + 18 minus 35 = 8."],
+["Set Theory: Venn Diagrams", "If n(A) = 30, n(B) = 20 and n(A intersection B) = 10, the number of elements that belong to A only (and not B) is:", ["20", "10", "30", "40"], 0, "Medium", "Elements in A only = n(A) minus n(A intersection B) = 30 minus 10 = 20."],
+["Set Theory: Venn Diagrams", "For three finite sets A, B and C, the formula for n(A union B union C) is:", ["n(A) + n(B) + n(C) minus n(A∩B) minus n(B∩C) minus n(C∩A) + n(A∩B∩C)", "n(A) + n(B) + n(C) + n(A∩B) + n(B∩C) + n(C∩A) minus n(A∩B∩C)", "n(A) + n(B) + n(C) minus n(A∩B∩C)", "n(A) times n(B) times n(C)"], 0, "Medium", "The three-set union formula adds the individual sets, subtracts each pairwise intersection once to remove double counting, then adds back the triple intersection which was subtracted three times."],
+["Set Theory: Venn Diagrams", "In a class, 40 students play cricket, 30 play football, and 20 students play both games. The number of students who play at least one of the two games is:", ["50", "70", "45", "55"], 0, "Medium", "Using n(C union F) = n(C) + n(F) minus n(C intersection F) = 40 + 30 minus 20 = 50."],
+["Set Theory: Venn Diagrams", "Among 100 students, 45 study Mathematics, 38 study Physics, 21 study Chemistry, 12 study Mathematics and Physics, 9 study Physics and Chemistry, 8 study Mathematics and Chemistry, and 5 study all three subjects. How many students study at least one of the three subjects?", ["80", "85", "90", "76"], 0, "Hard", "Using n(M union P union C) = 45+38+21 minus 12 minus 9 minus 8 plus 5 = 104 minus 29 plus 5 = 80 students study at least one subject."],
+["Set Theory: Venn Diagrams", "In a survey of 60 people, 25 like tea, 30 like coffee, and 10 like both. How many people like neither tea nor coffee?", ["15", "20", "10", "5"], 0, "Medium", "People liking at least one drink = 25 + 30 minus 10 = 45. Those liking neither = total minus at least one = 60 minus 45 = 15."],
+["Set Theory: Venn Diagrams", "If n(A) = 18, n(B) = 22 and n(A intersection B) = 6, the number of elements that belong to exactly one of the two sets (A or B, but not both) is:", ["28", "34", "40", "12"], 0, "Medium", "Elements in exactly one set = n(A) + n(B) minus 2 times n(A intersection B) = 18 + 22 minus 12 = 28, since this excludes the 6 common elements counted in both n(A) and n(B)."],
+["Set Theory: Venn Diagrams", "In a survey of 150 people regarding three newspapers X, Y and Z: 80 read X, 60 read Y, 50 read Z, 30 read X and Y, 20 read Y and Z, 15 read X and Z, and 10 read all three. How many people read none of the three newspapers?", ["15", "20", "25", "10"], 0, "Hard", "Using the three-set formula, n(X union Y union Z) = 80+60+50 minus 30 minus 20 minus 15 plus 10 = 190 minus 65 plus 10 = 135. Those reading none = 150 minus 135 = 15."],
+["Set Theory: Venn Diagrams", "If n(U) = 50, n(A) = 28 and n(A') = 22, this is consistent because:", ["n(A) + n(A') always equals n(U), and 28 + 22 = 50", "n(A) and n(A') must always be equal", "n(A') should equal n(U) minus 2 times n(A)", "n(A intersection A') should equal n(U)"], 0, "Easy", "A set and its complement together make up the entire universal set with no overlap, so n(A) + n(A') = n(U); here 28 + 22 = 50, confirming consistency."],
+["Surveying: Principles", "The fundamental principle of surveying, 'working from the whole to the part', primarily means:", ["Establishing a framework of accurate control points first, then filling in the details", "Measuring the smallest features first before large boundaries", "Surveying only the parts of interest and ignoring the whole area", "Using only whole numbers while recording measurements"], 0, "Easy", "This principle requires establishing a network of precise control points covering the whole area first, and then locating minor/detailed features relative to that framework, which minimises the accumulation of errors."],
+["Surveying: Principles", "The principle of locating a point with respect to two fixed reference points is commonly applied in:", ["Chain surveying, through methods such as offsets and intersection", "Only in GPS-based surveying", "Only in remote sensing", "Only in aerial photography"], 0, "Medium", "In chain surveying, a point's position is fixed relative to two known reference points on a survey line, using methods such as perpendicular offsets or intersection."],
+["Surveying: Types & Classification", "Plane surveying assumes the surface of the Earth to be:", ["Flat, ignoring the curvature of the Earth", "Perfectly spherical", "An ellipsoid with major and minor axes", "Curved, always accounting for curvature"], 0, "Easy", "Plane surveying treats the Earth's surface as a flat plane and ignores its curvature, an assumption valid for surveys covering relatively small areas."],
+["Surveying: Types & Classification", "Geodetic surveying differs from plane surveying mainly because it:", ["Takes the curvature of the Earth into account for large areas", "Is used only for small plots of land", "Never uses triangulation", "Ignores control points entirely"], 0, "Medium", "Geodetic surveying accounts for the Earth's curvature and is used for surveys covering very large areas, unlike plane surveying which assumes a flat surface."],
+["Surveying: Types & Classification", "Chain surveying is most suitable for:", ["Small, fairly flat areas with few obstacles, using linear measurements", "Large hilly terrains with dense forest cover", "Underwater surveys of harbours", "Surveying using only satellite data"], 0, "Easy", "Chain surveying relies on linear (chain/tape) measurements between stations and is best suited for small, relatively flat and open areas free of major obstructions."],
+["Surveying: Types & Classification", "In compass surveying, the direction of survey lines is primarily measured using:", ["A magnetic compass, giving the bearing of each line", "A theodolite only", "Aerial photographs", "GPS receivers only"], 0, "Easy", "Compass surveying uses a magnetic compass to measure the bearing (direction) of each survey line with respect to magnetic north."],
+["Surveying: Types & Classification", "Plane table surveying is a method in which:", ["Field observations and plotting are done simultaneously in the field", "All plotting is done in the office after fieldwork", "Only satellite imagery is used for mapping", "Measurements are taken purely underwater"], 0, "Medium", "In plane table surveying, the surveyor observes and plots the map directly in the field on a drawing board mounted on a tripod, allowing errors to be checked and corrected on the spot."],
+["Surveying: Levelling Basics", "The main purpose of levelling in surveying is to determine:", ["The relative heights or elevations of different points", "The horizontal distance between two points", "The magnetic bearing of a line", "The area enclosed within a boundary"], 0, "Easy", "Levelling is the branch of surveying concerned with finding the relative elevations (heights) of points, generally with reference to a common datum such as mean sea level."],
+["Surveying: Linear Measurements", "One acre is equal to how many guntas?", ["40 guntas", "10 guntas", "100 guntas", "4 guntas"], 0, "Medium", "In traditional Indian land measurement, commonly used in Karnataka, 1 acre is equal to 40 guntas."],
+["Surveying: Linear Measurements", "One hectare is equal to:", ["10,000 square metres", "1,000 square metres", "1 lakh square metres", "100 square metres"], 0, "Easy", "A hectare is a metric unit of area equal to 10,000 square metres (a square of side 100 m by 100 m)."],
+["Surveying: Linear Measurements", "In Karnataka land records, the unit 'cent', used for measuring small plots of land, is equal to approximately:", ["40.46 square metres (1/100th of an acre)", "100 square metres", "1,000 square metres", "4.046 square metres"], 0, "Medium", "A cent is a common local land unit equal to 1/100th of an acre, which works out to approximately 40.46 square metres."],
+["Surveying: Angular Measurements", "The bearing of a survey line is defined as:", ["The horizontal angle that the line makes with a reference meridian, usually measured from north", "The vertical angle of the line above the horizon", "The length of the line measured with a chain", "The angle between two adjacent survey stations only"], 0, "Easy", "Bearing is the horizontal angle between a reference direction (usually true or magnetic north) and the survey line, expressed as a whole circle bearing or quadrantal bearing."],
+["Surveying: Angular Measurements", "Magnetic declination is defined as the angle between:", ["True north and magnetic north at a given place", "Two survey lines meeting at a station", "The horizontal and vertical planes", "A survey line and the equator"], 0, "Medium", "Magnetic declination is the horizontal angle between the true meridian and the magnetic meridian at a particular location, and it varies with location and time."],
+["Surveying: Contours", "A contour line on a map represents:", ["A line joining points of equal elevation above a datum", "A line joining points of equal horizontal distance from a station", "The boundary of a survey plot", "A line showing magnetic declination"], 0, "Easy", "A contour is an imaginary line connecting points that have the same elevation with respect to a reference datum, commonly mean sea level."],
+["Surveying: Contours", "Which of the following statements about contour lines is correct?", ["Closely spaced contour lines indicate steep ground, while widely spaced lines indicate a gentle slope", "Contour lines can freely cross each other on level ground", "Contour lines always form straight lines", "Contour lines have no relation to the ground slope"], 0, "Medium", "The spacing between contour lines reflects the steepness of the terrain: closely spaced contours mean the ground rises or falls sharply, while widely spaced contours indicate a gentle slope."],
+["Surveying: Elevation Calculations", "During levelling, a backsight (BS) reading of 2.855 m is taken on a benchmark of known Reduced Level (RL) 100.000 m. If the foresight (FS) reading on the next point is 1.965 m, the RL of that point is:", ["100.890 m", "98.110 m", "102.965 m", "99.110 m"], 0, "Medium", "Height of Instrument = RL of BM + BS = 100.000 + 2.855 = 102.855 m. RL of next point = HI minus FS = 102.855 minus 1.965 = 100.890 m."],
+["Surveying: Levelling Basics", "The instrument primarily used for direct levelling to determine differences in elevation is the:", ["Dumpy level, used with a levelling staff", "Prismatic compass", "Plane table", "Chain"], 0, "Easy", "Direct (spirit) levelling uses a dumpy level (or auto level) mounted on a tripod, together with a graduated levelling staff, to measure differences in elevation between points."],
+["Surveying: Photogrammetry", "Photogrammetry is best defined as the science of:", ["Obtaining reliable measurements and maps from photographs, especially aerial photographs", "Measuring magnetic declination using photographs", "Only printing survey maps on photographic paper", "Using a compass to take angular readings"], 0, "Easy", "Photogrammetry is the technique of obtaining accurate measurements, maps and 3D information about objects and terrain from photographs, most commonly aerial or satellite images."],
+["Surveying: Photogrammetry", "A vertical aerial photograph is one that is taken with the camera axis:", ["Pointing vertically downward, as close to vertical as possible", "Pointing horizontally, parallel to the ground", "Tilted at exactly 45 degrees to the vertical", "Pointing directly at the horizon"], 0, "Medium", "A vertical aerial photograph is captured with the camera's optical axis held as near vertical (pointing straight down) as practically possible, minimising tilt distortion."],
+["Surveying: Photogrammetry", "Stereoscopy in photogrammetry is used mainly to:", ["View a pair of overlapping photographs to perceive the terrain in three dimensions", "Increase the resolution of a single photograph", "Measure magnetic bearings from a photograph", "Convert raster data into vector data"], 0, "Medium", "Stereoscopy uses a pair of overlapping photographs, taken from slightly different positions, viewed together so the observer perceives depth and the terrain appears three-dimensional."],
+["Surveying: Drone/UAV Surveying", "One of the main advantages of drone/UAV surveying over conventional piloted aerial photography is:", ["Low-altitude, high-resolution data capture at comparatively low cost and quick turnaround", "It can only be used at night", "It eliminates the need for any ground control points under all circumstances", "It cannot be used for cadastral mapping at all"], 0, "Easy", "UAV/drone surveys can fly at low altitude to capture very high-resolution imagery quickly and relatively cheaply compared to piloted aircraft, making them popular for small-to-medium area surveys including cadastral mapping."],
+["Surveying: Flight Planning", "In aerial/drone flight planning, 'forward overlap' and 'side overlap' between successive photographs are maintained mainly to:", ["Ensure complete stereoscopic coverage of the area and enable accurate photogrammetric processing", "Reduce the total number of photographs required to zero overlap", "Avoid the need for ground control points entirely", "Increase the flying speed of the aircraft"], 0, "Medium", "Sufficient forward and side overlap between photographs ensures that every point on the ground appears in at least two photographs, which is essential for stereoscopic viewing and accurate photogrammetric processing such as orthomosaic generation."],
+["Surveying: Orthomosaic Mapping", "An orthomosaic map, generated from drone or aerial imagery, is best described as:", ["A single, geometrically corrected and georeferenced image formed by stitching multiple overlapping photographs", "A raw, unprocessed single aerial photograph", "A magnetic bearing chart", "A contour map drawn manually in the field"], 0, "Medium", "An orthomosaic is created by stitching together many overlapping aerial/drone photographs after correcting for lens distortion, tilt and terrain relief, producing a single accurate, to-scale, georeferenced image."],
+["Surveying: Ground Control Points", "Ground Control Points (GCPs) are used in photogrammetric and drone surveys mainly to:", ["Provide accurately known ground coordinates that help georeference and improve the accuracy of the final map", "Mark the take-off and landing points of the drone", "Measure the wind speed during flight", "Replace the need for any camera on the drone"], 0, "Medium", "GCPs are points on the ground with precisely known coordinates, usually measured by GNSS/RTK survey, that are identifiable in the imagery and used to georeference photographs, significantly improving the positional accuracy of the resulting map."],
+["Surveying: Cadastral Mapping", "Cadastral mapping refers to mapping that primarily shows:", ["Property/land parcel boundaries and ownership-related details", "Only the contour lines of a region", "Only the vegetation cover of an area", "Only the magnetic field variations of a region"], 0, "Easy", "Cadastral maps record the boundaries, dimensions and ownership details of individual land parcels, forming the basis of land revenue and registration records."],
+["Surveying: Remote Sensing", "Remote sensing is best defined as the technique of:", ["Acquiring information about an object or area without being in physical contact with it, usually using electromagnetic radiation", "Measuring ground distances using a chain", "Establishing survey control points using a theodolite", "Recording land records manually in a register"], 0, "Easy", "Remote sensing involves collecting information about the Earth's surface using sensors that detect reflected or emitted electromagnetic radiation, without any direct physical contact with the object being observed."],
+["Surveying: Remote Sensing", "Spatial resolution of a satellite image refers to:", ["The smallest size of ground feature that can be distinctly identified in the image (pixel size)", "The number of spectral bands captured by the sensor", "The time interval between two successive satellite passes over the same area", "The radiometric brightness range of the image"], 0, "Medium", "Spatial resolution describes the ground area represented by a single pixel; a higher spatial resolution (smaller pixel size) allows smaller ground features to be distinguished."],
+["Surveying: Remote Sensing", "Spectral resolution of a remote sensing sensor refers to:", ["The sensor's ability to distinguish different wavelength intervals (bands) of the electromagnetic spectrum", "The smallest ground feature the sensor can detect", "The frequency with which the satellite revisits the same area", "The size of the satellite's solar panels"], 0, "Medium", "Spectral resolution refers to the number and width of distinct wavelength bands a sensor can detect and differentiate; finer spectral resolution allows better discrimination between different materials or land cover types."],
+["Surveying: Remote Sensing", "In remote sensing, sensors that detect naturally reflected or emitted electromagnetic radiation, such as sunlight reflected from the Earth, without emitting their own energy are called:", ["Passive sensors", "Active sensors", "Digital sensors only", "Photogrammetric sensors only"], 0, "Medium", "Passive sensors record naturally available energy, usually sunlight reflected off the Earth's surface, whereas active sensors, such as radar, emit their own energy signal and measure what is reflected back."],
+["Surveying: Remote Sensing", "Satellite communication plays a role in modern surveying mainly by:", ["Transmitting positioning and correction signals used by GNSS-based survey instruments", "Directly measuring the area of land parcels", "Replacing the need for coordinate systems", "Physically marking boundary pillars on the ground"], 0, "Medium", "Satellite communication underpins GNSS positioning by transmitting timing and orbital signals from satellites to receivers, and also carries correction data, as in DGPS/RTK/CORS networks, that surveyors rely on for accurate positioning."],
+["Surveying: GNSS & Positioning", "GNSS stands for:", ["Global Navigation Satellite System", "Global Network Survey Station", "General National Survey Standard", "Ground Navigation Support System"], 0, "Easy", "GNSS (Global Navigation Satellite System) is the general term for satellite-based positioning systems, of which the American GPS is one example; others include GLONASS, Galileo, BeiDou and India's NavIC."],
+["Surveying: GNSS & Positioning", "The GPS/GNSS system is generally described as consisting of three main segments: space, control and:", ["User segment", "Ground segment only", "Data segment", "Photogrammetric segment"], 0, "Easy", "GNSS architecture is divided into the space segment (satellites), the control segment (ground monitoring/control stations) and the user segment (receivers used by surveyors and other users)."],
+["Surveying: GNSS & Positioning", "The space segment of GNSS consists of:", ["The constellation of satellites orbiting the Earth and transmitting positioning signals", "The ground-based control stations that monitor satellites", "The GPS receivers used by surveyors in the field", "The software used to process survey data"], 0, "Easy", "The space segment refers to the satellite constellation in orbit around the Earth that continuously broadcasts navigation signals used for positioning."],
+["Surveying: GNSS & Positioning", "The control segment of GNSS is responsible for:", ["Monitoring and maintaining the satellites, and updating their orbital and clock data", "Manufacturing GNSS receivers", "Recording land ownership details", "Drawing cadastral maps"], 0, "Medium", "The control segment consists of ground stations that track the satellites, monitor their health and orbits, and periodically upload corrected orbital and clock data to keep the system accurate."],
+["Surveying: GNSS & Positioning", "The user segment of GNSS refers to:", ["The GNSS receivers and associated equipment used by surveyors and other end users to determine position", "The satellites transmitting the signals", "The ground control stations monitoring the satellites", "The software used to design cadastral maps"], 0, "Easy", "The user segment comprises the receivers, such as handheld units, rovers and base stations, and related equipment used by surveyors, navigators and other end users to receive satellite signals and compute their position."],
+["Surveying: DGPS", "DGPS (Differential GPS) improves positional accuracy mainly by:", ["Using correction data from a fixed reference (base) station at a known location to correct rover receiver readings", "Increasing the number of satellites in orbit", "Eliminating the need for any ground control points in aerial surveys", "Replacing GPS satellites with ground-based radio towers entirely"], 0, "Medium", "DGPS uses a base station at a precisely known location to compute the error in GPS signals and broadcast correction data to rover receivers, significantly improving positional accuracy compared to standalone GPS."],
+["Surveying: RTK", "RTK (Real-Time Kinematic) GNSS surveying is valued for providing:", ["Centimetre-level positional accuracy in real time, using carrier-phase corrections from a base station or network", "Only rough metre-level accuracy suitable for navigation", "Accuracy that improves only after several days of post-processing", "Accuracy that works without any satellite signal at all"], 0, "Medium", "RTK uses real-time carrier-phase corrections transmitted from a base station or CORS network to a rover receiver, achieving centimetre-level positional accuracy instantly in the field, unlike standard GPS or DGPS."],
+["Surveying: RTK & Boundary Demarcation", "High-accuracy real-time positioning using RTK GNSS is particularly valuable in surveying for:", ["Precise boundary demarcation and land re-survey work", "Only weather forecasting", "Only satellite communication testing", "Only measuring magnetic declination"], 0, "Easy", "The centimetre-level accuracy of RTK GNSS makes it especially suitable for precisely marking and re-establishing land parcel boundaries, which is critical in cadastral resurvey work."],
+["Surveying: Karnataka CORS Network", "The Karnataka State CORS (Continuously Operating Reference Station) Network is primarily set up to:", ["Provide continuous GNSS correction signals across the state to enable high-accuracy real-time positioning for land surveys", "Broadcast television signals across Karnataka", "Monitor rainfall and weather patterns only", "Replace the need for land revenue records entirely"], 0, "Medium", "Karnataka's CORS network consists of permanently installed reference stations that continuously track GNSS satellites and provide correction data over the internet/mobile network, enabling surveyors anywhere in its coverage area to achieve RTK-level accuracy without setting up their own base station."],
+["Surveying: CORS Architecture", "In a CORS network architecture, individual reference stations are typically connected to a central processing facility that:", ["Computes and distributes correction data to rover receivers in the field, often via internet or mobile data", "Physically travels to each survey site to take manual readings", "Only stores data without any distribution to users", "Replaces the GNSS satellites in orbit"], 0, "Medium", "A CORS network's central hub collects data continuously from all reference stations, computes network-based corrections, and streams them to field surveyors' rover receivers, commonly via mobile internet, enabling RTK-level accuracy without an individually set-up base station."],
+["Surveying: CORS in Karnataka Land Re-surveys", "In Karnataka's land re-survey programme, the CORS network is primarily used to:", ["Enable rapid, high-accuracy GNSS-based measurement of land parcel boundaries during resurvey", "Print physical land record documents", "Replace the Bhoomi portal entirely", "Conduct soil fertility testing"], 0, "Medium", "Karnataka's land re-survey programme uses CORS-based RTK GNSS positioning to quickly and accurately measure land parcel boundaries in the field, which are then used to update digital cadastral records."],
+["Surveying: GIS", "In GIS, vector data represents geographic features using:", ["Points, lines and polygons defined by coordinate geometry", "A grid of cells (pixels), each holding a value", "Only satellite images", "Only text-based attribute tables"], 0, "Easy", "Vector data models represent geographic features as discrete points, lines and polygons, each defined precisely by x, y coordinates."],
+["Surveying: GIS", "In GIS, raster data represents geographic information as:", ["A grid of uniformly sized cells (pixels), each storing a value for that location", "A set of points connected by straight lines only", "A table of land ownership records", "A single vector polygon covering the whole study area"], 0, "Easy", "Raster data divides an area into a regular grid of cells (pixels), with each cell holding a value representing an attribute such as elevation, land cover or reflectance, commonly used for satellite imagery and elevation models."],
+["Surveying: GIS Digitization", "In GIS, the process of converting a scanned paper map or image into digital vector features (points, lines, polygons) is called:", ["Digitization", "Geo-referencing", "Spatial analysis", "Attribute tabulation"], 0, "Medium", "Digitization is the process of tracing features from a scanned map or image to create digital vector data that a GIS can store, display and analyse."],
+["Surveying: GIS Geo-referencing", "Geo-referencing in GIS refers to the process of:", ["Aligning a spatial dataset, such as a scanned map or image, to real-world coordinates using a known coordinate system", "Converting vector data into raster data only", "Deleting unwanted attribute fields from a table", "Printing a map at a specific paper size"], 0, "Medium", "Geo-referencing assigns real-world map coordinates, in a defined coordinate system or map projection, to a spatial dataset, so it aligns correctly with other geographic data."],
+["Surveying: GIS Layering", "In GIS, the practice of organising different types of geographic data, such as roads, parcels and land use, as separate overlapping data sets that can be combined is called:", ["Layering", "Digitization", "Photogrammetric processing", "Levelling"], 0, "Easy", "GIS organises data into separate 'layers', such as roads, parcels, contours and land use, which can be overlaid and combined for spatial analysis, such as identifying which parcels are affected by a proposed road."],
+["Surveying: GIS Software", "QGIS and ArcGIS are examples of:", ["GIS software used for capturing, storing, analysing and displaying spatial data", "Total station survey instruments", "GNSS satellite systems", "Aerial camera models used for photogrammetry"], 0, "Easy", "QGIS, a free and open-source GIS, and ArcGIS, a proprietary commercial GIS by Esri, are widely used software applications for creating, editing, analysing and visualising spatial (map-based) data."],
+["Surveying: CAD for Surveyors", "AutoCAD is widely used by surveyors mainly for:", ["Drafting and editing precise digital maps and drawings of land, such as parcel boundaries and layouts", "Measuring magnetic declination in the field", "Collecting GNSS satellite signals", "Conducting remote sensing image classification"], 0, "Easy", "AutoCAD is computer-aided design (CAD) software used by surveyors to draft, edit and manage precise digital maps and drawings, such as boundary plans and layout maps, often exported in formats like DXF or DWG."],
+["Surveying: CAD File Formats", "DXF and DWG are both file formats primarily associated with:", ["CAD drawings, used to store and exchange vector-based maps/drawings", "Raster satellite imagery only", "GNSS correction broadcasts", "Land revenue payment receipts"], 0, "Medium", "DWG is the native binary file format of AutoCAD, while DXF (Drawing Exchange Format) is an open format designed to allow CAD drawing data to be exchanged between different software packages; both are used to store vector-based survey and design drawings."],
+["Surveying: Karnataka Land Record Systems", "In Karnataka, the Bhoomi portal is primarily associated with:", ["Computerised management and issuance of land records (Record of Rights, Tenancy and Crops)", "Weather forecasting for farmers", "Issuing driving licences", "Municipal property tax collection only"], 0, "Easy", "Bhoomi is Karnataka's flagship e-governance project for computerising land records, allowing farmers and landowners to access their RTC (Record of Rights, Tenancy and Crops) online, replacing the earlier manual record-keeping system."]
+];
+
+var LETTERS = ['A','B','C','D'];
+
+/* =========================================================
+   STATE
+========================================================= */
+var app = document.getElementById('app');
+var status = {};          // per-question status, keyed by qId (index in Q)
+var activeIndices = [];    // ordered list of qIds in the current run
+var currentPos = 0;        // position within activeIndices
+var timerInterval = null;
+var remainingSeconds = 0;
+var examStartTs = null;
+var questionStartTs = null;
+var screen = 'start';      // start | exam | result
+var isPractice = false;    // true when running a retry/practice subset
+var practiceLabel = '';
+var resultData = null;     // cached computed results after submission
+var activeTab = 'summary';
+var reviewFilter = 'all';
+
+function freshStatus(){
+  return { selected:null, visited:false, answered:false, marked:false, timeSpent:0, attempts:0 };
+}
+
+function initStatuses(){
+  status = {};
+  for(var i=0;i<Q.length;i++){ status[i] = freshStatus(); }
+}
+
+/* =========================================================
+   DIFFICULTY CLASSIFIER (derived at runtime from question
+   wording — the question database itself is never altered)
+========================================================= */
+function classifyDifficulty(item){
+  return item[4] || 'Medium';
+}
+
+/* =========================================================
+   RANDOMIZATION — shuffles question order and, within each
+   question, the option order (remapping the correct index so
+   scoring stays accurate). Runs fresh each time a full test is
+   started, so every attempt sees a different arrangement.
+========================================================= */
+function shuffleArray(arr){
+  for(var i=arr.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+  }
+  return arr;
+}
+function shuffleQuestionOptions(){
+  Q.forEach(function(item){
+    var opts = item[2], correct = item[3];
+    var order = opts.map(function(_,i){return i;});
+    shuffleArray(order);
+    item[2] = order.map(function(i){return opts[i];});
+    item[3] = order.indexOf(correct);
+  });
+}
+
+/* =========================================================
+   UTIL
+========================================================= */
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fmtTime(sec){
+  sec = Math.max(0, Math.round(sec));
+  var m = Math.floor(sec/60), s = sec%60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+function el(html){
+  var d=document.createElement('div');
+  d.innerHTML=html.trim();
+  return d.firstChild;
+}
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+function renderStart(){
+  screen='start';
+  var negChecked = CONFIG.negativeMarking.enabled ? 'checked' : '';
+  app.innerHTML =
+  '<div class="start-wrap">'+
+    '<h1>'+esc(CONFIG.examName)+'</h1>'+
+    '<h2>'+esc(CONFIG.subjectName)+'</h2>'+
+    '<div class="start-grid">'+
+      '<div class="start-card"><div class="lbl">Total Questions</div><div class="val">'+Q.length+'</div></div>'+
+      '<div class="start-card"><div class="lbl">Duration</div><div class="val">'+CONFIG.durationMinutes+' minutes</div></div>'+
+      '<div class="start-card"><div class="lbl">Marks / Question</div><div class="val">+'+CONFIG.marksPerQuestion+'</div></div>'+
+      '<div class="start-card"><div class="lbl">Negative Marking</div><div class="val" id="neg-val">'+(CONFIG.negativeMarking.enabled?('-'+CONFIG.negativeMarking.value):'Off')+'</div></div>'+
+    '</div>'+
+    '<ul class="instructions">'+
+      '<li>The test contains '+Q.length+' multiple-choice questions across several topics.</li>'+
+      '<li>Each question has four options (A–D); choose the single best answer.</li>'+
+      '<li>Use <b>Save &amp; Next</b> / <b>Next</b> / <b>Previous</b> to move between questions, or click any number on the palette to jump directly.</li>'+
+      '<li><b>Mark for Review</b> flags a question and moves you to the next one; you can return to it any time.</li>'+
+      '<li>The test will auto-submit when the timer reaches zero.</li>'+
+      '<li>Keyboard shortcuts: <b>1–4</b> select an option, <b>←/→</b> move between questions, <b>N</b> next, <b>P</b> previous, <b>M</b> mark for review.</li>'+
+    '</ul>'+
+    '<div class="toggle-row"><label><input type="checkbox" id="neg-toggle" '+negChecked+'> Enable negative marking (-'+CONFIG.negativeMarking.value+' per wrong answer)</label></div>'+
+    '<button class="btn-primary" id="start-btn">Start Test</button>'+
+  '</div>';
+  document.getElementById('neg-toggle').addEventListener('change', function(e){
+    CONFIG.negativeMarking.enabled = e.target.checked;
+    document.getElementById('neg-val').textContent = CONFIG.negativeMarking.enabled ? ('-'+CONFIG.negativeMarking.value) : 'Off';
+  });
+  document.getElementById('start-btn').addEventListener('click', startFullExam);
+}
+
+function startFullExam(){
+  shuffleQuestionOptions();
+  initStatuses();
+  activeIndices = shuffleArray(Q.map(function(_,i){return i;}));
+  currentPos = 0;
+  isPractice = false;
+  practiceLabel = '';
+  remainingSeconds = CONFIG.durationMinutes*60;
+  examStartTs = Date.now();
+  startTimer();
+  renderExamScreen();
+}
+
+/* =========================================================
+   TIMER
+========================================================= */
+function startTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  if(isPractice) return; // practice/retry mode is untimed
+  timerInterval = setInterval(function(){
+    remainingSeconds--;
+    updateTimerDisplay();
+    if(remainingSeconds<=0){
+      clearInterval(timerInterval);
+      submitTest(true);
+    }
+  },1000);
+}
+function stopTimer(){ if(timerInterval) clearInterval(timerInterval); }
+function updateTimerDisplay(){
+  var t = document.getElementById('timer-display');
+  if(!t) return;
+  t.textContent = isPractice ? 'PRACTICE (untimed)' : fmtTime(remainingSeconds);
+  t.classList.toggle('low', !isPractice && remainingSeconds<=120);
+}
+
+/* =========================================================
+   EXAM SCREEN
+========================================================= */
+function currentQid(){ return activeIndices[currentPos]; }
+
+function commitTimeSpent(){
+  if(questionStartTs!==null){
+    var qid = currentQid();
+    if(qid!==undefined && status[qid]){
+      status[qid].timeSpent += (Date.now()-questionStartTs)/1000;
+    }
+  }
+  questionStartTs = Date.now();
+}
+
+function renderExamScreen(){
+  screen='exam';
+  var qid = currentQid();
+  status[qid].visited = true;
+  questionStartTs = Date.now();
+
+  var answeredCount=0, visitedCount=0, markedCount=0, notVisited=0;
+  activeIndices.forEach(function(id){
+    var st=status[id];
+    if(st.marked) markedCount++;
+    else if(st.answered) answeredCount++;
+    else if(st.visited) visitedCount++;
+    else notVisited++;
+  });
+
+  var html = '';
+  html += '<div class="exam-header">';
+  html +=   '<div class="titles"><h1>'+esc(CONFIG.examName)+'</h1><h2>'+esc(CONFIG.subjectName)+(isPractice?(' — '+esc(practiceLabel)):'')+'</h2></div>';
+  html +=   '<div class="mid">';
+  html +=     '<span>Question <b>'+(currentPos+1)+'</b> / '+activeIndices.length+'</span>';
+  html +=     '<span class="timer" id="timer-display">'+(isPractice?'PRACTICE (untimed)':fmtTime(remainingSeconds))+'</span>';
+  html +=     '<button class="palette-toggle" id="palette-toggle-btn">Palette</button>';
+  html +=   '</div>';
+  html += '</div>';
+  html += '<div class="progress-track"><div class="progress-fill" style="width:'+Math.round(((currentPos+1)/activeIndices.length)*100)+'%"></div></div>';
+  if(isPractice){
+    html += '<div class="practice-banner">Practice mode — '+esc(practiceLabel)+'. This run is untimed and separate from your main result.</div>';
+  }
+  html += '<div class="exam-body">';
+  html +=   '<div class="qcol" id="qcol"></div>';
+  html +=   '<div class="palette" id="palette"></div>';
+  html += '</div>';
+  html += '<div class="bottom-bar">';
+  html +=   '<button id="btn-prev" '+(currentPos===0?'disabled':'')+'>Previous</button>';
+  html +=   '<button id="btn-clear" class="bb-clear">Clear Response</button>';
+  html +=   '<button id="btn-mark" class="bb-warn">Mark for Review</button>';
+  html +=   '<button id="btn-save" class="bb-primary">Save &amp; Next</button>';
+  html +=   '<button id="btn-next" '+(currentPos===activeIndices.length-1?'disabled':'')+'>Next</button>';
+  html +=   '<button id="btn-submit" class="bb-submit">Submit Test</button>';
+  html += '</div>';
+
+  app.innerHTML = html;
+  renderQuestion();
+  renderPalette();
+
+  document.getElementById('btn-prev').addEventListener('click', goPrev);
+  document.getElementById('btn-next').addEventListener('click', goNext);
+  document.getElementById('btn-save').addEventListener('click', goNext);
+  document.getElementById('btn-clear').addEventListener('click', clearResponse);
+  document.getElementById('btn-mark').addEventListener('click', markForReview);
+  document.getElementById('btn-submit').addEventListener('click', requestSubmit);
+  var pt = document.getElementById('palette-toggle-btn');
+  if(pt) pt.addEventListener('click', function(){
+    document.getElementById('palette').classList.toggle('open');
+  });
+}
+
+function renderQuestion(){
+  var qid = currentQid();
+  var item = Q[qid];
+  var st = status[qid];
+  var qcol = document.getElementById('qcol');
+
+  var statusLabel = st.marked ? '<span class="qstatus" style="background:var(--amber-bg);color:var(--amber)">Marked for review</span>'
+    : st.answered ? '<span class="qstatus" style="background:var(--green-bg);color:var(--green)">Answered</span>'
+    : '<span class="qstatus" style="background:var(--red-bg);color:var(--red)">Not answered</span>';
+
+  var html = '<div class="qmeta">Question '+(currentPos+1)+' of '+activeIndices.length+'<span class="qtopic">'+esc(item[0])+'</span>'+statusLabel+'</div>';
+  html += '<div class="qtext">'+esc(item[1])+'</div>';
+  item[2].forEach(function(optText,i){
+    var sel = (st.selected===i) ? ' selected' : '';
+    html += '<button class="opt'+sel+'" data-i="'+i+'"><span class="oletter">'+LETTERS[i]+'.</span><span>'+esc(optText)+'</span></button>';
+  });
+  qcol.innerHTML = html;
+
+  qcol.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      selectOption(parseInt(btn.getAttribute('data-i'),10));
+    });
+  });
+}
+
+function renderPalette(){
+  var pal = document.getElementById('palette');
+  if(!pal) return;
+  var answeredCount=0, visitedCount=0, markedCount=0, notVisited=0;
+  var html = '<h3>Question Palette</h3>';
+  html += '<div class="legend">'+
+    '<div><span class="sw" style="background:var(--white)"></span>Not visited</div>'+
+    '<div><span class="sw" style="background:var(--red-bg);border-color:var(--red)"></span>Not answered</div>'+
+    '<div><span class="sw" style="background:var(--green-bg);border-color:var(--green)"></span>Answered</div>'+
+    '<div><span class="sw" style="background:var(--amber-bg);border-color:var(--amber-border)"></span>Marked</div>'+
+  '</div>';
+  html += '<div class="pgrid">';
+  activeIndices.forEach(function(id,pos){
+    var st = status[id];
+    var cls = 'notvisited';
+    if(st.marked){ cls='marked'; markedCount++; }
+    else if(st.answered){ cls='answered'; answeredCount++; }
+    else if(st.visited){ cls='visited'; visitedCount++; }
+    else { notVisited++; }
+    var cur = (pos===currentPos) ? ' current' : '';
+    html += '<button class="pnum '+cls+cur+'" data-pos="'+pos+'">'+(pos+1)+'</button>';
+  });
+  html += '</div>';
+  html += '<div class="palette-summary">'+
+    '<div><span>Answered</span><span>'+answeredCount+'</span></div>'+
+    '<div><span>Not answered</span><span>'+visitedCount+'</span></div>'+
+    '<div><span>Marked</span><span>'+markedCount+'</span></div>'+
+    '<div><span>Not visited</span><span>'+notVisited+'</span></div>'+
+  '</div>';
+  pal.innerHTML = html;
+  pal.querySelectorAll('.pnum').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goToPosition(parseInt(btn.getAttribute('data-pos'),10));
+      pal.classList.remove('open');
+    });
+  });
+}
+
+function selectOption(i){
+  var qid = currentQid();
+  var st = status[qid];
+  st.selected = i;
+  st.answered = true;
+  st.attempts++;
+  renderQuestion();
+  renderPalette();
+}
+
+function clearResponse(){
+  var qid = currentQid();
+  var st = status[qid];
+  st.selected = null;
+  st.answered = false;
+  renderQuestion();
+  renderPalette();
+}
+
+function markForReview(){
+  var qid = currentQid();
+  status[qid].marked = !status[qid].marked;
+  goNext(true);
+}
+
+function goToPosition(pos){
+  if(pos<0 || pos>=activeIndices.length) return;
+  commitTimeSpent();
+  currentPos = pos;
+  renderExamScreen();
+}
+
+function goNext(fromMark){
+  commitTimeSpent();
+  if(currentPos < activeIndices.length-1){
+    currentPos++;
+    renderExamScreen();
+  } else if(!fromMark){
+    renderExamScreen();
+  } else {
+    renderExamScreen();
+  }
+}
+
+function goPrev(){
+  commitTimeSpent();
+  if(currentPos>0){
+    currentPos--;
+    renderExamScreen();
+  }
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+function showModal(message, onConfirm, confirmLabel, cancelLabel){
+  var overlay = el('<div class="modal-overlay"><div class="modal-box"><p></p><div class="modal-actions"><button class="btn-ghost" id="modal-cancel">'+esc(cancelLabel||'Cancel')+'</button><button class="btn-primary" id="modal-confirm">'+esc(confirmLabel||'Confirm')+'</button></div></div></div>');
+  overlay.querySelector('p').textContent = message;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#modal-cancel').addEventListener('click', function(){ document.body.removeChild(overlay); });
+  overlay.querySelector('#modal-confirm').addEventListener('click', function(){
+    document.body.removeChild(overlay);
+    onConfirm();
+  });
+}
+
+/* =========================================================
+   SUBMISSION
+========================================================= */
+function countUnanswered(){
+  var n=0;
+  activeIndices.forEach(function(id){ if(!status[id].answered) n++; });
+  return n;
+}
+
+function requestSubmit(){
+  var unanswered = countUnanswered();
+  var msg = unanswered>0
+    ? ('You still have '+unanswered+' unanswered question'+(unanswered===1?'':'s')+'. Do you want to submit the test now?')
+    : 'All questions are answered. Submit the test now?';
+  showModal(msg, function(){ submitTest(false); }, 'Submit Test', 'Continue Test');
+}
+
+function submitTest(auto){
+  commitTimeSpent();
+  stopTimer();
+  resultData = computeResults();
+  if(isPractice){
+    renderPracticeResult();
+  } else {
+    activeTab = 'summary';
+    reviewFilter = 'all';
+    renderResultDashboard();
+  }
+}
+
+/* =========================================================
+   RESULTS COMPUTATION
+========================================================= */
+function computeResults(){
+  var total = activeIndices.length;
+  var correct=0, wrong=0, attempted=0, timeTotal=0;
+  var topicStats = {};
+  var diffStats = { Easy:{c:0,w:0,t:0}, Medium:{c:0,w:0,t:0}, Hard:{c:0,w:0,t:0} };
+
+  activeIndices.forEach(function(id){
+    var item = Q[id], st = status[id];
+    var topic = item[0];
+    if(!topicStats[topic]) topicStats[topic] = {c:0,w:0,t:0};
+    topicStats[topic].t++;
+    var diff = classifyDifficulty(item);
+    diffStats[diff].t++;
+    timeTotal += st.timeSpent;
+    if(st.answered){
+      attempted++;
+      if(st.selected===item[3]){
+        correct++; topicStats[topic].c++; diffStats[diff].c++;
+      } else {
+        wrong++; topicStats[topic].w++; diffStats[diff].w++;
+      }
+    }
+  });
+
+  var unattempted = total - attempted;
+  var rawScore = correct*CONFIG.marksPerQuestion - (CONFIG.negativeMarking.enabled ? wrong*CONFIG.negativeMarking.value : 0);
+  var maxScore = total*CONFIG.marksPerQuestion;
+  var percentage = maxScore>0 ? (rawScore/maxScore*100) : 0;
+  var accuracy = attempted>0 ? (correct/attempted*100) : 0;
+  var timeTakenSec = isPractice ? timeTotal : Math.max(0, CONFIG.durationMinutes*60 - remainingSeconds);
+  var avgTimePerQ = attempted>0 ? (timeTakenSec/attempted) : 0;
+
+  return {
+    total: total, correct: correct, wrong: wrong, attempted: attempted, unattempted: unattempted,
+    rawScore: rawScore, maxScore: maxScore, percentage: percentage, accuracy: accuracy,
+    timeTakenSec: timeTakenSec, avgTimePerQ: avgTimePerQ,
+    topicStats: topicStats, diffStats: diffStats
+  };
+}
+
+/* =========================================================
+   PRACTICE (RETRY) RESULT — lightweight summary
+========================================================= */
+function renderPracticeResult(){
+  screen='result';
+  var r = resultData;
+  var html = '<div class="result-wrap">';
+  html += '<div class="result-head"><p>Practice complete — '+esc(practiceLabel)+'</p><div class="big">'+r.correct+' / '+r.total+'</div><p>'+Math.round(r.percentage)+'% correct in this practice set</p></div>';
+  html += '<div class="smart-row" style="justify-content:center;margin-top:20px">';
+  html += '<button class="btn-primary" id="back-dash">Back to Full Result</button>';
+  html += '<button class="btn-secondary" id="retry-again">Retry This Set Again</button>';
+  html += '</div></div>';
+  app.innerHTML = html;
+  document.getElementById('back-dash').addEventListener('click', function(){
+    isPractice=false; practiceLabel=''; renderResultDashboard();
+  });
+  document.getElementById('retry-again').addEventListener('click', function(){
+    var ids = activeIndices.slice();
+    startPracticeRun(ids, practiceLabel);
+  });
+}
+
+function startPracticeRun(ids, label){
+  ids.forEach(function(id){ status[id] = freshStatus(); });
+  activeIndices = ids;
+  currentPos = 0;
+  isPractice = true;
+  practiceLabel = label;
+  remainingSeconds = 0;
+  startTimer();
+  renderExamScreen();
+}
+
+/* =========================================================
+   RESULT DASHBOARD (main test)
+========================================================= */
+function readinessLabel(pct){
+  if(pct>=80) return 'Exam ready — strong overall command of the syllabus.';
+  if(pct>=60) return 'Good foundation — a bit more revision will get you exam-ready.';
+  if(pct>=40) return 'Moderate — focused revision of weak topics is recommended.';
+  return 'Needs significant revision before attempting the real exam.';
+}
+
+function renderResultDashboard(){
+  screen='result';
+  var r = resultData;
+  var html = '<div class="result-wrap">';
+  html += '<div class="result-head"><p>Test complete</p><div class="big">'+r.rawScore.toFixed(2)+' / '+r.maxScore+'</div><p>'+Math.round(r.percentage)+'% overall</p></div>';
+
+  html += '<div style="text-align:center;margin:6px 0 18px"><button class="btn-secondary" id="btn-download-pdf">📄 DOWNLOAD QUESTION PAPER &amp; ANSWER KEY</button></div>';
+
+  html += '<div class="stat-grid">';
+  html += statCard(r.correct,'Correct');
+  html += statCard(r.wrong,'Wrong');
+  html += statCard(r.attempted,'Attempted');
+  html += statCard(r.unattempted,'Unattempted');
+  html += statCard(Math.round(r.accuracy)+'%','Accuracy');
+  html += statCard(Math.round(r.percentage)+'%','Percentage');
+  html += statCard(fmtTime(r.timeTakenSec),'Time Taken');
+  html += statCard(fmtTime(r.avgTimePerQ),'Avg / Question');
+  html += '</div>';
+
+  html += '<div class="tabs">'+
+    tabBtn('summary','Summary')+
+    tabBtn('topic','Topic Analysis')+
+    tabBtn('difficulty','Difficulty Analysis')+
+    tabBtn('review','Question Review')+
+    tabBtn('performance','Performance Analysis')+
+    tabBtn('actions','Smart Actions')+
+  '</div>';
+
+  html += '<div class="tab-panel'+(activeTab==='summary'?' active':'')+'" id="panel-summary">'+summaryPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='topic'?' active':'')+'" id="panel-topic">'+topicPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='difficulty'?' active':'')+'" id="panel-difficulty">'+difficultyPanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='review'?' active':'')+'" id="panel-review">'+reviewPanelHtml()+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='performance'?' active':'')+'" id="panel-performance">'+performancePanelHtml(r)+'</div>';
+  html += '<div class="tab-panel'+(activeTab==='actions'?' active':'')+'" id="panel-actions">'+actionsPanelHtml(r)+'</div>';
+
+  html += '</div>';
+  app.innerHTML = html;
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      activeTab = btn.getAttribute('data-tab');
+      renderResultDashboard();
+    });
+  });
+
+  wireActionButtons(r);
+  wireReviewFilters();
+  var pdfBtn = document.getElementById('btn-download-pdf');
+  if(pdfBtn) pdfBtn.addEventListener('click', downloadQuestionPaperPdf);
+}
+
+function statCard(n,l){
+  return '<div class="stat-card"><div class="n">'+n+'</div><div class="l">'+esc(l)+'</div></div>';
+}
+function tabBtn(key,label){
+  return '<button class="tab-btn'+(activeTab===key?' active':'')+'" data-tab="'+key+'">'+esc(label)+'</button>';
+}
+
+function summaryPanelHtml(r){
+  var negNote = CONFIG.negativeMarking.enabled ? ('Negative marking is ON (-'+CONFIG.negativeMarking.value+' per wrong answer).') : 'Negative marking is OFF.';
+  return '<div class="perf-block"><h4>Overview</h4><ul>'+
+    '<li>Total questions: '+r.total+'</li>'+
+    '<li>Correct: '+r.correct+' &nbsp;|&nbsp; Wrong: '+r.wrong+' &nbsp;|&nbsp; Unattempted: '+r.unattempted+'</li>'+
+    '<li>Accuracy (of attempted): '+r.accuracy.toFixed(1)+'%</li>'+
+    '<li>Overall percentage: '+r.percentage.toFixed(1)+'%</li>'+
+    '<li>Time taken: '+fmtTime(r.timeTakenSec)+' &nbsp;|&nbsp; Average time per question: '+fmtTime(r.avgTimePerQ)+'</li>'+
+    '<li>'+negNote+'</li>'+
+  '</ul></div>';
+}
+
+function topicPanelHtml(r){
+  var html='';
+  Object.keys(r.topicStats).forEach(function(topic){
+    var s = r.topicStats[topic];
+    var pct = s.t>0 ? Math.round((s.c/s.t)*100) : 0;
+    html += '<div class="abar-row"><div class="abar-top"><span>'+esc(topic)+'</span><b>'+s.c+' correct / '+s.w+' wrong / '+s.t+' total — '+pct+'%</b></div>'+
+      '<div class="abar-track"><div class="abar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  return html || '<p>No data.</p>';
+}
+
+function difficultyPanelHtml(r){
+  var html='';
+  ['Easy','Medium','Hard'].forEach(function(d){
+    var s = r.diffStats[d];
+    var pct = s.t>0 ? Math.round((s.c/s.t)*100) : 0;
+    html += '<div class="abar-row"><div class="abar-top"><span>'+d+'</span><b>'+s.c+' correct / '+s.w+' wrong / '+s.t+' total — '+pct+'%</b></div>'+
+      '<div class="abar-track"><div class="abar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  html += '<p style="font-size:12px;color:var(--ink-mute);margin-top:10px">Each question in the bank carries an explicit Easy / Medium / Hard tag set by the paper-setter.</p>';
+  return html;
+}
+
+function reviewPanelHtml(){
+  var html = '<div class="filter-row">'+
+    filterBtn('all','All')+filterBtn('correct','Correct')+filterBtn('wrong','Wrong')+filterBtn('unattempted','Unattempted')+filterBtn('marked','Marked')+
+  '</div><div id="review-list">'+reviewListHtml()+'</div>';
+  return html;
+}
+function filterBtn(key,label){
+  return '<button class="filter-btn'+(reviewFilter===key?' active':'')+'" data-filter="'+key+'">'+esc(label)+'</button>';
+}
+function reviewListHtml(){
+  var html='';
+  activeIndices.forEach(function(id,pos){
+    var item=Q[id], st=status[id];
+    var wasCorrect = st.answered && st.selected===item[3];
+    var wasWrong = st.answered && st.selected!==item[3];
+    var unattempted = !st.answered;
+    if(reviewFilter==='correct' && !wasCorrect) return;
+    if(reviewFilter==='wrong' && !wasWrong) return;
+    if(reviewFilter==='unattempted' && !unattempted) return;
+    if(reviewFilter==='marked' && !st.marked) return;
+
+    var tag = wasCorrect ? '<span class="tag correct">Correct</span>' : wasWrong ? '<span class="tag wrong">Wrong</span>' : '<span class="tag skip">Not attempted</span>';
+    html += '<div class="review-item">';
+    html += '<div class="rmeta"><span class="qtopic" style="background:var(--topicbg);padding:2px 8px;border-radius:3px">'+esc(item[0])+'</span>Q'+(pos+1)+tag+(st.marked?'<span class="tag" style="background:var(--amber-bg);color:var(--amber)">Marked</span>':'')+'</div>';
+    html += '<div class="rq">'+esc(item[1])+'</div>';
+    item[2].forEach(function(opt,i){
+      var cls='';
+      if(i===item[3]) cls='correctopt';
+      else if(i===st.selected) cls='wrongopt';
+      html += '<div class="ropt'+(cls?(' '+cls):'')+'">'+LETTERS[i]+'. '+esc(opt)+(i===st.selected?' (Your answer)':'')+(i===item[3]?' (Correct answer)':'')+'</div>';
+    });
+    html += '<div class="explain">Explanation: '+esc(item[5]||'')+'</div>';
+    html += '</div>';
+  });
+  return html || '<p style="color:var(--ink-mute)">No questions match this filter.</p>';
+}
+function wireReviewFilters(){
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      reviewFilter = btn.getAttribute('data-filter');
+      document.getElementById('review-list').innerHTML = reviewListHtml();
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active', b===btn); });
+    });
+  });
+}
+
+function performancePanelHtml(r){
+  var topics = Object.keys(r.topicStats).map(function(t){
+    var s=r.topicStats[t];
+    return { topic:t, pct: s.t>0?(s.c/s.t*100):0, total:s.t };
+  });
+  var strong = topics.filter(function(t){return t.pct>=75;}).sort(function(a,b){return b.pct-a.pct;});
+  var weak = topics.filter(function(t){return t.pct<50;}).sort(function(a,b){return a.pct-b.pct;});
+  var revisionOrder = weak.slice();
+
+  var html='';
+  html += '<div class="perf-block"><h4>Strong Areas</h4><ul>'+(strong.length?strong.map(function(t){return '<li>'+esc(t.topic)+' — '+Math.round(t.pct)+'%</li>';}).join(''):'<li>None yet — accuracy across topics is still developing.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Weak Areas</h4><ul>'+(weak.length?weak.map(function(t){return '<li>'+esc(t.topic)+' — '+Math.round(t.pct)+'%</li>';}).join(''):'<li>No topic fell below 50% — solid overall performance.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Topics To Revise</h4><ul>'+(weak.length?weak.map(function(t){return '<li>'+esc(t.topic)+'</li>';}).join(''):'<li>No specific topic flagged for urgent revision.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Accuracy Analysis</h4><ul><li>Overall accuracy on attempted questions: '+r.accuracy.toFixed(1)+'%</li><li>Overall percentage (of full paper): '+r.percentage.toFixed(1)+'%</li></ul></div>';
+  html += '<div class="perf-block"><h4>Suggested Revision Order</h4><ul>'+(revisionOrder.length?revisionOrder.map(function(t,i){return '<li>'+(i+1)+'. '+esc(t.topic)+' ('+Math.round(t.pct)+'%)</li>';}).join(''):'<li>No priority order needed — no weak topics detected.</li>')+'</ul></div>';
+  html += '<div class="perf-block"><h4>Estimated Readiness</h4><ul><li>'+readinessLabel(r.percentage)+'</li></ul></div>';
+  return html;
+}
+
+function actionsPanelHtml(r){
+  var wrongCount = 0, unansCount = 0;
+  activeIndices.forEach(function(id){
+    var item=Q[id], st=status[id];
+    if(st.answered && st.selected!==item[3]) wrongCount++;
+    if(!st.answered) unansCount++;
+  });
+  return '<div class="perf-block"><h4>Smart Actions</h4>'+
+    '<div class="smart-row">'+
+      '<button class="btn-secondary" id="retry-wrong" '+(wrongCount===0?'disabled':'')+'>Retry Wrong Questions ('+wrongCount+')</button>'+
+      '<button class="btn-secondary" id="retry-unanswered" '+(unansCount===0?'disabled':'')+'>Retry Unanswered Questions ('+unansCount+')</button>'+
+      '<button class="btn-ghost" id="restart-test">Restart Full Test</button>'+
+    '</div></div>';
+}
+
+function wireActionButtons(r){
+  var rw = document.getElementById('retry-wrong');
+  var ru = document.getElementById('retry-unanswered');
+  var rt = document.getElementById('restart-test');
+  if(rw) rw.addEventListener('click', function(){
+    var ids = activeIndices.filter(function(id){
+      var item=Q[id], st=status[id];
+      return st.answered && st.selected!==item[3];
+    });
+    startPracticeRun(ids, 'Retry — Wrong Questions');
+  });
+  if(ru) ru.addEventListener('click', function(){
+    var ids = activeIndices.filter(function(id){ return !status[id].answered; });
+    startPracticeRun(ids, 'Retry — Unanswered Questions');
+  });
+  if(rt) rt.addEventListener('click', function(){
+    renderStart();
+  });
+}
+
+/* =========================================================
+   PDF DOWNLOAD — QUESTION PAPER + ANSWER KEY
+   Generated entirely client-side (jsPDF, loaded via CDN),
+   so it works on a static GitHub Pages deployment with no
+   backend, login or database. Pulls straight from the Q
+   array in its original section order (not the shuffled
+   in-exam order), and never includes the student's answers.
+========================================================= */
+function pdfWrapText(doc, text, x, y, maxWidth, lineHeight, pageHeight, marginBottom){
+  var lines = doc.splitTextToSize(text, maxWidth);
+  for(var i=0;i<lines.length;i++){
+    if(y > pageHeight - marginBottom){
+      doc.addPage();
+      y = 20;
+    }
+    doc.text(lines[i], x, y);
+    y += lineHeight;
+  }
+  return y;
+}
+
+function downloadQuestionPaperPdf(){
+  if(typeof window.jspdf === 'undefined'){
+    alert('PDF library is still loading — please try again in a moment.');
+    return;
+  }
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  var pageWidth = doc.internal.pageSize.getWidth();
+  var pageHeight = doc.internal.pageSize.getHeight();
+  var margin = 40;
+  var maxWidth = pageWidth - margin*2;
+  var y = 60;
+
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.text('SUNDAY GRAND ASSESSMENT', pageWidth/2, y, {align:'center'}); y += 24;
+  doc.setFontSize(14);
+  doc.text('SESSION 2', pageWidth/2, y, {align:'center'}); y += 20;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+  doc.text('100 MCQs  |  90 Minutes', pageWidth/2, y, {align:'center'}); y += 14;
+  doc.text('Question Paper & Answer Key (for revision — does not show your responses)', pageWidth/2, y, {align:'center'});
+
+  PDF_SECTIONS.forEach(function(section){
+    doc.addPage();
+    y = 50;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    y = pdfWrapText(doc, section.title, margin, y, maxWidth, 18, pageHeight, 40);
+    doc.setFontSize(10.5);
+    doc.setFont('helvetica','normal');
+    doc.text('Questions '+(section.start+1)+'–'+section.end, margin, y); y += 20;
+
+    for(var i=section.start; i<section.end; i++){
+      var item = Q[i];
+      var qNum = i+1;
+
+      if(y > pageHeight - 90){ doc.addPage(); y = 50; }
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(11);
+      y = pdfWrapText(doc, qNum+'. '+item[1], margin, y, maxWidth, 14, pageHeight, 40);
+      y += 2;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10.5);
+      item[2].forEach(function(optText, oi){
+        y = pdfWrapText(doc, LETTERS[oi]+'. '+optText, margin+14, y, maxWidth-14, 13, pageHeight, 40);
+      });
+      y += 2;
+
+      doc.setFont('helvetica','bold');
+      y = pdfWrapText(doc, 'Correct Answer: '+LETTERS[item[3]], margin, y, maxWidth, 13, pageHeight, 40);
+
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(9.5);
+      y = pdfWrapText(doc, 'Explanation: '+(item[5]||''), margin, y, maxWidth, 12, pageHeight, 40);
+      doc.setFont('helvetica','normal');
+
+      y += 12;
+    }
+  });
+
+  doc.save('Sunday_Grand_Assessment_Session2_QuestionPaper_AnswerKey.pdf');
+}
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+document.addEventListener('keydown', function(e){
+  if(screen!=='exam') return;
+  var tag = (e.target && e.target.tagName) || '';
+  if(tag==='INPUT' || tag==='TEXTAREA') return;
+
+  if(e.key>='1' && e.key<='4'){
+    var i = parseInt(e.key,10)-1;
+    var item = Q[currentQid()];
+    if(i < item[2].length){ selectOption(i); }
+  } else if(e.key==='ArrowRight'){
+    goNext();
+  } else if(e.key==='ArrowLeft'){
+    goPrev();
+  } else if(e.key==='n' || e.key==='N'){
+    goNext();
+  } else if(e.key==='p' || e.key==='P'){
+    goPrev();
+  } else if(e.key==='m' || e.key==='M'){
+    markForReview();
+  }
+});
+
+/* =========================================================
+   BOOT
+========================================================= */
+renderStart();
+
+})();
+</script>
+</body>
+</html>
