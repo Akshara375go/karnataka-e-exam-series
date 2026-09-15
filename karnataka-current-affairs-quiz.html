@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karnataka Current Affairs 2026 — Practice Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#EDE7D6;
+    --ink-dim:#B9B2A0;
+    --paper:#12172B;
+    --paper-raised:#171D34;
+    --line:#3A4266;
+    --gold:#E8B93B;
+    --gold-dim:#8A6F22;
+    --green:#4C9A6B;
+    --green-bg:#1B2E24;
+    --red:#D65B5B;
+    --red-bg:#2E1B1E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:28px 16px 60px;
+  }
+  .wrap{width:100%;max-width:560px;}
+  .masthead{
+    text-align:center;
+    margin-bottom:22px;
+  }
+  .masthead .kicker{
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+  .masthead h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:26px;
+    margin:6px 0 4px;
+    line-height:1.25;
+  }
+  .masthead p{
+    color:var(--ink-dim);
+    font-size:13.5px;
+    margin:0;
+  }
+
+  .progress-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .progress-track{
+    flex:1;
+    height:6px;
+    background:var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--gold);
+    width:0%;
+    transition:width .35s ease;
+  }
+  .progress-label{
+    font-size:12.5px;
+    color:var(--ink-dim);
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    padding:26px 22px;
+  }
+  .topic-tag{
+    display:inline-block;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+    border:1px solid var(--gold-dim);
+    padding:3px 9px;
+    margin-bottom:14px;
+  }
+  .question{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:19px;
+    line-height:1.4;
+    margin:0 0 20px;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .option{
+    text-align:left;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink);
+    padding:13px 14px;
+    font-family:'Work Sans',sans-serif;
+    font-size:15px;
+    cursor:pointer;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    line-height:1.4;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .option:hover:not(:disabled){
+    border-color:var(--gold-dim);
+  }
+  .option .letter{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    color:var(--gold);
+    flex-shrink:0;
+  }
+  .option:disabled{cursor:default;}
+  .option.correct{
+    border-color:var(--green);
+    background:var(--green-bg);
+  }
+  .option.correct .letter{color:var(--green);}
+  .option.incorrect{
+    border-color:var(--red);
+    background:var(--red-bg);
+  }
+  .option.incorrect .letter{color:var(--red);}
+  .option.faded{opacity:.45;}
+
+  .feedback{
+    margin-top:16px;
+    padding:12px 14px;
+    font-size:14px;
+    line-height:1.5;
+    border-left:3px solid var(--gold);
+    background:rgba(232,185,59,0.06);
+    display:none;
+  }
+  .feedback.show{display:block;}
+  .feedback .verdict{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:4px;
+  }
+  .feedback.correct-fb .verdict{color:var(--green);}
+  .feedback.incorrect-fb .verdict{color:var(--red);}
+
+  .next-btn{
+    margin-top:18px;
+    width:100%;
+    padding:13px;
+    background:var(--gold);
+    color:#1A1400;
+    border:none;
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    display:none;
+  }
+  .next-btn.show{display:block;}
+  .next-btn:active{background:#D2A62F;}
+
+  /* results screen */
+  .results{display:none;}
+  .results.show{display:block;}
+  .score-block{
+    text-align:center;
+    padding:30px 22px 26px;
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+  }
+  .score-num{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:52px;
+    color:var(--gold);
+    line-height:1;
+  }
+  .score-out{
+    color:var(--ink-dim);
+    font-size:15px;
+    margin-top:6px;
+  }
+  .score-msg{
+    margin-top:14px;
+    font-size:14.5px;
+    color:var(--ink);
+    line-height:1.5;
+  }
+  .topic-breakdown{
+    margin-top:22px;
+    text-align:left;
+  }
+  .topic-breakdown h3{
+    font-family:'Fraunces',serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:11.5px;
+    margin-bottom:10px;
+  }
+  .topic-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .topic-row:last-child{border-bottom:none;}
+  .topic-row .count{
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-dim);
+  }
+  .topic-row .count.weak{color:var(--red);}
+  .topic-row .count.strong{color:var(--green);}
+
+  .review-list{margin-top:22px;}
+  .review-item{
+    border:1px solid var(--line);
+    padding:14px 16px;
+    margin-bottom:10px;
+    font-size:13.5px;
+    line-height:1.5;
+  }
+  .review-item .q{color:var(--ink);margin-bottom:6px;font-weight:600;}
+  .review-item .a-wrong{color:var(--red);}
+  .review-item .a-right{color:var(--green);}
+
+  .restart-btn{
+    margin-top:22px;
+    width:100%;
+    padding:13px;
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="kicker">Karnataka VAO Exam Prep</div>
+    <h1 id="mastheadTitle">Current Affairs 2026 — Practice Quiz</h1>
+    <p id="mastheadSub">32 questions · Places in news, ODOP, Padma Awards, SC Act, Akka Pade &amp; more</p>
+  </div>
+
+  <div id="quizScreen">
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">1 / 32</div>
+    </div>
+
+    <div class="card">
+      <div class="topic-tag" id="topicTag">Topic</div>
+      <p class="question" id="questionText">Question text</p>
+      <div class="options" id="optionsWrap"></div>
+      <div class="feedback" id="feedback">
+        <div class="verdict" id="verdictText"></div>
+        <div id="explainText"></div>
+      </div>
+      <button class="next-btn" id="nextBtn">Next question</button>
+    </div>
+  </div>
+
+  <div class="results" id="resultsScreen">
+    <div class="score-block">
+      <div class="score-num" id="scoreNum">0</div>
+      <div class="score-out" id="scoreOut">out of 32 correct</div>
+      <div class="score-msg" id="scoreMsg"></div>
+
+      <div class="topic-breakdown" id="topicBreakdown">
+        <h3>Topic-wise breakdown</h3>
+        <div id="topicRows"></div>
+      </div>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <button class="restart-btn" id="restartBtn">Retake (shuffled)</button>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  {topic:"Places in News", q:"Where was the world's second-largest Khadi Tricolour National Flag unveiled?", options:["Mysuru Palace grounds","Belagavi, near Suvarna Vidhana Soudha","Hubballi","Vidhana Soudha, Bengaluru"], correct:1, explain:"CM Siddaramaiah inaugurated the 75ft × 55ft khadi flag at Belagavi."},
+  {topic:"Places in News", q:"Veerabhoomi Museum, built in memory of Krantiveera Sangolli Rayanna, is located at:", options:["Nandgad, Belagavi district","Kittur, Belagavi district","Badami, Bagalkote district","Hosapete, Vijayanagara"], correct:0, explain:"Established at Nandgad in Belagavi district."},
+  {topic:"Places in News", q:"Kasarkod Beach retained its Blue Flag Eco-Certification for how many consecutive years?", options:["4th","5th","6th","3rd"], correct:2, explain:"6th consecutive year — located in Honnavar Taluk, Uttara Kannada."},
+  {topic:"Places in News", q:"Karnataka's first government school AI teacher robot 'IRIS' was introduced in:", options:["Mangaluru","Udupi","Belagavi","Shivamogga"], correct:1, explain:"At the 111-year-old Vandse Government Higher Primary School, Udupi."},
+  {topic:"Places in News", q:"Karnataka's first indigenously developed Doppler Weather Radar was installed in:", options:["Kalaburagi","Mangaluru","Belagavi","Mysuru"], correct:1, explain:"Installed in Mangaluru to improve weather/rainfall forecasting."},
+  {topic:"Places in News", q:"The 12th Karnataka Bird Festival 2026 was held at Pilikula Nisargadhama in which city, and what was its mascot?", options:["Mangaluru; White-Bellied Sea Eagle","Mysuru; Great Indian Bustard","Udupi; Peacock","Belagavi; Sarus Crane"], correct:0, explain:"Held in Mangaluru; mascot was the White-Bellied Sea Eagle."},
+  {topic:"Places in News", q:"South India's first Penguin Park is being developed at:", options:["Ulsoor Lake, Bengaluru","Karanji Lake, Mysuru","Kukkarahalli Lake, Mysuru","Madivala Lake, Bengaluru"], correct:1, explain:"At Karanji Lake, Mysuru — India's 3rd penguin park after Mumbai and Ahmedabad."},
+  {topic:"Places in News", q:"Neolithic remains (clay pots, stone axes, conches) were found near which temple?", options:["Virupaksha Temple, Hampi","Kote Veerabhadreshwara Temple, Lakkundi (Gadag)","Chennakeshava Temple, Belur","Hoysaleswara Temple, Halebidu"], correct:1, explain:"Found during excavation at Lakkundi, Gadag district."},
+  {topic:"Places in News", q:"Kavital Police Station, ranked best-performing in Karnataka and 3rd in India, is located in:", options:["Raichur district","Koppal district","Ballari district","Yadgir district"], correct:0, explain:"Secured 3rd rank nationally in the MHA's Best Police Stations 2025 ranking."},
+  {topic:"Places in News", q:"The 50-acre industrial park for women entrepreneurs (by FICCI's FLO wing) was launched at:", options:["Gauribidanur, Chikkaballapur","Devanahalli, Bengaluru Rural","Nelamangala, Bengaluru Rural","Hoskote, Bengaluru Rural"], correct:0, explain:"At Gauribidanur in Chikkaballapur district."},
+  {topic:"Places in News", q:"In the Children's Gram Sabha rankings, which district came first with 98% success, and which came last?", options:["First: Hassan; Last: Chikkaballapur","First: Chikkaballapur; Last: Hassan","First: Kolar; Last: Chikkaballapur","First: Mandya; Last: Hassan"], correct:1, explain:"Chikkaballapur ranked first (98%); Hassan ranked last."},
+  {topic:"Places in News", q:"The Tata–Airbus Light Helicopter Assembly Facility, jointly inaugurated by PM Modi and President Macron, is at:", options:["Vemagal, Kolar","Devanahalli, Bengaluru Rural","Vemagal, Chikkaballapur","Malur, Kolar"], correct:0, explain:"At Vemagal, Kolar district."},
+  {topic:"Places in News", q:"A new freshwater fish species discovered in the Cauvery near Shivanasamudra is locally known as:", options:["Bili Meenu","Kaage Meenu","Honnu Meenu","Kempu Meenu"], correct:1, explain:"Discovered in Mandya district; locally called 'Kaage Meenu'."},
+  {topic:"ODOP", q:"The ODOP (One District One Product) concept originally draws inspiration from Japan's scheme launched in:", options:["1969","1979","1989","1998"], correct:1, explain:"Japan's 'One Village One Product' movement began in 1979."},
+  {topic:"ODOP", q:"Which state was the first in India to implement ODOP, in 2018?", options:["Karnataka","Gujarat","Uttar Pradesh","Maharashtra"], correct:2, explain:"UP implemented it first, with Moradabad brassware as its flagship product."},
+  {topic:"ODOP", q:"ODOP is implemented under which central authority?", options:["Ministry of MSME","DPIIT (Dept for Promotion of Industry and Internal Trade)","NITI Aayog","Ministry of Commerce directly"], correct:1, explain:"Implemented by DPIIT."},
+  {topic:"ODOP", q:"Match: Bidriware is the ODOP product of which district?", options:["Bagalkote","Kalaburagi","Bidar","Yadgir"], correct:2, explain:"Bidar district — Bidriware (metal handicraft)."},
+  {topic:"ODOP", q:"Match: Channapatna toys belong to which district's ODOP list?", options:["Ramanagara","Koppal","Mysuru","Mandya"], correct:0, explain:"Ramanagara — Channapatna toys."},
+  {topic:"ODOP", q:"Match: Kinhal toys are the ODOP product of:", options:["Koppal","Kolar","Chitradurga","Vijayanagara"], correct:0, explain:"Koppal district — Kinhal toys."},
+  {topic:"Padma Awards", q:"Padma Awards 2026 were announced on the eve of:", options:["Independence Day","Republic Day","Karnataka Rajyotsava","Gandhi Jayanti"], correct:1, explain:"Announced on 25 January, the eve of Republic Day."},
+  {topic:"Padma Awards", q:"Total Padma Awards 2026, and how many were Padma Vibhushan?", options:["131 total, 5 Vibhushan","121 total, 7 Vibhushan","131 total, 13 Vibhushan","141 total, 5 Vibhushan"], correct:0, explain:"131 total: 5 Vibhushan, 13 Bhushan, 113 Shri."},
+  {topic:"Padma Awards", q:"Shatavadhani R. Ganesh received the Padma Bhushan for his mastery of:", options:["Carnatic music","Avadhana (Sanskrit literary performance)","Yakshagana","Kalaripayattu"], correct:1, explain:"He is the only Shatavadhani (handles 100 participants at once) from Karnataka."},
+  {topic:"Padma Awards", q:"T.T. Jagannathan, known as the 'Kitchen Mogul', revolutionized which industry with the GRS safety mechanism?", options:["Refrigerators","Pressure cookers","Gas stoves","Mixer grinders"], correct:1, explain:"Former Chairman of TTK Prestige; received Padma Shri posthumously."},
+  {topic:"Padma Awards", q:"Dr. Armida Fernandez, known for establishing Asia's first human milk bank, hails from Hubballi but was awarded under which state's category?", options:["Karnataka","Kerala","Maharashtra","Tamil Nadu"], correct:2, explain:"Awarded under Maharashtra category despite being from Hubballi, Karnataka."},
+  {topic:"Energy Award", q:"KREDL won 1st place nationally in the National Energy Conservation Award 2025, given by which organiser?", options:["Ministry of New and Renewable Energy","BEE (Bureau of Energy Efficiency)","NITI Aayog","Central Electricity Authority"], correct:1, explain:"BEE, under the Ministry of Power, gave KREDL 1st place in 'State Designated Agency' category."},
+  {topic:"SC Sub-classification Act", q:"The Karnataka SC Sub-classification Act is based on the report of which commission?", options:["Sadashiva Commission","Justice Nagamohan Das Commission","Justice Cunha Commission","K. Jayaprakash Hegde Commission"], correct:1, explain:"Justice H.N. Nagamohan Das Commission collected the scientific data behind this Act."},
+  {topic:"SC Sub-classification Act", q:"Under the Act, what reservation share does Category C (63 castes, incl. Lambani, Bovi, Koracha) get out of the total 17% SC quota?", options:["6%","5%","7%","4%"], correct:1, explain:"Category A = 6% (16 castes), Category B = 6% (19 castes), Category C = 5% (63 castes)."},
+  {topic:"SC Sub-classification Act", q:"Within Category C, what internal quota is reserved for the 59 smaller/more backward castes?", options:["1 in every 3 seats","1 in every 5 seats","1 in every 10 seats","2 in every 5 seats"], correct:1, explain:"1 seat out of every 5 in Category C is reserved for these 59 smaller castes."},
+  {topic:"Commissions", q:"The Justice John Michael Cunha Commission's report relates to which issue?", options:["PSI recruitment scam","Chamarajanagar oxygen tragedy","Drought relief mismanagement","Urban infrastructure lapses"], correct:1, explain:"It probed the Chamarajanagar oxygen tragedy and medical procurement irregularities."},
+  {topic:"Commissions", q:"Who heads the 7th Pay Commission for Karnataka state government employees?", options:["B.S. Patil","K. Sudhakar Rao","H.K. Patil","Justice B. Veerappa"], correct:1, explain:"K. Sudhakar Rao heads the 7th Pay Commission."},
+  {topic:"Commissions", q:"The Backward Classes Commission conducting the caste census is headed by:", options:["Prof. Sukhadeo Thorat","K. Jayaprakash Hegde","Baraguru Ramachandrappa","B.S. Patil"], correct:1, explain:"K. Jayaprakash Hegde heads the Backward Classes Commission (Caste Census)."},
+  {topic:"Commissions", q:"The judicial inquiry into irregularities in recruitment of 545 PSI posts was led by:", options:["Justice B. Veerappa","Justice John Michael Cunha","Justice H.N. Nagamohan Das","B.S. Patil"], correct:0, explain:"Justice B. Veerappa headed the PSI Recruitment Scam Inquiry Commission."},
+  {topic:"Festivals", q:"Chalukya Utsav, a tribute to Chalukyan architecture, is held at:", options:["Hosapete","Banavasi","Badami/Aihole, Bagalkote","Kittur, Belagavi"], correct:2, explain:"Held at Badami/Aihole in Bagalkote district."},
+  {topic:"Festivals", q:"Hampi Utsav at Hosapete celebrates the grandeur of which empire?", options:["Chalukya","Kadamba","Vijayanagara","Bahmani"], correct:2, explain:"Celebrates the Vijayanagara Empire, in Vijayanagara district."},
+  {topic:"Festivals", q:"Kadamba Utsav, held at Banavasi (Uttara Kannada), honors Karnataka's first royal house — the:", options:["Kadamba dynasty","Chalukya dynasty","Hoysala dynasty","Rashtrakuta dynasty"], correct:0, explain:"The Kadamba dynasty is regarded as Karnataka's first native royal house."},
+  {topic:"Menstrual Leave Bill", q:"Under the Menstrual Leave Bill 2025, how many paid leave days per month for working women, and the annual cap?", options:["2 days/month, 12 days/year cap","1 day/month, 12 days/year cap","1 day/month, no annual cap","2 days/month, 24 days/year cap"], correct:1, explain:"1 day/month for working women, capped at 12 days a year."},
+  {topic:"Menstrual Leave Bill", q:"School/college girls get how many leave days per month under this Bill, along with what attendance relaxation?", options:["1 day/month, 1% relaxation","2 days/month, 2% attendance relaxation","3 days/month, 5% relaxation","2 days/month, no relaxation proposed"], correct:1, explain:"2 days/month for students, with a proposed 2% attendance relaxation."},
+  {topic:"Menstrual Leave Bill", q:"What is the maximum fine on an employer for denying menstrual leave or discriminating against an employee over it?", options:["₹2,000","₹5,000","₹10,000","₹1,000"], correct:1, explain:"Employers can be fined up to ₹5,000."},
+  {topic:"Akka Pade", q:"Akka Pade was first piloted in which district, in September 2023?", options:["Mysuru","Bidar","Belagavi","Chitradurga"], correct:1, explain:"Piloted in Bidar district by then SP Chennabasavanna S.L."},
+  {topic:"Akka Pade", q:"The idea behind Akka Pade — building trust through visibility rather than fear — was inspired by UN peacekeeping methods used in:", options:["Rwanda","South Sudan","Somalia","Democratic Republic of Congo"], correct:1, explain:"Inspired by UN peacekeeping approaches in South Sudan."},
+  {topic:"Akka Pade", q:"Akka Pade is named after which 12th-century social reformer?", options:["Rani Chennamma","Akkamahadevi","Onake Obavva","Belawadi Mallamma"], correct:1, explain:"Named after Akkamahadevi; 'Akka' means elder sister."},
+  {topic:"Akka Pade", q:"Statewide expansion of Akka Pade (approved by the Karnataka Cabinet) happened in which month/year, covering how many districts?", options:["January 2026, all 31 districts","January 2025, 20 districts","March 2026, 25 districts","September 2025, all 31 districts"], correct:0, explain:"Approved January 2026 — expanded to all 31 districts plus 5 police commissionerates."},
+  {topic:"Akka Pade", q:"Akka Pade's scheme is based on which Constitutional article allowing special provisions for women and children?", options:["Article 14","Article 15(3)","Article 21","Article 46"], correct:1, explain:"Based on Article 15(3); also aligns with Article 51A."},
+  {topic:"Women Safety Forces", q:"Among Karnataka's women-safety forces, which was launched the earliest?", options:["Akka Pade","Rani Chennamma Squad","Durga Pade","Obavva Pade"], correct:2, explain:"Durga Pade (2017–18) is the earliest, followed by Obavva Pade (2018), Rani Chennamma Squad (2021–22), then Akka Pade (2023 pilot)."},
+  {topic:"Women Safety Forces", q:"Which force's key symbol is 'Valour & Resilience', named after Kittur Rani Chennamma, and focuses on self-defence training for women?", options:["Durga Pade","Rani Chennamma Squad","Akka Pade","Obavva Pade"], correct:1, explain:"Rani Chennamma Squad — primarily in Bengaluru and Belagavi, focused on skill development and self-defence."},
+  {topic:"Women Safety Forces", q:"Durga Pade's key symbol represents:", options:["Empathy & Wisdom","Valour & Resilience","Protection & Power","Skill & Self-reliance"], correct:2, explain:"Durga Pade is named after Goddess Durga — symbolizing Protection & Power, focused on active vigilance against crimes."},
+  {topic:"PM MITRA", q:"PM MITRA stands for Pradhan Mantri Mega Integrated Textile Region and Apparel. Karnataka's PM MITRA park is located in:", options:["Bidar","Kalaburagi","Belagavi","Ballari"], correct:1, explain:"Located in Kalaburagi — one of 7 PM MITRA parks in India."},
+  {topic:"PM MITRA", q:"The Kalaburagi PM MITRA park's Common Effluent Treatment Plant uses which technology to ensure no polluted water is released?", options:["Reverse Osmosis only","Zero Liquid Discharge (ZLD)","Bio-remediation","Activated Sludge Process"], correct:1, explain:"Equipped with Zero Liquid Discharge (ZLD) technology."},
+  {topic:"Karez System", q:"The ancient Karez (Qanat) underground water system, found mainly in Bidar, was built during which period?", options:["Vijayanagara Empire","Bahmani Sultanate (15th century)","Mughal Empire","British colonial era"], correct:1, explain:"Built during the Bahmani Sultanate's rule, in the Naubad-Aliyabad area of Bidar."},
+  {topic:"Karez System", q:"Karez systems work mainly using which principle to move groundwater?", options:["Electric pumps","Gravity, through underground tunnels","Solar-powered lifts","Wind-powered wheels"], correct:1, explain:"Underground tunnels carry groundwater via gravity — no pumps needed, reducing evaporation."},
+  {topic:"Farming Festival", q:"'Kisan Swaraj Sammelan' (Savayava Krishikara Kumbhamela), an organic farming festival showcasing native seed varieties, is held at:", options:["Bengaluru University","Karnataka State Open University (KSOU), Mysuru","Mangalore University","University of Agricultural Sciences, Dharwad"], correct:1, explain:"Held on the KSOU campus in Mysuru."}
+];
+
+let order = [...Array(QUESTIONS.length).keys()];
+let current = 0;
+let score = 0;
+let answered = false;
+let wrongAnswers = [];
+let topicStats = {};
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+const optionsWrap = document.getElementById('optionsWrap');
+const questionText = document.getElementById('questionText');
+const topicTag = document.getElementById('topicTag');
+const feedback = document.getElementById('feedback');
+const verdictText = document.getElementById('verdictText');
+const explainText = document.getElementById('explainText');
+const nextBtn = document.getElementById('nextBtn');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const quizScreen = document.getElementById('quizScreen');
+const resultsScreen = document.getElementById('resultsScreen');
+const letters = ['A','B','C','D'];
+
+function renderQuestion(){
+  answered = false;
+  const idx = order[current];
+  const item = QUESTIONS[idx];
+  topicTag.textContent = item.topic;
+  questionText.textContent = item.q;
+  optionsWrap.innerHTML = '';
+  feedback.className = 'feedback';
+  nextBtn.className = 'next-btn';
+
+  item.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.addEventListener('click', () => selectOption(i, item, btn));
+    optionsWrap.appendChild(btn);
+  });
+
+  progressFill.style.width = `${(current/QUESTIONS.length)*100}%`;
+  progressLabel.textContent = `${current+1} / ${QUESTIONS.length}`;
+}
+
+function selectOption(i, item, btn){
+  if(answered) return;
+  answered = true;
+  const allOptions = optionsWrap.querySelectorAll('.option');
+  const isCorrect = i === item.correct;
+
+  allOptions.forEach((el, idx2) => {
+    el.disabled = true;
+    if(idx2 === item.correct){
+      el.classList.add('correct');
+    } else if(idx2 === i){
+      el.classList.add('incorrect');
+    } else {
+      el.classList.add('faded');
+    }
+  });
+
+  if(!topicStats[item.topic]) topicStats[item.topic] = {correct:0,total:0};
+  topicStats[item.topic].total++;
+
+  if(isCorrect){
+    score++;
+    topicStats[item.topic].correct++;
+    feedback.className = 'feedback show correct-fb';
+    verdictText.textContent = 'Correct!';
+  } else {
+    wrongAnswers.push({q:item.q, chosen:item.options[i], right:item.options[item.correct], explain:item.explain});
+    feedback.className = 'feedback show incorrect-fb';
+    verdictText.textContent = `Not quite — correct answer: ${item.options[item.correct]}`;
+  }
+  explainText.textContent = item.explain;
+  nextBtn.className = 'next-btn show';
+  nextBtn.textContent = current === QUESTIONS.length - 1 ? 'See results' : 'Next question';
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if(current >= QUESTIONS.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+});
+
+function showResults(){
+  quizScreen.style.display = 'none';
+  resultsScreen.className = 'results show';
+  document.getElementById('mastheadSub').textContent = 'Quiz complete';
+
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('scoreOut').textContent = `out of ${QUESTIONS.length} correct`;
+
+  const pct = Math.round((score/QUESTIONS.length)*100);
+  let msg;
+  if(pct >= 90) msg = "Excellent retention — this content is exam-ready.";
+  else if(pct >= 75) msg = "Strong grasp overall. Revisit the topics below where you slipped.";
+  else if(pct >= 50) msg = "Decent start — a second pass on the weaker topics will help a lot.";
+  else msg = "This needs another read-through before it sticks. Revisit the weak topics below.";
+  document.getElementById('scoreMsg').textContent = msg;
+
+  const topicRows = document.getElementById('topicRows');
+  topicRows.innerHTML = '';
+  Object.keys(topicStats).forEach(t => {
+    const s = topicStats[t];
+    const row = document.createElement('div');
+    row.className = 'topic-row';
+    const cls = s.correct === s.total ? 'strong' : (s.correct === 0 ? 'weak' : '');
+    row.innerHTML = `<span>${t}</span><span class="count ${cls}">${s.correct}/${s.total}</span>`;
+    topicRows.appendChild(row);
+  });
+
+  const reviewList = document.getElementById('reviewList');
+  reviewList.innerHTML = '';
+  if(wrongAnswers.length > 0){
+    const heading = document.createElement('h3');
+    heading.style.fontFamily = "'Fraunces',serif";
+    heading.style.fontSize = '15px';
+    heading.style.color = 'var(--ink-dim)';
+    heading.style.marginBottom = '10px';
+    heading.textContent = `Review — ${wrongAnswers.length} to revisit`;
+    reviewList.appendChild(heading);
+    wrongAnswers.forEach(w => {
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      div.innerHTML = `<div class="q">${w.q}</div>
+        <div class="a-wrong">Your answer: ${w.chosen}</div>
+        <div class="a-right">Correct: ${w.right}</div>
+        <div style="margin-top:6px;color:var(--ink-dim);">${w.explain}</div>`;
+      reviewList.appendChild(div);
+    });
+  }
+}
+
+document.getElementById('restartBtn').addEventListener('click', () => {
+  order = shuffle([...Array(QUESTIONS.length).keys()]);
+  current = 0;
+  score = 0;
+  answered = false;
+  wrongAnswers = [];
+  topicStats = {};
+  resultsScreen.className = 'results';
+  quizScreen.style.display = 'block';
+  document.getElementById('mastheadSub').textContent = `${QUESTIONS.length} questions · shuffled order`;
+  renderQuestion();
+});
+
+// init
+order = shuffle(order);
+renderQuestion();
+</script>
+</body>
+</html>
