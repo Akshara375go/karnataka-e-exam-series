@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Governance Portals & Software Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom scrollbar for question list if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative pb-20">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex items-center gap-4">
+                <!-- Branding Logo -->
+                <img src="Screenshot 2026-08-10 114155.jpg" alt="Karnataka e-Exam Test Series" class="h-16 object-contain rounded-full shadow-sm border border-gray-100" onerror="this.src='https://placehold.co/100x100/1e3a8a/ffffff?text=e-Exam'">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-gray-800">E-Governance Portals</h1>
+                    <p class="text-sm text-gray-500">Group Exams 2026 Preparation</p>
+                </div>
+            </div>
+            
+            <!-- Telegram Link -->
+            <a href="https://t.me/karnatakaeExamseries" target="_blank" class="mt-4 sm:mt-0 flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full font-medium hover:bg-blue-100 transition-colors text-sm">
+                <i class="fab fa-telegram plane"></i> Join Telegram Channel
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+        
+        <!-- Start Screen -->
+        <div id="start-screen" class="bg-white rounded-2xl shadow-md p-8 text-center max-w-2xl mx-auto fade-in">
+            <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-laptop-code text-4xl text-blue-600"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">E-Governance Portals & Software Quiz</h2>
+            <p class="text-gray-600 mb-8 leading-relaxed">Test your knowledge on crucial e-governance initiatives, portals, and software applications relevant for upcoming State and Central Group examinations.</p>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8 text-left max-w-sm mx-auto">
+                <div class="bg-gray-50 p-4 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-list-ol text-gray-400"></i>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-semibold">Questions</p>
+                        <p class="font-bold text-gray-800">50</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-stopwatch text-gray-400"></i>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-semibold">Format</p>
+                        <p class="font-bold text-gray-800">Multiple Choice</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="startQuiz()" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg w-full sm:w-auto">
+                Start Quiz Now <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="hidden">
+            
+            <!-- Progress Header -->
+            <div class="bg-white rounded-xl shadow-sm p-4 mb-6 sticky top-24 z-10 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="w-full sm:w-2/3">
+                    <div class="flex justify-between text-sm font-semibold text-gray-600 mb-2">
+                        <span>Question <span id="current-q-num">1</span> of 50</span>
+                        <span id="progress-percent">2%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 2%"></div>
+                    </div>
+                </div>
+                <button onclick="finishQuiz()" class="text-sm font-medium text-red-600 hover:text-red-800 bg-red-50 px-3 py-1.5 rounded-lg transition-colors border border-red-100 whitespace-nowrap">
+                    Finish & Submit Early
+                </button>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 fade-in">
+                <h3 id="question-text" class="text-xl sm:text-2xl font-bold text-gray-800 mb-6 leading-tight"></h3>
+                
+                <div id="options-container" class="space-y-3">
+                    <!-- Options injected via JS -->
+                </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="flex justify-between mt-6">
+                <button id="prev-btn" onclick="prevQuestion()" class="flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Navigation Grid (Optional quick jump) -->
+            <div class="mt-8 bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+                <p class="text-sm font-semibold text-gray-500 mb-3 text-center">Quick Navigation</p>
+                <div id="nav-grid" class="flex flex-wrap justify-center gap-1.5">
+                    <!-- Grid items injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden fade-in">
+            <!-- Score Overview -->
+            <div class="bg-white rounded-2xl shadow-md p-8 text-center mb-8">
+                <div class="inline-block p-4 rounded-full bg-blue-50 mb-4">
+                    <i class="fas fa-trophy text-5xl text-blue-500"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Quiz Completed!</h2>
+                <p class="text-gray-500 mb-6">Here is your performance summary for the E-Governance Portals module.</p>
+                
+                <div class="flex justify-center items-center gap-8 mb-8">
+                    <div class="text-center">
+                        <div class="text-4xl font-black text-gray-800" id="final-score">0</div>
+                        <div class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Score</div>
+                    </div>
+                    <div class="h-12 w-px bg-gray-200"></div>
+                    <div class="text-center">
+                        <div class="text-4xl font-black text-green-500" id="correct-count">0</div>
+                        <div class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Correct</div>
+                    </div>
+                    <div class="h-12 w-px bg-gray-200 hidden sm:block"></div>
+                    <div class="text-center hidden sm:block">
+                        <div class="text-4xl font-black text-red-500" id="incorrect-count">0</div>
+                        <div class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Incorrect</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-4">
+                    <button onclick="location.reload()" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm">
+                        <i class="fas fa-redo-alt mr-2"></i> Retake Quiz
+                    </button>
+                    <button onclick="window.scrollTo(0, document.getElementById('detailed-review').offsetTop)" class="bg-gray-100 text-gray-700 border border-gray-200 px-6 py-2.5 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                        Review Answers <i class="fas fa-arrow-down ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Review -->
+            <div id="detailed-review" class="bg-white rounded-2xl shadow-md p-6 sm:p-8">
+                <h3 class="text-xl font-bold text-gray-800 border-b pb-4 mb-6">Detailed Analysis</h3>
+                <div id="review-container" class="space-y-6">
+                    <!-- Review items injected via JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer sticky Telegram promo -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-center items-center z-50">
+        <p class="text-sm text-gray-600 font-medium mr-4 hidden sm:block">Prepare for KPSC & Group Exams 2026 with daily updates!</p>
+        <a href="https://t.me/karnatakaeExamseries" target="_blank" class="bg-[#0088cc] text-white px-5 py-2 rounded-lg font-bold text-sm hover:bg-[#0077b3] transition-colors shadow-sm flex items-center gap-2">
+            <i class="fab fa-telegram text-lg"></i> Join t.me/karnatakaeExamseries
+        </a>
+    </div>
+
+    <script>
+        // Full Quiz Data (50 Questions)
+        const quizData = [
+            { question: "What is the primary purpose of the UMANG application developed by the Ministry of Electronics and Information Technology (MeitY)?", options: ["Facilitating online railway bookings.", "Providing a single platform for all government services.", "Managing national highway tolls.", "Tracking weather forecasts."], answer: 1 },
+            { question: "Which national portal serves as the digital infrastructure for school education, providing resources for teachers and students?", options: ["SWAYAM", "PRAGATI", "DIKSHA", "e-Pathshala"], answer: 2 },
+            { question: "The 'e-Sanjeevani' portal is an initiative by the Government of India in which of the following sectors?", options: ["Agriculture marketing.", "Telemedicine services.", "Online grievance redressal.", "Digital land records."], answer: 1 },
+            { question: "Which software portal is used by the Prime Minister to review and monitor the implementation of government projects and address public grievances?", options: ["CPGRAMS", "PRAGATI", "CHAMPIONS", "MyGov"], answer: 1 },
+            { question: "What is the specific purpose of the 'e-Shram' portal launched by the Ministry of Labour & Employment?", options: ["Registering unorganized sector workers.", "Filing income tax returns.", "Managing corporate provident funds.", "Tracking child labour cases."], answer: 0 },
+            { question: "The 'SHe-Box' portal, developed by the Ministry of Women and Child Development, is designed for which of the following?", options: ["Applying for maternity benefits.", "Filing workplace sexual harassment complaints.", "Registering female entrepreneurs.", "Tracking female foeticide cases."], answer: 1 },
+            { question: "Which national application manages the electronic toll collection system using RFID technology in India?", options: ["Vahan", "Sarathi", "FASTag", "e-Way Bill"], answer: 2 },
+            { question: "In Karnataka, what is the name of the flagship e-governance portal used for maintaining and accessing computerized land records?", options: ["Kaveri", "Bhoomi", "Nadakacheri", "Seva Sindhu"], answer: 1 },
+            { question: "Which software platform is used to issue and manage digital Driving Licenses in India?", options: ["Vahan", "DigiLocker", "Sarathi", "mParivahan"], answer: 2 },
+            { question: "The 'C-VIGIL' application is primarily used by citizens for which of the following activities?", options: ["Reporting cybercrimes.", "Tracking public transport.", "Reporting election model code violations.", "Filing consumer complaints."], answer: 2 },
+            { question: "What is 'U-WIN', a portal designed by the Ministry of Health and Family Welfare?", options: ["A portal for maintaining universal immunization records.", "A platform for organ donation registry.", "A dashboard for tracking pandemic statistics.", "A software for hospital bed management."], answer: 0 },
+            { question: "Which of the following portals is dedicated to integrating Agricultural Produce Market Committees (APMCs) across India?", options: ["Kisan Suvidha", "e-NAM", "M-Kisan", "AGMARKNET"], answer: 1 },
+            { question: "The 'Bhashini' platform was launched by the Government of India for what primary objective?", options: ["Teaching regional languages to foreign tourists.", "Preserving endangered tribal languages.", "Providing AI-driven language translation services.", "Standardizing grammar across official documents."], answer: 2 },
+            { question: "What is the function of the 'KAVACH' system implemented by the Indian Railways?", options: ["Online ticket reservation.", "Automatic train collision avoidance.", "Freight train tracking.", "Automatic railway station cleaning."], answer: 1 },
+            { question: "Which digital initiative allows citizens to access authenticated digital documents like driving licenses and mark sheets directly from the issuing authority?", options: ["MyGov", "DigiLocker", "UMANG", "e-Pramaan"], answer: 1 },
+            { question: "In Karnataka, the 'Kaveri' portal is predominantly utilized by citizens for which purpose?", options: ["Applying for caste certificates.", "Registering property and marriage documents.", "Paying electricity bills.", "Booking state transport tickets."], answer: 1 },
+            { question: "The 'CHAMPIONS' portal was launched by the Government of India to assist and support which specific sector?", options: ["The agriculture sector.", "The micro, small, and medium enterprises sector.", "The heavy manufacturing sector.", "The education and research sector."], answer: 1 },
+            { question: "What is the primary function of the 'PENCIL' portal administered by the Ministry of Labour and Employment?", options: ["To promote adult literacy programs.", "To enforce the eradication of child labour.", "To manage pension disbursements.", "To provide skill training to rural youth."], answer: 1 },
+            { question: "The 'Seva Sindhu' portal in Karnataka is best described as which of the following?", options: ["An integrated portal for the delivery of citizen services.", "A portal exclusively for state government employees.", "A platform for agricultural marketing.", "A dedicated grievance redressal mechanism."], answer: 0 },
+            { question: "Which application was developed by the Ministry of Earth Sciences to provide localized lightning alerts to farmers and citizens?", options: ["Meghdoot", "Damini", "Mausam", "Safar"], answer: 1 },
+            { question: "What is the primary function of the 'e-Way Bill' system under the Goods and Services Tax (GST) regime?", options: ["To file annual GST returns.", "To track the movement of goods exceeding a specific value.", "To register new businesses for GST.", "To calculate input tax credit."], answer: 1 },
+            { question: "The 'PM-DAKSH' portal is an initiative designed to facilitate which of the following objectives?", options: ["Direct benefit transfers for farmers.", "Skill development for marginalized target groups.", "Digital literacy for senior citizens.", "Financial inclusion for women entrepreneurs."], answer: 1 },
+            { question: "Which platform operates as India's National Single Sign-On (NSSO), allowing users to access multiple government services with a single set of credentials?", options: ["Jan Parichay", "Meri Pehchaan", "e-Pramaan", "DigiLocker"], answer: 1 },
+            { question: "What is the purpose of the 'SANDES' application developed by the National Informatics Centre (NIC)?", options: ["It is an indigenous instant messaging platform.", "It is a portal for weather forecasting.", "It is a software for rural broadband mapping.", "It is a platform for citizen surveys."], answer: 0 },
+            { question: "The 'Kutumba' software project in Karnataka serves which primary administrative function?", options: ["Managing state transport logistics.", "Managing family data for targeted entitlement delivery.", "Digitizing historical state archives.", "Monitoring agricultural crop yields."], answer: 1 },
+            { question: "Which of the following describes the 'e-RUPI' digital payment solution developed by NPCI?", options: ["A cryptocurrency launched by the RBI.", "A cashless and contactless purpose-specific voucher.", "A new physical currency note design.", "An international wire transfer protocol."], answer: 1 },
+            { question: "The 'MADAD' portal is exclusively maintained to support which demographic of Indian citizens?", options: ["Senior citizens seeking pension assistance.", "Farmers seeking minimum support price information.", "Indians living and working abroad facing consular grievances.", "Students applying for central government scholarships."], answer: 2 },
+            { question: "What is the function of the 'SMILE' scheme's portal managed by the Ministry of Social Justice and Empowerment?", options: ["Providing scholarships for minority students.", "Providing rehabilitation for marginalized individuals.", "Promoting rural entrepreneurship.", "Managing healthcare data for the elderly."], answer: 1 },
+            { question: "The 'U-DISE+' software system is an indispensable tool for the government in evaluating which sector?", options: ["The school education system across the country.", "The distribution of public distribution system (PDS) grains.", "The progress of rural electrification.", "The implementation of the National Health Mission."], answer: 0 },
+            { question: "Which portal functions as a national platform for volunteering in government and government-aided schools?", options: ["Vidyanjali", "Swayam Prabha", "e-Pathshala", "Shagun"], answer: 0 },
+            { question: "What is the primary utility of the 'PARAKH' portal set up by the NCERT?", options: ["To facilitate online teacher transfers.", "To establish standard student assessment guidelines.", "To manage midday meal scheme logistics.", "To digitize historical educational manuscripts."], answer: 1 },
+            { question: "Which platform serves as the central hub for the electronic filing of cases and accessing judicial orders across Indian courts?", options: ["Nyaya Bandhu", "Tele-Law", "e-Courts", "NJDG"], answer: 2 },
+            { question: "The 'O-SMART' scheme involves digital modeling and software forecasting for which specific environmental domain?", options: ["Forest fire tracking.", "Oceanographic research and marine services.", "Air quality index monitoring.", "Glacial melt analysis."], answer: 1 },
+            { question: "Which mobile application is specifically designed to aid citizens in verifying the authenticity of Indian currency notes?", options: ["BHIM", "MANI", "RuPay App", "e-Mudra"], answer: 1 },
+            { question: "What is the primary function of the 'YUKTI' web portal managed by the Ministry of Education?", options: ["To coordinate online examinations during crises.", "To repository innovations and startup ideas from academic institutions.", "To manage faculty recruitment in central universities.", "To track international student enrollments."], answer: 1 },
+            { question: "In the context of the National Highways Authority of India, what is the 'Bhoomi Rashi' portal used for?", options: ["Monitoring highway toll collections.", "Expediting the process of land acquisition for highway projects.", "Tracking highway maintenance vehicles.", "Providing highway traffic updates to citizens."], answer: 1 },
+            { question: "Which portal is utilized by the Government of India to promote the transparent public procurement of goods and services?", options: ["e-NAM", "GeM", "CPPP", "MSME Databank"], answer: 1 },
+            { question: "What is the purpose of the 'Suvidha' application launched by the Election Commission of India?", options: ["To allow citizens to cast votes online.", "To facilitate candidate nominations and campaign permissions.", "To publish live election results.", "To register new political parties."], answer: 1 },
+            { question: "The 'NKN' (National Knowledge Network) is a robust digital infrastructure designed to:", options: ["Provide free Wi-Fi at railway stations.", "Interconnect all higher education and research institutions with a high-speed network.", "Manage the national biometric database.", "Host all central government websites."], answer: 1 },
+            { question: "Which software portal is utilized specifically for monitoring the Swachh Bharat Mission (Grameen) progress at the village level?", options: ["Jal Jeevan Dash", "SBM-G IMIS", "Panchayat Darpan", "Gram Samvaad"], answer: 1 },
+            { question: "What is the primary function of the 'UDAN' web portal operated by the Ministry of Civil Aviation?", options: ["Booking domestic flight tickets.", "Bidding by airlines to operate flights on regional, underserved routes.", "Tracking live flight status.", "Applying for pilot licenses."], answer: 1 },
+            { question: "The 'Vahan' database, managed by the MoRTH, is essential for identifying which of the following?", options: ["The driving history of a citizen.", "The registration and taxation status of a motor vehicle.", "The toll transaction history of a vehicle.", "The insurance claim history of a vehicle."], answer: 1 },
+            { question: "Which government application provides a digital interface for the National Agriculture Market to facilitate online trading?", options: ["Kisan Rath", "e-NAM", "AgriMarket", "Crop Insurance"], answer: 1 },
+            { question: "The 'SAMADHAN' portal is primarily used by citizens and workers to file grievances related to what?", options: ["Telecom service deficiencies.", "Industrial disputes and delayed wages.", "Banking fraud.", "Public distribution system irregularities."], answer: 1 },
+            { question: "What is 'e-Gram Swaraj', launched by the Ministry of Panchayati Raj?", options: ["An e-commerce platform for rural artisans.", "A unified portal for decentralized planning, progress reporting, and accounting for Panchayats.", "A digital library for rural schools.", "A telemedicine portal for primary health centers."], answer: 1 },
+            { question: "Which of the following describes the 'BHIM' application?", options: ["A portal for managing direct benefit transfers.", "A UPI-based payment interface developed by the National Payments Corporation of India.", "An app for booking railway tickets.", "A digital wallet exclusively for government employees."], answer: 1 },
+            { question: "The 'NIDHI' portal is an initiative launched by the Ministry of Tourism to achieve what goal?", options: ["To issue online visas to foreign tourists.", "To register and classify accommodation units across the country.", "To book tickets for national monuments.", "To provide virtual tours of heritage sites."], answer: 1 },
+            { question: "Which portal serves as a comprehensive digital repository for managing the flow of blood and blood products across India?", options: ["e-RaktKosh", "e-Sanjeevani", "Co-WIN", "Ni-kshay"], answer: 0 },
+            { question: "The 'Bhuvan' geo-portal, frequently used for urban planning and disaster management, is developed by which organization?", options: ["Survey of India", "Indian Space Research Organisation (ISRO)", "National Informatics Centre (NIC)", "Ministry of Earth Sciences"], answer: 1 },
+            { question: "What is the function of the 'E-Daakhil' portal in the Indian governance framework?", options: ["To file income tax returns electronically.", "To submit property tax in urban local bodies.", "To file consumer grievances online from anywhere.", "To apply for passports online."], answer: 2 }
+        ];
+
+        // State Variables
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let quizCompleted = false;
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsScreen = document.getElementById('results-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentQNum = document.getElementById('current-q-num');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+        const navGrid = document.getElementById('nav-grid');
+
+        // Initialize Navigation Grid
+        function initNavGrid() {
+            navGrid.innerHTML = '';
+            for (let i = 0; i < quizData.length; i++) {
+                const btn = document.createElement('button');
+                btn.className = `w-8 h-8 rounded text-xs font-bold transition-colors border ${userAnswers[i] !== null ? 'bg-blue-100 text-blue-700 border-blue-300' : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100'} ${i === currentQuestionIndex ? 'ring-2 ring-blue-500 ring-offset-1' : ''}`;
+                btn.textContent = i + 1;
+                btn.onclick = () => jumpToQuestion(i);
+                btn.id = `nav-btn-${i}`;
+                navGrid.appendChild(btn);
+            }
+        }
+
+        // Update Navigation Grid Highlight
+        function updateNavGridStyle() {
+            for (let i = 0; i < quizData.length; i++) {
+                const btn = document.getElementById(`nav-btn-${i}`);
+                if (!btn) continue;
+                
+                // Reset base styles based on answer status
+                if (userAnswers[i] !== null) {
+                    btn.className = `w-8 h-8 rounded text-xs font-bold transition-colors border bg-blue-100 text-blue-700 border-blue-300`;
+                } else {
+                    btn.className = `w-8 h-8 rounded text-xs font-bold transition-colors border bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100`;
+                }
+                
+                // Add highlight for current
+                if (i === currentQuestionIndex) {
+                    btn.classList.add('ring-2', 'ring-blue-500', 'ring-offset-1');
+                }
+            }
+        }
+
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            initNavGrid();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = quizData[currentQuestionIndex];
+            
+            // Update Header & Progress
+            currentQNum.textContent = currentQuestionIndex + 1;
+            const progress = Math.round(((currentQuestionIndex + 1) / quizData.length) * 100);
+            progressBar.style.width = `${progress}%`;
+            progressPercent.textContent = `${progress}%`;
+
+            // Setup Question
+            questionText.textContent = `${currentQuestionIndex + 1}. ${currentQ.question}`;
+            
+            // Setup Options
+            optionsContainer.innerHTML = '';
+            currentQ.options.forEach((option, index) => {
+                const isSelected = userAnswers[currentQuestionIndex] === index;
+                const optionDiv = document.createElement('div');
+                
+                // Styling for unselected vs selected
+                const baseClasses = "flex items-center p-4 border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-sm";
+                const unselectedClasses = "border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50";
+                const selectedClasses = "border-blue-500 bg-blue-50 ring-1 ring-blue-500 shadow-sm";
+                
+                optionDiv.className = `${baseClasses} ${isSelected ? selectedClasses : unselectedClasses}`;
+                optionDiv.onclick = () => selectOption(index);
+
+                // Checkbox indicator
+                const indicator = document.createElement('div');
+                indicator.className = `flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center mr-3 transition-colors ${isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300 bg-white'}`;
+                if(isSelected) {
+                    indicator.innerHTML = '<i class="fas fa-check text-white text-xs"></i>';
+                }
+
+                const textSpan = document.createElement('span');
+                textSpan.className = `text-gray-700 font-medium ${isSelected ? 'text-blue-800' : ''}`;
+                textSpan.textContent = option;
+
+                optionDiv.appendChild(indicator);
+                optionDiv.appendChild(textSpan);
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            // Button States
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.innerHTML = 'Finish <i class="fas fa-check"></i>';
+                nextBtn.classList.replace('bg-blue-600', 'bg-green-600');
+                nextBtn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
+            } else {
+                nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+                nextBtn.classList.replace('bg-green-600', 'bg-blue-600');
+                nextBtn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+            }
+            
+            updateNavGridStyle();
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestionIndex] = index;
+            loadQuestion(); // Re-render to show selection visually
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+        
+        function jumpToQuestion(index) {
+            currentQuestionIndex = index;
+            loadQuestion();
+        }
+
+        function finishQuiz() {
+            // Optional: Ask for confirmation if questions are unanswered
+            const unanswered = userAnswers.filter(ans => ans === null).length;
+            if (unanswered > 0) {
+                const confirmSubmit = confirm(`You have ${unanswered} unanswered questions. Are you sure you want to finish?`);
+                if (!confirmSubmit) return;
+            }
+
+            quizContainer.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            
+            let score = 0;
+            let correct = 0;
+            let incorrect = 0;
+            
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.answer;
+                
+                if (isCorrect) {
+                    score++;
+                    correct++;
+                } else if (userAnswer !== null) {
+                    incorrect++;
+                }
+
+                // Generate review item
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = `p-4 sm:p-5 rounded-xl border ${isCorrect ? 'bg-green-50/50 border-green-100' : (userAnswer === null ? 'bg-gray-50 border-gray-200' : 'bg-red-50/50 border-red-100')}`;
+                
+                let statusBadge = '';
+                if (isCorrect) {
+                    statusBadge = '<span class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold bg-green-100 text-green-700"><i class="fas fa-check-circle"></i> Correct</span>';
+                } else if (userAnswer === null) {
+                    statusBadge = '<span class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold bg-gray-200 text-gray-600"><i class="fas fa-minus-circle"></i> Skipped</span>';
+                } else {
+                    statusBadge = '<span class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold bg-red-100 text-red-700"><i class="fas fa-times-circle"></i> Incorrect</span>';
+                }
+
+                let html = `
+                    <div class="flex flex-col sm:flex-row gap-3 items-start justify-between mb-3">
+                        <h4 class="font-semibold text-gray-800"><span class="text-gray-500 mr-2">Q${index + 1}.</span>${q.question}</h4>
+                        <div class="flex-shrink-0">${statusBadge}</div>
+                    </div>
+                    <div class="space-y-2 mt-3 ml-0 sm:ml-7">
+                `;
+
+                // Show options and highlight right/wrong
+                q.options.forEach((opt, optIndex) => {
+                    let optStyle = "text-gray-600 pl-3 border-l-2 border-transparent";
+                    let icon = "";
+                    
+                    if (optIndex === q.answer) {
+                        // Correct answer (always show)
+                        optStyle = "text-green-700 font-medium pl-3 border-l-2 border-green-500 bg-green-50/50 py-1 rounded-r";
+                        icon = '<i class="fas fa-check text-green-500 mr-2"></i>';
+                    } else if (optIndex === userAnswer && !isCorrect) {
+                        // User's wrong answer
+                        optStyle = "text-red-600 pl-3 border-l-2 border-red-400 bg-red-50/30 py-1 rounded-r line-through opacity-80";
+                        icon = '<i class="fas fa-times text-red-400 mr-2"></i>';
+                    }
+                    
+                    html += `<div class="${optStyle} text-sm">${icon}${opt}</div>`;
+                });
+
+                html += `</div>`;
+                reviewDiv.innerHTML = html;
+                reviewContainer.appendChild(reviewDiv);
+            });
+
+            // Update Score Display
+            document.getElementById('final-score').textContent = `${score}/${quizData.length}`;
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('incorrect-count').textContent = incorrect;
+            
+            // Scroll to top of results
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
