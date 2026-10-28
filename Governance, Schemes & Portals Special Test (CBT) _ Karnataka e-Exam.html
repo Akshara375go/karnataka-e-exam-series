@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Governance, Schemes & Portals Special Test | Karnataka e-Exam</title>
+<style>
+:root{--navy:#1b2a5c;--red:#c8202e;--bg:#eef1f7;--card:#fff;--ink:#1c2233;--mute:#5b6478;--line:#d5dae6;--ok:#1e8e4e;--bad:#c8202e;--mark:#6a3fb5;--na:#dfe3ee;--hdr:#1b2a5c;--hdrink:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141f;--card:#1a2030;--ink:#e8ebf4;--mute:#a1a9bd;--line:#2c3550;--na:#2c3550;--hdr:#141c36;--red:#ee4a58;--mark:#a583ee;--ok:#3fbf78;--bad:#ee4a58;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141f;--card:#1a2030;--ink:#e8ebf4;--mute:#a1a9bd;--line:#2c3550;--na:#2c3550;--hdr:#141c36;--red:#ee4a58;--mark:#a583ee;--ok:#3fbf78;--bad:#ee4a58;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+a{color:var(--red)}
+.top{background:var(--hdr);color:var(--hdrink);display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:4px solid var(--red)}
+.top img{width:52px;height:52px;border-radius:50%;background:#fff}
+.top h1{font-size:1.05rem;margin:0;line-height:1.25}
+.top small{opacity:.85;display:block;font-size:.8rem}
+.top .sp{flex:1}
+.timer{background:rgba(255,255,255,.12);border-radius:6px;padding:6px 12px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tg{color:#fff;font-size:.85rem;white-space:nowrap}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px}
+.intro{padding:24px;max-width:820px;margin:20px auto}
+.intro h2{margin-top:0}
+.intro ul{padding-left:20px}
+.btn{border:1px solid var(--navy);background:var(--card);color:var(--navy);padding:9px 16px;border-radius:4px;font-weight:600}
+.btn.pri{background:var(--navy);color:#fff}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.mk{border-color:var(--mark);color:var(--mark)}
+:root[data-theme="dark"] .btn.pri,:root:not([data-theme="light"]) .btn.pri{border-color:var(--line)}
+.btn:focus-visible,.opt:focus-within,.pal button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.main{display:grid;grid-template-columns:1fr 290px;gap:16px;align-items:start}
+.qhead{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-weight:700;color:var(--navy)}
+:root[data-theme="dark"] .qhead,:root:not([data-theme="light"]) .qhead{color:var(--ink)}
+.qhead span{font-weight:400;color:var(--mute);font-size:.88rem}
+.qbody{padding:18px 20px}
+.qbody ol{margin:.5em 0 .5em 1.2em;padding-left:.6em}
+.qbody li{margin:.3em 0}
+table.m{border-collapse:collapse;margin:.6em 0;width:100%;max-width:640px}
+table.m th,table.m td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+table.m th{background:var(--na)}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:5px;padding:10px 12px;margin:9px 0;cursor:pointer}
+.opt:hover{border-color:var(--navy)}
+.opt.sel{background:rgba(27,42,92,.09);border-color:var(--navy)}
+.opt input{margin-top:5px;accent-color:var(--navy)}
+.opt.ok{border-color:var(--ok);background:rgba(30,142,78,.12)}
+.opt.no{border-color:var(--bad);background:rgba(200,32,46,.1)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px;border-top:1px solid var(--line)}
+.bar .sp{flex:1}
+.side{padding:12px}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;font-size:.78rem;color:var(--mute);margin-bottom:10px}
+.legend i,.pal button{display:inline-block;width:34px;height:34px;border-radius:5px;text-align:center;line-height:34px;font-style:normal;font-weight:700;font-size:.85rem;border:0;color:#fff;position:relative}
+.legend i{width:22px;height:22px;line-height:22px;font-size:.7rem;margin-right:6px;vertical-align:middle}
+.s0{background:var(--na);color:var(--ink)!important}
+.s1{background:var(--red)}
+.s2{background:var(--ok)}
+.s3{background:var(--mark)}
+.s4{background:var(--mark)}
+.s4::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--ok);border:2px solid var(--card)}
+.pal{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;justify-items:center}
+.pal button.cur{outline:3px solid var(--navy);outline-offset:1px}
+:root[data-theme="dark"] .pal button.cur,:root:not([data-theme="light"]) .pal button.cur{outline-color:#fff}
+.sum{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;margin-bottom:10px}
+.res{padding:24px;margin:16px auto;max-width:900px}
+.score{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.score div{flex:1 1 130px;border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+.score b{display:block;font-size:1.5rem;color:var(--navy)}
+:root[data-theme="dark"] .score b,:root:not([data-theme="light"]) .score b{color:var(--ink)}
+.rv{padding:16px 20px;margin:14px 0}
+.rv .tag{font-weight:700;font-size:.85rem}
+.rv .ex{margin-top:10px;padding:10px 12px;background:var(--na);border-left:4px solid var(--navy);border-radius:3px;font-size:.93rem}
+.foot{text-align:center;color:var(--mute);font-size:.85rem;padding:18px}
+.hide{display:none!important}
+@media (max-width:860px){.main{grid-template-columns:1fr}.top{flex-wrap:wrap}.tg{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD74oHWjNIaAF9aDR2ox74oABQSFBJOABkk9q8y+L/x38CfBnRBceJL03OqToWs9HtCGubj3x0RM9XbA9MnivkV9c/aU/a71CW30OP/AIRjwOXKOySPBZ7e4eUDfdP6qvy+wrpo4WVRc8naPdmU6yi+Vas+mviL+1d8HPh3LNYy6+de1WLIaw0QC4ZW9HkyI0/Fs+1eAX/7Zvxh8fX8mm/CD4XgAnasv2eXU5h7nYFjX8c16z8Nv2KvhR4Nhhu/FEMnjDVEwxbUF2WiN/sW6nBH++Wr6K0/TNO0jT47DSrC2sbWMYS3tYlijUeyqABWntMPT0jHmfd/5EctWe7t6Hwwnhv9vfxuftF5rl9oEMh4V7220/aP9yIFxU6/st/tVagDJqfxqjjY9VOu30n8lAr7qwB2FANH16a+GKXyD6vHq2/mfCzfssftT2CeZp3xsSRx0Ua5fx/zUiq8vhT9vTwR/pNh4hvtehjP3Yr+3v8AI/3JlDGvvHPFISD1FH16b+KKfyD6vHo2vmfB1n+2T8bPh7qCad8XPhlHIA2GkktpdLmb6Eho2P0Ar3v4d/tc/B3x/LBYy6zJ4a1WXAFnrYEKu3okwJjb8wfavbb/AE7T9WsJLDVLG2vrWQYeC6iWWNh6FWBBr51+JX7Ffwp8ZQTXfheGTwfqj5YNYLvtHP8At27HAH+4V/Gn7TD1Pjjyvuv8g5asPhd/U+kkdHQOjBlYZVgcgj1FL3r87k1X9pH9kDVI7fVFOv8AgrzNqB5HuLBwT0R/v2rnsDgZ7NX2D8Hfj14F+M+iNL4fu2tNWgQNeaLeMBcQerDHEiZ/jXj1weKyrYWVNc8XePdFQrKT5Xoz1CiiiuY2CiiigAoooB5oAK+d/wBpL9pvTPhDpzeGPDHkal41uY8pCw3xaerD5ZZgOrH+GPv1OB12P2lvj5Z/Bb4fiLTWguPFeqIyabbP8ywgcNcSD+4vYfxNgdAceSfss/s73t/qMfxv+LUc1/rV/L9u0201D53Bc5+1zA9ZG6op+6MHGcBeyhSjGPtqu3Rd/wDgGFSbb5Ib/kZ/wT/ZT1rx1rJ+Kn7QU97fXV84uY9GvHPmz55D3R6quMYhGMDAOB8tfa1nZWenafDY2FrDa2sCCOKCBBGkajoqqOAPYV8pt+2HcaX4S+JWpa7oOlx3nh7WRomh2dvLIW1CZmlAMmeQFEW5tv06kV7LbfEDxR4f/Zlu/iR8SdI0/StWtdMl1KbTLVn2RfKWiiYsc7zlQ3oTjtRiVWm05+iX+QUuSKtE9Oorwf8AZn+Pmo/HDw/rz67o9jpOq6VcRK1vZu5VoZEyr/Pzncrj06V5Bp/7YHxlvPCmr+NovhHouoeFNEvfsmo3dreyI8R3ADhiSOGX5tpAzzWawtRycbar9S/bRsn3Ptc0n4V8t/FD9rpfBEvw51rR9Atr/wAOeKbAaldSXDOtzbxeYqsEC/KWUM3Xglfeu2k+OV9L+2H4f+E+mafpl1oGr6INXTVVdzKwMUsi7R90qRGvPoaX1eole3f8Nw9rG9rnt3ejFfM/xX/ann+Hf7TWkfDe20Swu9JLWaavqEzuJLU3D4wuPl4Qo3Pqar/Hf4//ABo+D/iW8uovhrolx4QN3HZ6fq91dvvuXaPcQURsjlXHQD5accLUk0rb7A6sVfyPqA4Haj3r561b43fE7wN+zPr/AMQfiX4B0zQ9ft7yK10rS4rkyxXfmbArMVYkcmTgHOEq/wDDb4+ah47/AGU/EXxOl0ewtta0OO+E+nxu5i8yBPMQHPzAMpXP41Lw80ubpewe0jex7bfWFlqenT6fqNnBd2k6GOa3njDxyKeqsp4I9jXxR8a/2Utb8Ca0Pin+z/PfWdxYubmTR7Rz51tjkvanqy+sJzxkDI+Wutt/2s/FWteAvh3aeFvCOkan4/8AGE0p/soTSi3tIEmeMSOfvDOwtzwFRz6V6B+0R8ctX+CPw70C9s9K03VvEGqXP2f7PIZEhwkRaV12ndgNtAz681vRjWozUV16dzOo6c4tvoY/7Nv7Tmm/F3T08L+KPs+m+NbaPLRL8kWoqvWSEHo4/ij7dRx0+iq+DPix8KZPHnww0H9qH4P2r6Vrc1rHq2q6dphKlZl5kuIMciRHVty/xAZ653fQP7NHx8tPjT8P2g1RoIPFmloq6jbx/Ks6nhbmMf3W7j+FsjoRRiKEbe1p7dV2f+QUqjvyT36eZ7lRRRXEdAVieMfFejeBvAmq+LfEFwINO023a4mfuQOir6sxwoHckVt4r4o/bQ8Zav4x+Inhf9n/AMIuZbu8uIbi9jTo80hxbxt/sqN0rf8AAT2rfD0fazUenX0M6s+SNzl/gf4J1n9p/wDaM1b4y/EW13+HNPuV8myf5opZF5htFz1jiUhn/vMRn7xr9AAAoAHqK5X4b+BNH+Gnwv0fwVoij7Np8AjaXGGnkPMkre7MSfxx2rqXkSNC7sFVeSzHAH40Yit7WWmy29ApU+RebPyun8E+JbzxX8Ufiz4auLeeTwP4qN69hJH5gkBupWMpB42psXIxyCx4xX0V+0x8X7P4h/sheELPwaWuLzx/ew262MDhpR5ZBlgx/eE3lp/+uvrCw8N+F7OG/OmaDpEEepktem2tY1W7Jzky7RiTO5s5z1PrVa38BeBrNrNrXwb4fgNjIZrQxadCv2dyQS8eF+RiVGSMHgV0SxinKMpL4dv69dTJUHFNJ7nxx8FNb17wX+3amm+KPA1z4Gi8XaIlnDpd3Osu97eJVjkVl4O4wOMerH1rwSx0rxl/wzj4m8SWXibUh4Kj8VLZ69olgQu5G2sJyxyCc7UweAdhOa+5P2h/ifbfC/xN4W1BPAuga7fzJO8F7qCYmtCjJ/qnCkrndngjpXjFt+1A1roV1pFl8FvCMOm3pL3NnDEyw3BPd0Ee1zwOSD0rmlndGjNqS10v8j6TBcF5nj8PHEUIpwd7PmS62790R/Fzwn4C8TfGX9nzwXoLCfwfqOkSWdqyS5ZrdgNjbv74OGP+0DXHfAe28SeFv2+dA8G+OLlftXhTT77SFlc4/wBFjgmkjfPddkmQf7pA7V9ZfAjXdD+J/gmLxJe/Dzw7o1zol89npyWtop+yrtVyYiyAx5LnhcV6lP4V8M3Wutrd14c0qbU2iMBvpLONpjGVKlPMK7tpUkYzjBIrWnj4zpWSumn+N9TxcZl1XCV5Ua2kovU/M/XLnxh8S/C3xa8fad8O9R1jS9b1ZLtfEkMyiPS4rR2cLtPLfumXJGMfhXsX7RPjWHx//wAE+/hv4tMyPNd6naLcMWB/fxwTRygn13I1faNj4b8PaXoMmiaZoGmWemSBlextrRI4HDcMCijac9+Oaqt4I8FyeH4dCfwjoT6XDKZ4rA6fEYI5OfnWPbtDcnkDPJrR4yLlF8uz/Sxy+wdmr7nyv+13r+p6x4/+Fvww8O6PPr96bldfn0a2kCvdLFgJHz0yqznJ6AE1wvw08Qatol9+0P4D8SeHpfC13rGh3viKHRbmQM9qTG5ZARwRsmQ5HYe1fdp8PeHn8Spr7aJpjaxFH5SX5tkNwiYI2iTG4LgkYzjk1Hc+E/C17q8uq3nhvSLi/mgNtLdS2cbyyRFdpjZyMlSOCpOMcVEcVGMPZ8v/AA97luk3Lmufm58FX1H4Hap8NPjjq1zDd+FvEr3Wj3rbMnT0EhT7x6HCeYMY4V1r1j45eI9b8aftx6ZpHhLwZP47g8IaM7zaXY3KxhnuYyHkLnIAAlh+pAr7Hl8G+EZvDMXhybwrosmjxvvj017CI26NknKxFdoOSTkDufWpNM8M+GNJ1GfUdI0DSbG7nURzXNpaxxvIq4wrOoyQMDAJ4wKuWMUp+0cddV/XyJjQ5Y8qeh82/sOa/dp8LPEfw01mKS21TwrqzxtaTMPMhjlyShH+zIkoP1ryn45eC9Z/Zi/aO0n4y/Dy12eHtRuW82yQbYo5G5mtWx0jlUFk/ukHH3RX3ZZaB4e0vWrvUdN0XTLPUL47rq5t7ZI5rg5zl2ADPyc85rF+JfgLSfib8K9X8F6woEF/AUjmxkwSjmOVfdWAP5jvUQxSVZztpLdDlRbgo31Wxo+EPFWj+OPAuleLdAuPP07UrdbiBz1AI5VvRlOVI7EGtuviv9ivxpq3hfxp4p+Ani1jBe6fPNdWUTn7kiNtuYl9j8sg9ix719qCscRS9lNx6dPQulPnjcgvry207TLnUL2URW1vE000jdFRQWY/kDXw9+yhptx8W/2qvGvxy1uIvHayv9iD8hJp8qgH/XOBcf8AA699/ay8VP4U/ZP8Ty28piudSSPSoWBwczuFb/xwPWd+xt4TTwz+yjot00QS51uWXVZTjkh22x/+Q0T862pfu6Ep9Xp/mRP3qij21PfT04r8/wDxr48T4w/Hi80/xj46fwv4NtJ5orcHcyJHG20YjXhpXIzubgD6AH9APevz/wDEOgp8Cv2ib678ZeCYPEfhe7lna2W6jBimhkbepRmBUSoeCD79iDXhZhe0f5b6/wDBsfoPA6pOrX0vW5fc2v58vNpzbWv59B3g/wAaWvwf+Pum2XgXx8/ijwheywx3S4ZEZZH2MGjPAkQkMGXqPqRX1n4y+PXwz8BeLJ/DXifWri11GBEkkijspZQFYblO5QRyK8C+H3jvwd8QvjZY6R4U/Z+0F9DwpmuTbp59mwOfPeQDYFHGE6k9DnivqDWvhx4C8Sau+q6/4O0XUr6RQr3N1aLI7ADABJ9BxU4RT5Jeykt/OxpxLUwv1ul/aFGalye9Zw5m76OVk0nvfRdD5Z/bG1Sz1qL4faxp8hktL2yubmFypUsj+UynB5HBHBrP8EftX3Pg/wCHmieFl+HkV8um2kdqLk3pQy7RjdjyzjPpmtX9tC2s9OuvAdjaRQ21tBa3UUUKAKqKpiAUDsABis7wP+1npfg/4caL4Xk8BC+fTLOO1Nz9vjTzSoxuwUOM+ma5qk+TEzbny7dL9j6LA4NYrIcNGOF9uk5ac/Lb3pa36n0/4G161+LXwPtNZ1LRxYW+tQSxzWUUxJRd7IcOApz8ucjBB+lfJc+qeN/2Zv2iwmp6hqmsaBMDt86d3F7Zseo3HAmQ4/EejV9OfCH4zaZ8TfAOr+J5dJj8P2el3Bhm826WRFURiQuWAAUAH9K+aPEuq67+1T+0FFoPh+drTw1pqyGGd03C3h6NcOv9+RgoVc9MDsa6MTJShCUHefTz7nhcPYedHF4uji6ajhknzpu/L/Kk+summ/rYv/DDSPGX7Qvx01Hxp4h1DUrPwxa3Akngt7mSOJwP9VaR7SB90AueuM92Fe8/tA6f8S7/AOHkGnfDzUbHSrXLHUrqW/WykEYACRpI3CgnOTkHgDua+fPgn8RdW+Bfxcv/AIZ+Pn+y6TNd+VN5j/LZznAW4Un/AJZONuT6bW7Gul/bV/4SF5PDMqNOfDRhlyUOYftW4bS+OM7Pu5/2sVnTqRjhpyd+br3O7GYOtVz7DUY8saNv3el4uKV9rq8vn28r+U+M/Bmi+BfDNn4g8P8AxttNZ8SrIn2mx065bzIyerRyq5LbT1J6jn2r6X8A+PNc8c/sS69rmtXTyaraadqFnJdqdjytHGdshIxhtpXJHcZr5y8aeJfg9qXwUg0b4b/D+6g1a3W3m1TWLiAFrZVIDZl3HO9yF/hHP4V7B8CpI3/YL8ahJEYoNU3YOcZgU8/hUYaSjVai9Gul/wBTsz2lKrl1OriIv2kaqSclFSs/KOyfRPy8jxz4L+H/AIk/FC51nwpofja70qwe2im1K5nnlkLIGISNQGz8xLEgEAhefSs+Cb4lfBT45XnhTQtdb+11mWxAR2e3uvOUCNijHGfnVgTypHfv6l+xIynxX4uCsp/0C16HP/LR65X4yOg/b4ILqD/a2l8Ej0hrBQtQhVTd7239T1pYxzzjF5fKEXSVPmtyrV2jv33t9xS+MPwe8e/C+y03xprvjV9Zub268ma7gmmSaGcqXGHZssDtb5hjBHSvrz4DeK9T8afADw/rmtzm41B45IJ526ytFI0e8+5Cgn3zXnP7aBUfBHSCzAf8TyPqcf8ALGWuo/ZWYN+y9oRUgjz7vkHP/Lw9d9CCpYqUI7WPjc4xc8w4eo4vEJOaqON0ktLPTT5fcfPv7UVnP8Hf2v8AwV8b9IiaO2vpEN8E4DyQ4SYHH9+Bx9Spr7htbmC8sobu0lWWCZFkjkXkMrDII+oIrwH9tHwnH4l/ZU1TUFhD3GhXMOpxnHIQN5cv4bJCfwrpf2XfFD+Lf2U/CN9POZrq0tTps5PJ3QOYhn/gKqfxr36v7yhCfVafqj83h7tRx76njX/BQbWJYfhl4Q8PxSEfbdTmuSg/i8qHav6y19TeBtFTw58MfDugRxhFsNNtrXaBjGyJQf1Br4+/bsY3fxS+FulucxPJMSv+9cQL/Kvt8jHA6dMUVtKFNerCGtST9Ba5LxN44+Gul3j6F4v8WeF7Ofasj2OqXkKNg/dYxueh7HFdbVO40nSryczXem2c8uMb5YEdsD3IrkVupvdrVHG6d8TvgxYRi00rx74ItldgBDa6jbRhmPA4UjJrC+PPxH8efCzwQ/jHw14Z0PV9Hso92om/vpIJY2aREjEaqhD5Lc5IxivShoOhIdw0bTgRyD9mjGP0rhfjToeh/EH4Ja94NvfF2neHorx4YX1C8ZdkTLKkmMMyg524HPf2rSnyKa00Jm5NNt6nnHxN+LPjPwdpvga38Y+B/h2ut6/dXkLvqmqMLCyjjRXRvtDxZBcHByMZwO9VvHHxTTwl4P8AAEv/AAhnwyXU/FfnFtVuroDQ7YRruUC6WLLGQFQvAGc9q2fjBoPhL4lat4P1TR/jD4I0i88NyTyINQ+y6hDOZY1jw0TSBTgKTznkg9qh8QaUmsfD/wAO6LbfH3wHBeabFLBfW81jYy6VqSP93dZ+YAhQY27Wx1yOa2UKbUW4+u4KtVjdRk7eo3x58SfHngf4Bab450/4W+DF065gjbWdOfU1kVJpZkhjERgQxzo24HcTwPpXrPg+LWdL8Cyap4n8J6Fo+thZHuLLw8fOjdULFArlFLMR2I4JryCXwD8OU/ZIg+B9h8YfDyrE0Uh1Se8t2yy3QuGxEJAFUkFQoPyjHWvZbnx/4AubKa2X4g+HoGkRkEsWq24ePIxuXLEZHUVlOMbJRj1fTp0Gqk3e8t/M8Y+E3xcv/jBq82par4F8BzadJYzXDG11KO41HTGjJCW95BKgfLDugKjvUXwr+OviD4p+FL+91Xw/8PP7Lg0e5v20i21c3N7GYuEWa1ZPkQlevbK461B4S8AeGdK+LVr488V/Hjwlr97p9hc2FnPAlnZ3Fys42mS9lSQ+e6jpwOeag+F3gLSfh1oFx4cn+Ovw81DSJNLudOVYbGzt7omXO13uBKXcKWJ2nrx6VvKFK0rLt387kKpU0u9h3wb+NbeKfE/hvwjrHw38GaZYeLdKm1S1XQLpLjyvJAYrdwGMbCexOeePXFaT9oq/svgv4D1/TPBfgvTH8X6jf2NzFqN4bOwtxAzKHeQJ0YJg7h1IFaXwv+G/w2+FPi/QNd0D4qeDEa30H+xdciSW3T+1GVt0dyG8zMcgPDddwAz61hzfCTwrH8MfAnhjS/jn4IjvfCWoXt+l3ex213DcG4ZztaBpsfKHPUnnninyUebSOnz8/wDgBKrVa1l+PodF4n+NGoeA/DvgRtN8O/DvT9U8WxzyS6u2omLRIhFyka3UceXaQMNuQADntzXq+nax4dk+HmmePPiFpXhvw1d3EUUlzJd3VtPHDKeFC3Q+VwcDaQfSvL/EWjR618P/AA9osPx/8BRXWnQy299bTWNjLpWoo5+Umz8wCNkGApVsdeOa9L+EXg7wv4V+BuieC9F1208U6ZpqND9u3RzJLJvLtwpZVAZjhc/KMCsKkKagtOpcak+ZvmH3vxS+CupwLDqHxA8D3catuCXGpW0gB9cMx5rqvDt74d1Dw5Be+FLrTbrSZNxhm0xkaBsMQ20p8p5znHfNP/4R/Qc/8gXTv/AWP/CrtvbwWtusFtDHDEvRI1CqPoBxWL5d0Pmlblb0Oc+JOix+I/g74p0GVN63uk3VuB7mJsfrivm3/gn7rct58FfEuhSNn7Bq6zKD2E0Kk/8Aj0Zr64dVkjMbjKuNpHqDxXxL+wOxtPFXxO0gH5YprYgf7sk6f0rrpa4eou1mYT0qRfqR/t2g2vxQ+F2pvxEjzAt6bbiBv5V9v5zyOQea+Of+Cg+kSy/Dbwdr8SH/AEPU57YuO3mw7l/WKvqjwNrMfiP4Y+HteikDrf6bb3O4HOd8Sk/qTRW1oU36r8QhpUkvQ3uT1qpf6jDY2VxKZIjJEm/y2cKT6D8aXVJkg0i4drn7MfLbbICAQccYz1NeWyTTXExnuJGllPVnOTXLFXNmdHqvi+a9sxb2ULW4kUiUvgnnsDXyD+2ih/4Vl4TJJ2Nq86lSPlOLcEexxk/TPvX0zmna78IPA3xc8Bw6N41sru5jtrv7TC0MrW7wOV2kow6hl4I5HA9K6MPUVKopvZGdWLnFxR+Xvw70nw1rHxZ8NaT4ruI7PQ7vU4IL+fcIwkLOA2W/hB6bu2c9q9z0nwFZ3v7QPhHSfGnwa8OeFo7oasBp1tI0q30cMEjQO9qZS3DBQrhgJu3TNfT3/DD/AMCMY+wa+f8AuKyf4Uf8MP8AwJ3bvsPiDOAM/wBrSdB+FehVx9Kbum1p/XU5aeGnBWZ8yxeGPA2jftOQeG7z4e+FrjTtR8L/ANpT2V9byRmzuorGeZsQ+cTbM0ka7oWd/lxgjdXm/wAFoPBHiL4x6hqHjvw5px8PppV/qM+n2yGOKALGGHlAkkbMkqCSeO9fcX/DD/wI5/4l+v8APX/ibSf4V88/tZ/Ab4bfBzwT4dvPBlrqcV9qWoSQyNd3rTjy0iLEBT0OSvNVRxFOo/Zxbu1b+tRVKc4++0rLUr3/AMI/hVoWo/DTwpqMOl3d1Hreoabr2opdCNNTuEto7iCEyZwkZaWKLcMdW5rLT4f+Fbv4g+BYfF/gHRfDfia/07VZ7zwfDI1vb3M8KsdPR1aQtD57AqV3jeEBGN1av7JXwI+HPxk8M+KJ/GtvqM1zpt3BHCLW9aACOSMnkDryp5r6NP7D/wACGJJsPEBJ6k6rIc/pU1K8aUnCUndeXf5+f4FQhKcVJJHyx4a8C+DNR+JuuWvxZ8FaT4BtYfCCajewafIZTZS/a4UM6w7ma3kZGIMRLbQxfHOK0vBHw20fVfH3j/Q9Y+Gnh+2vodVS2t2ZGutN021McjDcY5klhjdRG4vcOB3A3Yr6VP7D/wACN5Y2HiDJ5J/taTn9KD+xD8COpsfEHI2n/ibScj06dPas3jKbT95/d/wS1Rl2/r7j8y2ijR2TbE20kZUAg4PY9x7196/8E9Wb/hBvHMYJEa6jbMEHQEwtk498D8q63XP2QP2bvDWiXWr642r2VnbQvcSyS6y4wiLuYgdTgDoK2P2btY+DWhWmo+FPAXh7xD4Xnuo4dZ2+KEMU+pW0mUhuI2ZiGj4wBwRnpzWmLxca9FqCZlQw8qdS8mfQ9FHGcZ5orxT0BGYIhdjgL8xPsK+Jv2CUN34t+J+rgHZJPbKD/vSTv/Wvrb4hazH4d+EvifXpZBGtjpVzcbj6rExH64r5q/4J+6LLafBXxLr0ikfb9XWFSe4hhUH/AMekNdlLTD1H3sjCetSK9T039rTwnJ4s/ZQ8Sx28RlutMWPVoVAycwNuf/yGZKyv2M/GEfij9lfStPaYPdaDNLpcozztU74j9PLdR+Br3q9tLbUNOuLC8iWa2uI2hljbo6MCrA/UE18Jfs0ajc/A/wDbK8UfBbXJmjsdUma2tGk4Dyx5ktnGf+ekLEfXFOkvaUJQ6rX/ADFP3ail30PtfxfKieGpEaJn3sAGAyEOepPb0rz38K9W1K2F7o1za8fvIyo+uOP1xXlQwRk9fQ1zQN2TWlpNe3iWtuFMkmQu7p+NerQB1tYkkADqgDAHIBx2ryywne11S3uI5REUcEuRkAd8+1d5pGu211BbQz3kUt3MCdsSlQuOx9OKUgRt0hZR1YfnXl998Ur8/tGXPw50jTbaaw0nQ/7W1jUJGbdDJI223gQDjc33jntXbafoFj/ZsLX1pFNcsu+V3BJ3Hk/zpOLW4J3Nvp1r48/busvDtxpvgefxP4hvdOtYprwR22n2Iup53Kx5YbpERFUDkkk5YACvrL+yIYfmsbi4tG9Ecsh+qtkV8K/tfQX/AIy/a58CeBNYvo9D042sMMeqXUZ8gvPMfMkUZ5AKRpjI+brgc11YFXrJ32uzHEP3Gjs/2EbPw5BH44uPDHiG+v7eRrNZbTULFbaeBgJcNlJHR1YEjIIIIOR0r7IHPrXwF+yJBfeDP2wfG/gXRb6PXtMFpcQS6naoRAGhmBjlYZ4BLOmATz0yOa+7DpRmJa9v7uc/3UfykH0C/wBTRjlas3fez/AMO/cSNHkdq8a+OGr+K28X/DrwL4Y8U3nhlfE2rT295qVjHG9wkcNs0oVN4KjLAZOK9JvrWLSI4tRtZLhUhkBmQys4MZ4Y4J6jOa+edZ8d3HjP9on4ZafqemR6ZrHh3xnqmlXtrHKZFI+wM8MykgHZJEysM99w5xWNGN3ftf8AI0m9LGV8X/2TPE3xIuNCeT4wSajPpsM0Elx4hgWSZvMkDKB5O1QB0xjPvXA3P7BHj7UJrd9Q+K+mXPkRpBE01rcSNFEv3UTc/CjnAGAK9X8MfDvVLH4+2epalNoRt7LWLi4djf2rszyvOyMUCCaSYmSEIsjHyysm3O4Y9HPw9+KxYkftBa0ASSANA07gen+rrqWKqQSipq3p/wAAxdKMndxOP8eWHjv4Y/EHwb4lsPip4i1XTta8V2uj3GgahFA1otvOHBCEKHUrsG05Jr6FxyR6V8/fF7Stb0bwt8LbHxD4puPEt6PiHprHULi1htmZT5uF2RALx0zjJr6CxgmuWrrGLNo7s+ev20PF8Xhj9lbVNPWYJc69PFpkYzzsJ8yUj/gEZH/AhXUfsyeEpPBn7LPhHTLiAxXdzanUbhT133DGXB9wrKPwr52/aCuZPjp+294S+DGmO0uk6JIP7SZDlVZsS3JP+7EqJ/vMRX3FDHHDAkMMaxxooVEUYCgcAD6Ctqv7uhGn1ev+RnD3qjl20H18b/tufDTUIBo3xx8KCSDUtFeKDUJoB8yIr7oLj/gDnaT6MvYV9kVT1bStP13QrzRtWtIruwvIXt7i3kGVljYYZT9QTWNCq6U1NGlSHPHlOJ+CfxR0/wCLvwd0vxdalI7xl8jUbVT/AMe90gHmJ9Dwy+qsKp61pVxpmpuJUHlyOzRsvQjOcfUZr5F0O+1z9i/9qWfRdXa6u/h9rxBWfBbfBnCTAf8APaEttcdWU57rX3rJFpPinw9b3NvcRXVpcRrcW11buGVlYZV1I4IIP41pXpKnLmj8L2IpT5lZ7o81qY288ej3OsuuyxslaaediAqKg3MefQAk1sXfhPU4b4Q2yCeFj8sucAf73pXkv7T3iY+A/wBmuTwvf6vb6fP4rvo9J84An7Nbsc3MpI5YCMY4GfmAqKa55KK6mknZXLn7O9he+IvDt/8AEbWUb+0vHusSa3IGGGjsIT5drHj+7hcj/er6P75NfKcP7Uf7N2jWdlpejeLNdFtY2sVjbix0yYKsUahVUZUHtmtnSv2qvgZdzCOH4r3umyHourafMifiSmB+dXVo1ZScuV/cRGcErXPpOvAv2qfhzD4u+H2ieKbaDOqeGNYtL1HUfM1s08azp9ANr/8AAK9K8L+PdJ8Sab/aGja1pHiKwABa90W5WfZ/voCStW/HuprZ/B3xNrNqltdfZtIurqJZV3xuUhZ1DAEZGVGRkVjTcoTTW5ckpI8p/ZS+HMHhH4cax4puINuq+J9Wur2R2HzLbrPIsCfTG5/+B177XM+CNSjn+EXhvVrpbe0E+lWtw6RLtjQvCrEKOTjLHA5NY3jP4oeHPB1qLjxL4o0TwtbsMo+rXCrPIPVIfvH8qc3KpNvqEbRR3ssSXFvJDIMo6lW+hr5y8QaLY+H/ANq3wP4o1KPZa61P/Yt1MBjy9Tto5DZyk/8ATSCSaE+vy+lU739q/wCCouWjj8aeKtaA6yaXpM5j/AlRxXC/Ev8AaK+B3jH4VazouneJte07X1MWo6VcappsqBL62cSwHcAduWXYSezGtqVCqnrF6kTqRtuegeE/hqbP9oGzvJPE/hG5ex1S8uxawahHJdLvM7Ni38oMJf3se5ndtnlttxvNdxqPwpvNN0651PUPj78TLS0t42mmlkv7RUiQDJJP2fgAVy/wh0PVPGnhDwT42hXwqmktfT+IPtlrFIL+R5hcboHyu0FXuGUncf8AVjjmtfxz8G9V/wCFPeL9N0Lxx401/UdR04xQWet6t9piLLIsmEXaMMwUqDnvisq1SUE2t0tjowlGFatCnUfLGTSb7Jvf5Hkmo/F34XeIB4U8K3XjvxldRaH4nt9cXxFr1nHOLjymb903l7GSPD8Ps4A5FfQXxn+LGk/Cj4L3/jSWSG4uGQRaXbhgRd3Dj92Bjqv8RP8AdU18XtqWj21hJoHw08C63a+Ndbh+walbXcbTHTkA2SxW24bh5pG55H5RcrkDmrNh4T1v9o347aB8OV1Z73wH4C0+3stQv7ZyYZHVFE/lv0Z5HUxIw/gjLDjryZZVniZv2z92Ora/L5n1HFeT4TLadOeFUouTtaTTbsvi02V9N2nutN/V/wBin4b6jFoWsfGrxZ5k2teJ5HFpLOPnNuXLyTf9tZOR/soOxr62qvY2Nppml22nafbR21pbRLDDBEu1Y0UAKoHYAACrFdVaq6s3NnyNOHJGwUUUVkWcF8XvhR4c+MPw3ufCuvp5Un+usr+NQZLKcDCyL6jsy9GBI9CPkj4QfFzxZ+zJ8Rpfgv8AGaKVPDYkLWWoAM6Was3EsR6vbMeSByhzx94V951wPxa+D/hD4xeCm0HxRaFZosvZajAALiykI+8h7g8ZU8MOvYjqoV0l7OprF/h5oxqU23zw3O5sr201HT4b+wuYbq1nQSxTwuHSRCMhlYcEEdxXlP7Q8EFp8KrjxDpvgC18XeLIB9j0OCXSxqDRTTMAXEZBAUBSxJ4+UDNfLGkeKfjR+xn4rTw54rsX8S/D+5mItpIyRDgnJNu5z5Mvcwv8p5x/er7O+G/xZ8CfFfw6NW8F65FebAPtFm/7u5tT/dliPK/XlT2JonRlRaqLWPcI1FP3Xoz4y03SP259X2nTdFfQoj91Us9M04KP93bkVrDwD+3WRm7vdN1Je8OoTabcq3sQ8eDX3YMegpe9W8a+kI/cSsOv5n95+fD+GPjL4e1ZdX8Y/s4tHewkt/wkfw8lGl6jF/tD7M7RSfR48HvXoVn8f7C6+EXjDw54k1/7W82jXdsJ9TtRpepW80kDrGl5aE7WLMQouIMoSQHVCQa+xOM5xg1wvxJ+Dvw8+LWn21r458Px6g1oSba6SRoZ4c9QsiEHBxyDkcdKX1mM2ueP3f8ABK9m4r3WfN+p/H20b4YeFPDPhjWr+MxaNawbfDtst/rF46wIjrbRkFLVAwKm4mBbIPloQNx4jT/Cvx3v9SbUfh5+zjpmh3Ezb213xeU1PVJif45Jr1+CeuFjA9OK+z/hz8K/Avwp8Py6P4H0KPTYZn82eUu0s074xl5GJZuOg6DsK7HAznH40fWYwuoR+/8A4Aeycl7zPhaXwL+3tIMx+JBbL2gs9SsYFHsFRABWFqlt+3DoLeZ4g8PXfii0jOZILmysNVSVQclcBS3I4yOea/QfvmjA64FNY19YR+4XsF/M/vPLo/htpHibwToVx4U1vxV8OrFoTd/2Z4bkTT13T7XYSxNG2HVs9AOS1ULv4MzWNjNe3vx8+KlvbQIZZZptZt0SNQMlmYwYAA6k11vxG+K3gX4VeHf7X8aa7DZKwPkWq/vLi5P92KIfM316DuRXxxq3ir4yftmeKZPDfhKzl8LfDq3lAu55STGwBzmdxjzpO4hT5QcFj/FSo06k1zN2j3f9ahUlGOm7Kvi7xp4t+PPjG0+BXwW1vW9R8PWxP9qeKNUnZp9QTd8008qhSLZc4WMAeYccYwK+zfhV8L/DXwi+G9n4R8NQkxx/vLm7kAEt3MR80r47nGAOigADpTPhV8JvCPwg8DR+HPCtoQWIkvL6bBnvZcffkYfoo4UcD37qor11JclPSK/HzZVODXvS3EpaKSuY1F7UUH6UUAGOKKSloAz9a0TSPEehXOi69plpqWn3SGOe1uohJHIvoVP+RXyD8Qv2Mta8O+Iv+E1/Z98T3Wj6jCxkj0ua6aJk/wBmC49P9iTI/wBqvs6itqNedJ+6/wDIidOM9z4c8O/tf/FD4YatH4V+P3gC+klT5ft8UItblh/e2n91N9UK19F+C/2lPgr46EceleOdPtLx/wDly1VvsUwPpiTAb/gJNei654d0HxPo8mleI9GsNWsZBhra9gWZD+DA4PuK+ffGX7EHwZ8SGSbRItV8LztyF0+fzYAf+uUoYD6KRW3Ph6nxJxflt9xny1IbO/qfSMM0NzCs9vIk0TjKyRsGUj2I4qQkA8nFfDj/ALEfxP8ADFwz/Dz40fZkByiubmwb8TE7L+lOHwZ/bd0v9zY/FtLmMdD/AG67f+jIs0fVqb+GovndB7WS3gz7g4J4xTZZI4ImlmdY41GWdztUD3Jr4jHwd/bg1EeTefFpLaM8Fv7cYf8AouHNC/sU/FXxTcBviN8bHuo2OXSNrm+P4ea6r+lH1amviqL5XYe1k9os+i/Gn7RvwZ8BpIus+OdOuLtB/wAeOmN9snJ9NseQP+BEV85+If2v/ib8TtWk8K/s/wDw/vhK/wAn9oTQi6uEH97YP3UP1dmr0zwb+xD8GPDbRz61Dqnii4U5I1Gfy4Cf+uUQUH6MTX0Fofh/QvDWkR6V4e0ex0qxQYW2soFhQfgoGT7mhTw9P4U5Pz0X3By1J7u3ofI3w+/Yz1nxF4j/AOE2/aE8UXWt6lMRJJpUN00pbnO2a46kf7EeB/tV9e6Po2k+H9DttG0PTbXTtPtU8uC1tYhHHGvoqjgVexRWNWvOq/eZpCnGGwUlLRWJYlFFFAH/2Q==" alt="Karnataka e-Exam Test Series logo">
+  <div><h1>KARNATAKA e-EXAM | GOVERNANCE, SCHEMES &amp; PORTALS SPECIAL TEST</h1><small>Governance, Government Schemes &amp; Portals (April 2025 – 27 October 2026) · Q1–50</small></div>
+  <div class="sp" style="flex:1"></div>
+  <a class="tg" href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a>
+  <div class="timer hide" id="timer">50:00</div>
+</header>
+
+<section id="intro" class="wrap">
+  <div class="card intro">
+    <h2>General instructions</h2>
+    <ul>
+      <li>50 questions, 50 minutes. Each correct answer gives +1; each wrong answer deducts ⅓. Unanswered questions carry no penalty.</li>
+      <li>Use the question palette on the right to jump to any question. Colours show your status for each one.</li>
+      <li><b>Save &amp; Next</b> records your answer. <b>Mark for Review &amp; Next</b> flags the question for a second look. Marked questions that you have answered are still evaluated.</li>
+      <li>When time ends, the test submits automatically. After submitting you get your score, a full review, and explanations for every question.</li>
+    </ul>
+    <p>Join the channel for more mocks: <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a></p>
+    <button class="btn pri" id="start">Start test</button>
+  </div>
+</section>
+
+<section id="test" class="wrap hide">
+  <div class="main">
+    <div class="card">
+      <div class="qhead"><div id="qno">Question 1</div><span>Marks: +1 / −⅓</span></div>
+      <div class="qbody" id="qbody"></div>
+      <div class="bar">
+        <button class="btn mk" id="bmark">Mark for Review &amp; Next</button>
+        <button class="btn" id="bclear">Clear Response</button>
+        <div class="sp"></div>
+        <button class="btn" id="bprev">Previous</button>
+        <button class="btn pri" id="bnext">Save &amp; Next</button>
+      </div>
+    </div>
+    <aside class="card side">
+      <div class="legend"><span><i class="s0">0</i>Not visited</span><span><i class="s1">0</i>Not answered</span><span><i class="s2">0</i>Answered</span><span><i class="s3">0</i>Marked</span></div>
+      <div class="sum" id="sum"></div>
+      <div class="pal" id="pal"></div>
+      <p style="margin:14px 0 0"><button class="btn red" id="submit" style="width:100%">Submit test</button></p>
+    </aside>
+  </div>
+</section>
+
+<section id="result" class="wrap hide">
+  <div class="card res">
+    <h2 style="margin-top:0">Result</h2>
+    <div class="score" id="score"></div>
+    <p>Want more? Join <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a> for the next part and daily mocks.</p>
+    <button class="btn" id="filter">Show only wrong / unanswered</button>
+  </div>
+  <div id="review"></div>
+</section>
+
+<div class="foot">Karnataka e-Exam Test Series · CBT Mocks · <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a></div>
+
+<script>
+const AR=(a,r)=>"<b>Assertion (A):</b> "+a+"<br><b>Reason (R):</b> "+r;
+const AO=["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"];
+const M=(h,rows,tail)=>"<table class=\"m\"><tr><th>"+h[0]+"</th><th>"+h[1]+"</th></tr>"+rows.map(r=>"<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>").join("")+"</table>"+(tail||"");
+const L=(i,s)=>i+"<ol>"+s.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>Which of the statements given above are correct?</p>";
+const MO=(a)=>a.map(x=>x.replace(/A-(\d) B-(\d) C-(\d) D-(\d)/,"A-$1, B-$2, C-$3, D-$4"));
+const HC=(i,s)=>i+"<ol>"+s.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>How many of the above statements are correct?</p>";
+const HW=["Only one","Only two","Only three","All four"];
+const Q=[
+[ L("Consider the following on the Viksit Bharat–G RAM G Act, 2025 (in force since 1 July 2026):",["It gives a statutory guarantee of 125 days of wage employment per rural household each year.","States may notify an aggregated pause of up to 60 days in peak sowing and harvesting seasons.","The Centre bears the entire wage cost, as it did under MGNREGA.","Wages must be paid weekly or within 15 days, with compensation for delay."]),
+ ["1 and 3 only","1, 2 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "Statement 3 is wrong. The Act is a Centrally Sponsored Scheme funded 60:40 (Centre:State) for most States, 90:10 for North-Eastern and Himalayan States, and fully by the Centre for UTs without legislatures. It was passed on 18 December 2025 and replaced MGNREGA, 2005."],
+[ AR("Under VB-G RAM G, States carry a larger share of the cost of the rural employment guarantee than they did under MGNREGA.","MGNREGA had the Centre bearing the full wage cost, whereas VB-G RAM G is a Centrally Sponsored Scheme shared 60:40 for most States."),
+ AO,0,"Both are true and R explains A. Allocation also moves from a demand-driven labour budget to a normative formula fixed by the Centre."],
+[ L("Consider the following on the Pradhan Mantri Viksit Bharat Rozgar Yojana (PM-VBRY):",["It is the renamed Employment Linked Incentive scheme, in effect from 1 August 2025 with an outlay of ₹99,446 crore.","First-time EPFO-registered employees earning up to ₹1 lakh a month get up to ₹15,000 in two instalments.","Employers get up to ₹3,000 a month for each additional employee.","It is implemented by NABARD on behalf of the Ministry of Finance."]),
+ ["1 and 2 only","2 and 4 only","1, 2 and 3 only","1, 3 and 4 only"],2,
+ "Statement 4 is wrong. The Ministry of Labour & Employment implements it through EPFO. Cabinet approved it on 1 July 2025 and the PM announced it from the Red Fort on 15 August 2025. It covers jobs created from 1 August 2025 to 31 July 2027 and aims at over 3.5 crore jobs, 1.92 crore of them first-timers."],
+[ "The PM Dhan-Dhaanya Krishi Yojana, launched on 11 October 2025 with an outlay of ₹24,000 crore, is modelled on which programme and targets how many districts?",
+ ["Aspirational Districts Programme; 100 districts","Aspirational Blocks Programme; 100 blocks","Mission Antyodaya; 150 districts","PM Krishi Sinchayee Yojana; 200 districts"],0,
+ "It targets 100 low-performing agricultural districts and converges 36 schemes across 11 ministries, with District Dhan-Dhaanya Samitis for local planning. It was launched together with the Mission for Aatmanirbharta in Pulses at IARI, Pusa."],
+[ "Which of the following is NOT correct about the Mission for Aatmanirbharta in Pulses?",
+ ["Its outlay is ₹11,440 crore","It is a six-year mission with focus on tur, urad and masoor","It targets raising pulses output from about 252 lakh tonnes to 350 lakh tonnes by 2030-31","It aims to reduce pulses acreage by 35 lakh hectares"],3,
+ "The mission aims to increase acreage by 35 lakh hectares by 2030, not reduce it. It also targets cutting import dependence."],
+[ HC("Consider the following on the four Labour Codes:",["All four came into force on 21 November 2025.","They consolidate 13 central labour laws.","Fixed-term employees become eligible for gratuity only after five years of service.","Gig and platform workers are legally defined for the first time under the Code on Social Security, 2020."]),
+ HW,1,
+ "Statements 1 and 4 are correct. The Codes consolidate 29 central laws, so 2 is wrong. Fixed-term employees become eligible for gratuity after one year of continuous service, so 3 is wrong."],
+[ M(["List-I (Item)","List-II (GST rate from 22 September 2025)"],[["A. Aerated and caffeinated beverages","1. Nil"],["B. Small petrol cars (below 1,200 cc and 4 m)","2. 5%"],["C. Handicrafts","3. 18%"],["D. Individual health and life insurance","4. 40%"]],"<p>Match the lists.</p>"),
+ ["A-3, B-4, C-2, D-1","A-4, B-3, C-1, D-2","A-4, B-2, C-3, D-1","A-4, B-3, C-2, D-1"],3,
+ "Aerated and caffeinated drinks moved from 28% to 40%. Small cars moved from 28% to 18%. Handicrafts moved to 5%. Individual health and life insurance premiums became GST-free."],
+[ L("Consider the following on the GST reforms of September 2025:",["The 56th GST Council meeting approved a two-rate structure of 5% and 18% plus a special 40% rate for select sin and luxury goods.","Most changes took effect on 22 September 2025.","The 12% slab was retained for essential goods.","Council decisions need at least three-fourths of the weighted votes of members present and voting."]),
+ ["1, 2 and 4 only","1 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "The 12% and 28% slabs were removed, so 3 is wrong. The meeting was held on 3 September 2025 and ran about 10.5 hours. Tobacco rate changes were handled separately."],
+[ AR("The September 2025 GST rate rationalisation was a consensus decision with all States on board.","GST Council decisions require the unanimous consent of the Centre and every State."),
+ AO,2,"A is true. R is false: Article 279A needs three-fourths of weighted votes, with the Centre holding one-third weight and States two-thirds."],
+[ L("Consider the following on Union Budget 2026-27:",["It was the first Budget prepared at Kartavya Bhawan.","It was presented on a Saturday.","The fiscal deficit target was 4.3% of GDP.","The Income Tax Act, 2025 replaces the 1961 Act from 1 April 2026."]),
+ ["1, 2 and 3 only","1, 3 and 4 only","2 and 4 only","1, 2, 3 and 4"],1,
+ "It was presented on Sunday, 1 February 2026, so 2 is wrong. It was Finance Minister Sitharaman’s ninth consecutive Budget, with public capex at ₹12.2 lakh crore and no change in tax slabs."],
+[ M(["List-I (Budget 2026-27 initiative)","List-II (Feature)"],[["A. BharatVISTAAR","1. Hub for biologics and biosimilars"],["B. Carbon Capture, Utilization and Storage scheme","2. Outlay of ₹20,000 crore"],["C. Biopharma SHAKTI","3. AI platform integrating AgriStack portals and ICAR practices"],["D. Rare earth permanent magnets scheme","4. Research, mining, processing and manufacturing"]],"<p>Match the lists.</p>"),
+ ["A-2, B-3, C-1, D-4","A-3, B-2, C-4, D-1","A-3, B-2, C-1, D-4","A-1, B-2, C-3, D-4"],2,
+ "BharatVISTAAR uses AI over AgriStack and ICAR advisories. The CCUS scheme is ₹20,000 crore. Biopharma SHAKTI targets biologics and biosimilars. The magnets scheme covers the full value chain."],
+[ "Budget 2026-27 announced dedicated Rare Earth Mineral Corridors. Which of the following States was NOT among them?",
+ ["Odisha","Kerala","Andhra Pradesh","Karnataka"],3,
+ "The corridors were announced in Odisha, Kerala, Andhra Pradesh and Tamil Nadu."],
+[ "Among the seven high-speed rail corridors announced in Budget 2026-27, which pair of corridors touches Bengaluru?",
+ ["Hyderabad–Bengaluru and Chennai–Bengaluru","Mumbai–Bengaluru and Pune–Bengaluru","Bengaluru–Mysuru and Bengaluru–Mangaluru","Hyderabad–Bengaluru and Bengaluru–Kochi"],0,
+ "The seven corridors are Mumbai–Pune, Pune–Hyderabad, Hyderabad–Bengaluru, Hyderabad–Chennai, Chennai–Bengaluru, Delhi–Varanasi and Varanasi–Siliguri."],
+[ AR("The VB-G RAM G Act, 2025 came into force immediately after the President’s assent in December 2025.","MGNREGA provisions continued to apply during the interim period until the new Act was brought into force."),
+ AO,3,"A is false and R is true. The President assented around 21 December 2025, but the Act was brought into force on 1 July 2026. Pending MGNREGA work was to be completed before that."],
+[ M(["List-I (Earlier name or entity)","List-II (New name)"],[["A. National Social Assistance Programme","1. Keralam"],["B. Raj Niwas (Lieutenant Governors’ residences)","2. Lok Niwas"],["C. Kerala","3. Viksit Bharat–G RAM G"],["D. MGNREGA, 2005","4. Pradhan Mantri Samajik Sahayata Yojana"]],"<p>Match the lists.</p>"),
+ ["A-4, B-2, C-1, D-3","A-4, B-1, C-2, D-3","A-2, B-4, C-1, D-3","A-3, B-2, C-1, D-4"],0,
+ "NSAP was renamed on 14 October 2026. Raj Bhavans became Lok Bhavans and Raj Niwases Lok Niwases. Kerala became Keralam by an Act notified in August 2026. MGNREGA was replaced by VB-G RAM G."],
+[ L("Consider the following on the renaming of institutions:",["The Ministry of Home Affairs directed on 25 November 2025 that Raj Bhavans be renamed Lok Bhavans.","Raj Niwases of Union Territories were to become Lok Niwases.","The new PMO complex has been named Kartavya Bhavan.","The Prime Minister’s residence was renamed Lok Kalyan Marg in 2016."]),
+ ["1 and 2 only","1, 2 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The PMO complex is Seva Teerth. Kartavya Bhavan is the Common Central Secretariat, so 3 is wrong. The renaming reflects a shift from power (satta) to service (seva). Karnataka’s new Chief Minister took oath at the Lok Bhavan in June 2026."],
+[ L("Consider the following on the Pradhan Mantri Samajik Sahayata Yojana (earlier NSAP):",["The Cabinet approved its continuation for 2026-27 to 2030-31 with ₹53,428 crore.","The Indira Gandhi National Old Age Pension Scheme is now the Pradhan Mantri Vridhavastha Pension Yojana.","The benchmark disability for the disability pension was lowered from 80% to 40%.","It is administered by the Ministry of Social Justice and Empowerment."]),
+ ["1 and 2 only","1, 2 and 3 only","2 and 4 only","3 and 4 only"],1,
+ "It is administered by the Ministry of Rural Development, so 4 is wrong. The 40% benchmark follows the RPwD Act, 2016, and the age floor for disability pension was also removed."],
+[ "Which Directive Principle is the constitutional basis for social assistance such as the Pradhan Mantri Samajik Sahayata Yojana?",
+ ["Article 39A","Article 47","Article 41","Article 43"],2,
+ "Article 41 directs the State to secure public assistance in cases of old age, sickness, disablement and unemployment. Article 39A is equal justice and free legal aid, Article 43 living wage, and Article 47 nutrition and public health."],
+[ HC("Consider the following on the PM-RAHAT scheme:",["It was launched on 13 February 2026.","It covers victims of road accidents on any category of road.","Hospitals are reimbursed from the Motor Vehicle Accident Fund.","It is implemented by the Ministry of Health and Family Welfare."]),
+ HW,2,
+ "Statements 1 to 3 are correct. The scheme is run by the Ministry of Road Transport and Highways, so 4 is wrong. Treatment is cashless up to ₹1.5 lakh for up to seven days, with claims paid within 10 days."],
+[ AR("PM-RAHAT provides cashless treatment of up to ₹1.5 lakh, limited to seven days from the accident.","Nearly half of road-accident deaths can be averted if victims reach hospital within the first hour."),
+ AO,1,"Both are true, but R explains why early cashless care matters, not why the cap is ₹1.5 lakh for seven days."],
+[ L("Consider the following on Ayushman Bharat PM-JAY:",["West Bengal signed its MoU on 8 June 2026, becoming the 36th and last State/UT to implement it.","The Centre–State cost ratio is 60:40 for general States and 90:10 for North-Eastern and Himalayan States.","It gives ₹5 lakh per family per year, with an additional top-up for senior citizens aged 70 and above.","It is a Central Sector Scheme."]),
+ ["1, 2 and 3 only","1 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "It is a Centrally Sponsored Scheme, so 4 is wrong. It was launched on 23 September 2018, subsuming the Rashtriya Swasthya Bima Yojana. About 43.5 crore Ayushman cards had been created by 28 February 2026."],
+[ L("Consider the following on the schemes approved on 15 July 2026:",["The India Semiconductor Mission 2.0 (Semicon 2.0) has an outlay of ₹1,27,500 crore.","The Mobile Phone Manufacturing Scheme offers incentives of 10% to 15% on eligible sales.","The Mobile Phone Manufacturing Scheme succeeds the PLI scheme for large-scale electronics manufacturing.","Semicon 2.0 is built around six areas including chip design, equipment and materials, fabs, packaging, R&D and talent."]),
+ ["1 and 2 only","1, 3 and 4 only","2 and 3 only","2, 3 and 4 only"],1,
+ "Incentives are 2.25% to 5%, so 2 is wrong. The mobile scheme has ₹62,500 crore for FY2026-27 to 2030-31 and targets ₹39 lakh crore of production. ISM 1.0 was approved in 2021."],
+[ "The National Investment Policy for Urea-2026 (NIPU-2026), approved on 15 July 2026, replaces which earlier policy?",
+ ["NIP-2012","Urea Subsidy Scheme, 1977","Nutrient Based Subsidy Policy, 2010","New Urea Policy, 2015"],0,
+ "NIPU-2026 is compared against NIP-2012, with estimated savings of over ₹250 crore per plant."],
+[ "PM-SETU, a skilling initiative for ITIs on a hub-and-spoke model, has been reported with which outlay and scale?",
+ ["₹6,000 crore; 100 ITIs","₹60,000 crore; 1,000 ITIs","₹99,446 crore; 1,000 ITIs","₹24,000 crore; 100 ITIs"],1,
+ "PM-SETU is a ₹60,000 crore plan to modernise 1,000 ITIs. ₹99,446 crore is PM-VBRY and ₹24,000 crore is PM-DDKY."],
+[ L("Consider the following on the 16th Finance Commission cycle and schemes:",["The new five-year cycle for schemes began on 1 April 2026.","Third-party evaluation is a precondition for continuing schemes beyond 31 March 2026.","The sunset-clause policy for schemes dates from the Union Budget of 2016.","All existing schemes continue automatically without fresh appraisal."]),
+ ["1 and 4 only","2 and 4 only","1, 2 and 3 only","1, 2, 3 and 4"],2,
+ "Statement 4 is wrong. Schemes ending on 31 March 2026 needed re-appraisal and fresh approval. Several were renamed or restructured, such as NSAP, MGNREGA and the mobile scheme."],
+[ HC("Consider the following on Karnataka’s gig-worker law:",["The Platform-Based Gig Workers (Social Security and Welfare) Bill was passed in August 2025, after an ordinance in May 2025.","It provides a welfare fee of 1% to 5% on payouts to gig workers.","It applies only to ride-hailing aggregators.","Karnataka was the first State in India to enact a gig-worker law."]),
+ HW,1,
+ "Statements 1 and 2 are correct. It covers food delivery, e-commerce and other platforms, so 3 is wrong. Rajasthan enacted a gig-worker law in 2023, so 4 is wrong. Karnataka was reported as the first southern State."],
+[ L("Consider the following on Karnataka’s 2025 Social and Educational Survey:",["It was conducted by the Karnataka State Commission for Backward Classes under Madhusudan R. Naik.","It used a questionnaire of 100 questions.","It reached 100% of the projected population.","The Cabinet approved the fresh survey on 12 June 2025, citing the ten-year revision requirement of the KSCBC Act, 1995."]),
+ ["1 and 2 only","2 and 3 only","3 and 4 only","1 and 4 only"],3,
+ "The questionnaire had 60 questions, so 2 is wrong. About 89% of the projected population took part, so 3 is wrong. The survey replaced the discarded 2015 exercise."],
+[ AR("The Karnataka Cabinet approved a fresh social and educational survey in June 2025, effectively setting aside the 2015 exercise.","Section 11(1) of the KSCBC Act, 1995 requires revision of the State’s backward classes list once every ten years."),
+ AO,0,"Both are true and R explains A. The 2015 survey had been opposed by Vokkaliga and Veerashaiva-Lingayat groups as unscientific."],
+[ M(["List-I (Karnataka 2026-27 Budget item)","List-II (Allocation)"],[["A. Gruha Lakshmi","1. ₹5,300 crore"],["B. Gruha Jyothi","2. ₹10,578 crore"],["C. Shakti","3. ₹28,608 crore"],["D. Five guarantee schemes together","4. About ₹51,286 crore"]],"<p>Match the lists.</p>"),
+ ["A-2, B-3, C-1, D-4","A-3, B-1, C-2, D-4","A-3, B-2, C-1, D-4","A-3, B-2, C-4, D-1"],2,
+ "The Budget was presented on 6 March 2026, with total expenditure of ₹4,48,004 crore. The five guarantees (Gruha Lakshmi, Gruha Jyothi, Anna Bhagya, Shakti, Yuva Nidhi) take about 12% of spending."],
+[ L("Consider the following on the Karnataka Budget 2026-27:",["800 new Karnataka Public Schools were announced at ₹3,900 crore.","A ban on social media use by children below 16 was proposed.","₹30,000 scholarships for girl students apply irrespective of the type of school they attended.","56,432 vacant government posts are to be filled."]),
+ ["1, 2 and 3 only","2 and 3 only","1 and 3 only","1, 2 and 4 only"],3,
+ "The scholarship is for girls in higher education who studied in government schools and colleges, so 3 is wrong."],
+[ "The Karnataka Budget 2026-27 said a new Revised Master Plan-2041 for Bengaluru will be implemented by the end of:",
+ ["2026","2028","2027","2030"],2,
+ "The budget also proposed a second airport for Bengaluru and 41 km of additional metro lines in 2026-27."],
+[ L("Consider the following on the change of Karnataka’s Chief Minister in 2026:",["Siddaramaiah resigned as Chief Minister on 28 May 2026.","D.K. Shivakumar was elected Congress Legislature Party leader on 30 May 2026.","He took oath on 3 June 2026 at the Lok Bhavan, Bengaluru.","Siddaramaiah had surpassed S. Nijalingappa to become the longest-serving Chief Minister of Karnataka."]),
+ ["1, 2 and 3 only","1 and 4 only","2 and 4 only","3 and 4 only"],0,
+ "He surpassed D. Devaraj Urs’s record in January 2026, so 4 is wrong. G. Parameshwara took oath as Deputy Chief Minister and 13 ministers were sworn in with Shivakumar."],
+[ M(["List-I (Karnataka portal)","List-II (Role)"],[["A. Seva Sindhu","1. Property registration (Stamps and Registration Department)"],["B. Kaveri 2.0","2. Land records such as RTC, mutation and FMB"],["C. Bhoomi","3. Digital property (khata) records for urban Bengaluru"],["D. e-Aasthi","4. Single-window platform with 2,000+ citizen services"]],"<p>Match the lists.</p>"),
+ ["A-1, B-4, C-2, D-3","A-4, B-2, C-1, D-3","A-2, B-1, C-4, D-3","A-4, B-1, C-2, D-3"],3,
+ "Kaveri 2.0 was developed by the Centre for Smart Governance and is integrated with Bhoomi and e-Aasthi. It suffered a week-long disruption after a cyberattack in 2025."],
+[ "Which of the following is NOT a Karnataka State e-governance portal?",
+ ["Seva Sindhu","Kaveri 2.0","Bhoomi","e-Shram"],3,
+ "e-Shram is the Union Ministry of Labour’s national database for unorganised workers."],
+[ L("Consider the following on Karnataka’s Shakti scheme:",["It offers free travel to women in non-AC, non-premium State buses.","₹5,300 crore was allocated for it in 2026-27.","Women had made about 684 crore trips by March 2026.","It is funded entirely by the Union Government."]),
+ ["1 and 2 only","2 and 4 only","1, 2 and 3 only","1, 3 and 4 only"],2,
+ "It is a State scheme funded by the Karnataka government, so 4 is wrong. It is one of the five guarantee schemes."],
+[ "As per the Karnataka Budget 2026-27 speech, how many consumers had enrolled under the Gruha Jyothi scheme?",
+ ["51 lakh","1.74 crore","1.29 crore","2.5 crore"],1,
+ "Gruha Jyothi gives free electricity up to 200 units to households, with a ₹10,578 crore allocation for 2026-27. 1.29 crore is the number of women registered under Gruha Lakshmi."],
+[ "Karnataka Budget 2026-27 announced 800 new Karnataka Public Schools at a cost of:",
+ ["₹1,900 crore","₹2,400 crore","₹3,900 crore","₹5,300 crore"],2,
+ "₹5,300 crore is the Shakti allocation."],
+[ "Karnataka Budget 2026-27 said new crest gates would be installed at the Tungabhadra Dam before the monsoon. How many?",
+ ["33","19","16","27"],0,
+ "33 new gates were announced for the dam."],
+[ "The new complex housing the Prime Minister’s Office, Seva Teerth, is also to house:",
+ ["Ministry of Home Affairs and Ministry of Defence","Parliamentary Affairs and Law Ministries","Lok Sabha and Rajya Sabha Secretariats","Cabinet Secretariat, National Security Council Secretariat and India House"],3,
+ "The name signals the shift from power (satta) to service (seva). The ministries sit in Kartavya Bhavan."],
+[ L("Consider the following on Kartavya Bhavan:",["It is the new name of the Common Central Secretariat.","It was inaugurated by the Prime Minister in August 2025.","The Union Budget 2025-26 was the first to be prepared there."]),
+ ["1 only","2 only","1 and 2 only","1, 2 and 3"],2,
+ "Statement 3 is wrong: Budget 2026-27 was the first prepared at Kartavya Bhawan."],
+[ "Incentive payments to first-time employees under PM-VBRY Part A are made as DBT through which system?",
+ ["Aadhaar Bridge Payment System","UPI Lite wallets","PFMS cheque payments","Jan Dhan overdraft facility"],0,
+ "The PM-VBRY portal went live on 18 August 2025 and employers complete a one-time registration. The second instalment is linked to a financial literacy course."],
+[ "Budget 2026-27 announced Content Creator Labs for AVGC (animation, VFX, gaming, comics) in how many schools and colleges?",
+ ["5,000 schools and 100 colleges","15,000 schools and 500 colleges","10,000 schools and 250 colleges","1,000 schools and 50 colleges"],1,
+ "It is part of the push for the “orange economy” and youth skills."],
+[ "Which Budget 2026-27 scheme provides assistive devices to persons with disabilities?",
+ ["Divyang Kaushal Yojana","Divyang Sampark Yojana","Divyangjan Suraksha Yojana","Divyang Sahara Yojana"],3,
+ "Divyangjan Kaushal Yojana is the skills and employment scheme announced alongside it."],
+[ HC("Consider the following on the Karnataka Budget 2026-27:",["₹1,162 crore was earmarked for disaster relief.","₹269 crore was reserved for the Karnataka Man-Animal Conflict Mitigation Programme.","41 km of additional metro lines were proposed to be completed in 2026-27.","Total expenditure was estimated at ₹3,38,007 crore."]),
+ HW,2,
+ "Total expenditure was ₹4,48,004 crore. ₹3,38,007 crore is revenue expenditure."],
+[ "Karnataka Budget 2026-27 proposed a ban on social media use by children below the age of:",
+ ["16 years","14 years","18 years","12 years"],0,
+ "It also announced strict measures against drug use in educational institutions."],
+[ "Karnataka’s Social and Educational Survey concluded on 31 October 2025 with an enumeration of about:",
+ ["94%","89%","99%","75%"],1,
+ "6.13 crore of a projected 6.85 crore people took part. The 2015 survey had about 94%."],
+[ "The 16-member Karnataka Gig Workers Welfare Board includes how many representatives each of gig workers and aggregators?",
+ ["Two each","Three each","Five each","Four each"],3,
+ "It also includes the Labour Minister, officials of the Labour and IT departments and civil society members."],
+[ "Which of the four Labour Codes was enacted in 2019, while the other three were enacted in 2020?",
+ ["Industrial Relations Code","Code on Social Security","Code on Wages","Occupational Safety, Health and Working Conditions Code"],2,
+ "The Code on Wages, 2019 is the odd one out. The other three were enacted in 2020."],
+[ M(["List-I (New scheme or policy)","List-II (Predecessor)"],[["A. Mobile Phone Manufacturing Scheme","1. India Semiconductor Mission (2021)"],["B. Semicon 2.0","2. PLI scheme for large-scale electronics manufacturing"],["C. NIPU-2026","3. NIP-2012"],["D. VB-G RAM G Act","4. MGNREGA"]],"<p>Match the lists.</p>"),
+ ["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-2, B-3, C-1, D-4","A-2, B-1, C-3, D-4"],3,
+ "Most 2026 approvals run from FY2026-27 to 2030-31, matching the 16th Finance Commission cycle."],
+[ "Union Budget 2026-27 was which consecutive Budget presented by Finance Minister Nirmala Sitharaman?",
+ ["Ninth","Eighth","Seventh","Tenth"],0,
+ "It was also only the second Union Budget presented on a Sunday."]
+];
+const N=Q.length,TOTAL=50*60;
+let cur=0,ans=Array(N).fill(-1),st=Array(N).fill(0),left=TOTAL,tick=null,done=false;
+// st: 0 not visited,1 not answered,2 answered,3 marked,4 answered+marked
+const $=id=>document.getElementById(id);
+const L2=["a","b","c","d"];
+function show(id){["intro","test","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));window.scrollTo(0,0)}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function render(){
+  const q=Q[cur];
+  if(st[cur]===0)st[cur]=1;
+  $("qno").textContent="Question "+(cur+1)+" of "+N;
+  let h="<div>"+q[0]+"</div>";
+  q[1].forEach((o,i)=>{h+="<label class=\"opt"+(ans[cur]===i?" sel":"")+"\"><input type=\"radio\" name=\"o\" value=\""+i+"\""+(ans[cur]===i?" checked":"")+"><span>("+L2[i]+") "+o+"</span></label>"});
+  $("qbody").innerHTML=h;
+  $("qbody").querySelectorAll("input").forEach(r=>r.addEventListener("change",()=>{ans[cur]=+r.value;render()}));
+  pal();
+}
+function pal(){
+  let h="";for(let i=0;i<N;i++)h+="<button class=\"s"+st[i]+(i===cur?" cur":"")+"\" data-i=\""+i+"\" aria-label=\"Question "+(i+1)+"\">"+(i+1)+"</button>";
+  $("pal").innerHTML=h;
+  $("pal").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;render()}));
+  const c=[0,0,0,0,0];st.forEach(s=>c[s]++);
+  $("sum").innerHTML="<span><b>"+c[2]+"</b> answered</span><span><b>"+c[1]+"</b> not answered</span><span><b>"+(c[3]+c[4])+"</b> marked</span><span><b>"+c[0]+"</b> not visited</span>";
+}
+function save(mark){
+  st[cur]=ans[cur]>=0?(mark?4:2):(mark?3:1);
+  if(cur<N-1)cur++;
+  render();
+}
+function submit(auto){
+  if(done)return;
+  if(!auto&&!confirm("Submit the test? You cannot change answers afterwards."))return;
+  done=true;clearInterval(tick);$("timer").classList.add("hide");
+  let c=0,w=0,u=0;
+  Q.forEach((q,i)=>{if(ans[i]<0)u++;else if(ans[i]===q[2])c++;else w++});
+  const sc=Math.round((c-w/3)*100)/100;
+  $("score").innerHTML="<div><b>"+sc+" / "+N+"</b>Net score</div><div><b>"+c+"</b>Correct</div><div><b>"+w+"</b>Wrong</div><div><b>"+u+"</b>Unanswered</div><div><b>"+(c+w?Math.round(100*c/(c+w)):0)+"%</b>Accuracy</div><div><b>"+fmt(TOTAL-left)+"</b>Time used</div>";
+  buildReview(false);show("result");
+}
+function buildReview(onlyBad){
+  let h="";
+  Q.forEach((q,i)=>{
+    const ok=ans[i]===q[2],un=ans[i]<0;
+    if(onlyBad&&ok)return;
+    h+="<div class=\"card rv\"><div class=\"tag\" style=\"color:var(--"+(ok?"ok":un?"mute":"bad")+")\">Q"+(i+1)+" · "+(ok?"Correct":un?"Not answered":"Wrong")+"</div><div>"+q[0]+"</div>";
+    q[1].forEach((o,j)=>{h+="<div class=\"opt "+(j===q[2]?"ok":(j===ans[i]?"no":""))+"\" style=\"cursor:default\"><span>("+L2[j]+") "+o+(j===q[2]?" ✔":"")+(j===ans[i]&&j!==q[2]?" (your answer)":"")+"</span></div>"});
+    h+="<div class=\"ex\"><b>Correct answer: ("+L2[q[2]]+").</b> "+q[3]+"</div></div>";
+  });
+  $("review").innerHTML=h||"<div class=\"card rv\">Nothing to show: every question is correct.</div>";
+}
+let bad=false;
+$("filter").addEventListener("click",()=>{bad=!bad;$("filter").textContent=bad?"Show all questions":"Show only wrong / unanswered";buildReview(bad)});
+$("start").addEventListener("click",()=>{
+  show("test");$("timer").classList.remove("hide");render();
+  tick=setInterval(()=>{left--;$("timer").textContent=fmt(left);if(left<=300)$("timer").style.background="var(--red)";if(left<=0)submit(true)},1000);
+});
+$("bnext").addEventListener("click",()=>save(false));
+$("bmark").addEventListener("click",()=>save(true));
+$("bclear").addEventListener("click",()=>{ans[cur]=-1;st[cur]=1;render()});
+$("bprev").addEventListener("click",()=>{if(cur>0){cur--;render()}});
+$("submit").addEventListener("click",()=>submit(false));
+</script>
+</body>
+</html>
