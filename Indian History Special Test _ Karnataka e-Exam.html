@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Indian History Special Test | Karnataka e-Exam</title>
+<style>
+:root{--navy:#1b2a5c;--red:#c8202e;--bg:#eef1f7;--card:#fff;--ink:#1c2233;--mute:#5b6478;--line:#d5dae6;--ok:#1e8e4e;--bad:#c8202e;--mark:#6a3fb5;--na:#dfe3ee;--hdr:#1b2a5c;--hdrink:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141f;--card:#1a2030;--ink:#e8ebf4;--mute:#a1a9bd;--line:#2c3550;--na:#2c3550;--hdr:#141c36;--red:#ee4a58;--mark:#a583ee;--ok:#3fbf78;--bad:#ee4a58;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141f;--card:#1a2030;--ink:#e8ebf4;--mute:#a1a9bd;--line:#2c3550;--na:#2c3550;--hdr:#141c36;--red:#ee4a58;--mark:#a583ee;--ok:#3fbf78;--bad:#ee4a58;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+a{color:var(--red)}
+.top{background:var(--hdr);color:var(--hdrink);display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:4px solid var(--red)}
+.top img{width:52px;height:52px;border-radius:50%;background:#fff}
+.top h1{font-size:1.05rem;margin:0;line-height:1.25}
+.top small{opacity:.85;display:block;font-size:.8rem}
+.top .sp{flex:1}
+.timer{background:rgba(255,255,255,.12);border-radius:6px;padding:6px 12px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tg{color:#fff;font-size:.85rem;white-space:nowrap}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px}
+.intro{padding:24px;max-width:820px;margin:20px auto}
+.intro h2{margin-top:0}
+.intro ul{padding-left:20px}
+.btn{border:1px solid var(--navy);background:var(--card);color:var(--navy);padding:9px 16px;border-radius:4px;font-weight:600}
+.btn.pri{background:var(--navy);color:#fff}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.mk{border-color:var(--mark);color:var(--mark)}
+:root[data-theme="dark"] .btn.pri,:root:not([data-theme="light"]) .btn.pri{border-color:var(--line)}
+.btn:focus-visible,.opt:focus-within,.pal button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.main{display:grid;grid-template-columns:1fr 290px;gap:16px;align-items:start}
+.qhead{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-weight:700;color:var(--navy)}
+:root[data-theme="dark"] .qhead,:root:not([data-theme="light"]) .qhead{color:var(--ink)}
+.qhead span{font-weight:400;color:var(--mute);font-size:.88rem}
+.qbody{padding:18px 20px}
+.qbody ol{margin:.5em 0 .5em 1.2em;padding-left:.6em}
+.qbody li{margin:.3em 0}
+table.m{border-collapse:collapse;margin:.6em 0;width:100%;max-width:640px}
+table.m th,table.m td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+table.m th{background:var(--na)}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:5px;padding:10px 12px;margin:9px 0;cursor:pointer}
+.opt:hover{border-color:var(--navy)}
+.opt.sel{background:rgba(27,42,92,.09);border-color:var(--navy)}
+.opt input{margin-top:5px;accent-color:var(--navy)}
+.opt.ok{border-color:var(--ok);background:rgba(30,142,78,.12)}
+.opt.no{border-color:var(--bad);background:rgba(200,32,46,.1)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px;border-top:1px solid var(--line)}
+.bar .sp{flex:1}
+.side{padding:12px}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;font-size:.78rem;color:var(--mute);margin-bottom:10px}
+.legend i,.pal button{display:inline-block;width:34px;height:34px;border-radius:5px;text-align:center;line-height:34px;font-style:normal;font-weight:700;font-size:.85rem;border:0;color:#fff;position:relative}
+.legend i{width:22px;height:22px;line-height:22px;font-size:.7rem;margin-right:6px;vertical-align:middle}
+.s0{background:var(--na);color:var(--ink)!important}
+.s1{background:var(--red)}
+.s2{background:var(--ok)}
+.s3{background:var(--mark)}
+.s4{background:var(--mark)}
+.s4::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--ok);border:2px solid var(--card)}
+.pal{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;justify-items:center}
+.pal button.cur{outline:3px solid var(--navy);outline-offset:1px}
+:root[data-theme="dark"] .pal button.cur,:root:not([data-theme="light"]) .pal button.cur{outline-color:#fff}
+.sum{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;margin-bottom:10px}
+.res{padding:24px;margin:16px auto;max-width:900px}
+.score{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.score div{flex:1 1 130px;border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+.score b{display:block;font-size:1.5rem;color:var(--navy)}
+:root[data-theme="dark"] .score b,:root:not([data-theme="light"]) .score b{color:var(--ink)}
+.rv{padding:16px 20px;margin:14px 0}
+.rv .tag{font-weight:700;font-size:.85rem}
+.rv .ex{margin-top:10px;padding:10px 12px;background:var(--na);border-left:4px solid var(--navy);border-radius:3px;font-size:.93rem}
+.foot{text-align:center;color:var(--mute);font-size:.85rem;padding:18px}
+.hide{display:none!important}
+@media (max-width:860px){.main{grid-template-columns:1fr}.top{flex-wrap:wrap}.tg{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="data:image/jpeg;base64,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" alt="Karnataka e-Exam Test Series logo">
+  <div><h1>KARNATAKA e-EXAM | INDIAN HISTORY SPECIAL TEST</h1><small>Indian History: Prehistoric to Modern (KPSC · KEA · KAS pattern) · Q1–50</small></div>
+  <div class="sp" style="flex:1"></div>
+  <a class="tg" href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a>
+  <div class="timer hide" id="timer">50:00</div>
+</header>
+
+<section id="intro" class="wrap">
+  <div class="card intro">
+    <h2>General instructions</h2>
+    <ul>
+      <li>50 questions, 50 minutes. Each correct answer gives +1; each wrong answer deducts ¼. Unanswered questions carry no penalty.</li>
+      <li>Use the question palette on the right to jump to any question. Colours show your status for each one.</li>
+      <li><b>Save &amp; Next</b> records your answer. <b>Mark for Review &amp; Next</b> flags the question for a second look. Marked questions that you have answered are still evaluated.</li>
+      <li>When time ends, the test submits automatically. After submitting you get your score, a full review, and explanations for every question.</li>
+    </ul>
+    <p>Join the channel for more mocks: <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a></p>
+    <button class="btn pri" id="start">Start test</button>
+  </div>
+</section>
+
+<section id="test" class="wrap hide">
+  <div class="main">
+    <div class="card">
+      <div class="qhead"><div id="qno">Question 1</div><span>Marks: +1 / −¼</span></div>
+      <div class="qbody" id="qbody"></div>
+      <div class="bar">
+        <button class="btn mk" id="bmark">Mark for Review &amp; Next</button>
+        <button class="btn" id="bclear">Clear Response</button>
+        <div class="sp"></div>
+        <button class="btn" id="bprev">Previous</button>
+        <button class="btn pri" id="bnext">Save &amp; Next</button>
+      </div>
+    </div>
+    <aside class="card side">
+      <div class="legend"><span><i class="s0">0</i>Not visited</span><span><i class="s1">0</i>Not answered</span><span><i class="s2">0</i>Answered</span><span><i class="s3">0</i>Marked</span></div>
+      <div class="sum" id="sum"></div>
+      <div class="pal" id="pal"></div>
+      <p style="margin:14px 0 0"><button class="btn red" id="submit" style="width:100%">Submit test</button></p>
+    </aside>
+  </div>
+</section>
+
+<section id="result" class="wrap hide">
+  <div class="card res">
+    <h2 style="margin-top:0">Result</h2>
+    <div class="score" id="score"></div>
+    <p>Want more? Join <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a> for the next part and daily mocks.</p>
+    <button class="btn" id="filter">Show only wrong / unanswered</button>
+  </div>
+  <div id="review"></div>
+</section>
+
+<div class="foot">Karnataka e-Exam Test Series · CBT Mocks · <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a></div>
+
+<script>
+const AR=(a,r)=>"<b>Assertion (A):</b> "+a+"<br><b>Reason (R):</b> "+r;
+const AO=["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"];
+const M=(h,rows,tail)=>"<table class=\"m\"><tr><th>"+h[0]+"</th><th>"+h[1]+"</th></tr>"+rows.map(r=>"<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>").join("")+"</table>"+(tail||"");
+const L=(i,s)=>i+"<ol>"+s.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>Which of the statements given above are correct?</p>";
+const MO=(a)=>a.map(x=>x.replace(/A-(\d) B-(\d) C-(\d) D-(\d)/,"A-$1, B-$2, C-$3, D-$4"));
+const HC=(i,s)=>i+"<ol>"+s.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>How many of the above statements are correct?</p>";
+const HW=["Only one","Only two","Only three","All four"];
+const Q=[
+[ HC("Consider the following on prehistoric India:",["Mehrgarh in Baluchistan shows early farming settlement that predates the mature Harappan phase.","Burzahom is known for pit-dwellings and the burial of dogs with their masters.","The Bhimbetka rock shelters in Madhya Pradesh have paintings ranging from the Mesolithic period onwards.","Burzahom is located in Himachal Pradesh."]),
+ HW,2,
+ "Statement 4 is wrong: Burzahom is in the Kashmir valley. The other three are correct."],
+[ "Which Harappan site is famous for its dockyard?",
+ ["Lothal","Kalibangan","Dholavira","Banawali"],0,
+ "Lothal in Gujarat has a dockyard linked to maritime trade. Kalibangan is known for its ploughed field and fire altars, and Dholavira for water reservoirs."],
+[ M(["List-I (Harappan site)","List-II (Feature)"],[["A. Dholavira","1. Ploughed field and fire altars"],["B. Kalibangan","2. Great Bath"],["C. Mohenjo-daro","3. Water-conservation reservoirs and a large signboard"],["D. Chanhudaro","4. Bead-making; no citadel"]],"<p>Match the lists.</p>"),
+ ["A-1, B-3, C-2, D-4","A-3, B-1, C-4, D-2","A-3, B-2, C-1, D-4","A-3, B-1, C-2, D-4"],3,
+ "Dholavira has an elaborate water system, Kalibangan the ploughed field, Mohenjo-daro the Great Bath, and Chanhudaro was a bead-making centre without a citadel."],
+[ AR("The Harappan civilisation is classified as an Iron Age culture.","Copper and bronze objects were widely used at Harappan sites."),
+ AO,3,"A is false and R is true. The Harappans were a Bronze Age culture, and iron came into wider use only after about 1200 BCE."],
+[ L("Consider the following on the Vedic period:",["The Rigveda has ten mandalas and 1,028 hymns.","The Gayatri mantra, in the third mandala, is attributed to Vishvamitra.","Sabha, Samiti and Vidatha were Vedic assemblies.","The Atharvaveda mainly contains hymns recited by the hotri priest."]),
+ ["1 and 2 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The Atharvaveda deals largely with charms and everyday rites, not the hotri’s Rigvedic recitation, so 4 is wrong."],
+[ "The First Buddhist Council, held soon after the Buddha’s parinirvana under Mahakassapa, met at:",
+ ["Vaishali","Rajagriha","Pataliputra","Kundalavana"],1,
+ "It met at Rajagriha under the patronage of Ajatashatru. Vaishali hosted the second council, Pataliputra the third under Ashoka, and Kundalavana the fourth under Kanishka."],
+[ L("Consider the following on the Mauryan period:",["The Arthashastra, attributed to Kautilya, is a treatise on statecraft.","Megasthenes’ Indica describes Chandragupta Maurya’s court.","Rock Edict XIII refers to the Kalinga war.","Ashokan inscriptions throughout the subcontinent are written only in the Brahmi script."]),
+ ["1 and 2 only","2, 3 and 4 only","1, 2 and 3 only","1, 2, 3 and 4"],2,
+ "Ashokan edicts also use Kharosthi (north-west), Greek and Aramaic, so 4 is wrong."],
+[ M(["List-I (Inscription)","List-II (Ruler)"],[["A. Hathigumpha inscription","1. Rudradaman I"],["B. Junagadh (Girnar) rock inscription","2. Kharavela"],["C. Allahabad Pillar inscription","3. Pulakeshin II (composed by Ravikirti)"],["D. Aihole inscription","4. Samudragupta (composed by Harishena)"]],"<p>Match the lists.</p>"),
+ ["A-2, B-1, C-4, D-3","A-1, B-2, C-4, D-3","A-2, B-1, C-3, D-4","A-4, B-1, C-2, D-3"],0,
+ "Hathigumpha records Kharavela of Kalinga. The Junagadh inscription is of Rudradaman I. The Allahabad Prashasti praises Samudragupta. The Aihole inscription of Ravikirti is a Chalukya record of Pulakeshin II."],
+[ L("Consider the following statements:",["Fa-hien visited India during the reign of Chandragupta II.","Hiuen Tsang visited India during the reign of Chandragupta II.","Aryabhata wrote the Aryabhatiya."]),
+ ["1 only","2 only","1 and 3 only","2 and 3 only"],2,
+ "Hiuen Tsang came in the reign of Harsha, so 2 is wrong. Fa-hien visited under Chandragupta II (Vikramaditya)."],
+[ "The Shore Temple at Mahabalipuram was built by which Pallava ruler?",
+ ["Mahendravarman I","Narasimhavarman II (Rajasimha)","Narasimhavarman I (Mamalla)","Nandivarman II"],1,
+ "Rajasimha built the Shore Temple and the Kailasanatha temple at Kanchipuram. The monolithic rathas are associated with Narasimhavarman I."],
+[ L("Consider the following on early medieval India:",["Banabhatta wrote the Harshacharita.","The tripartite struggle for Kannauj involved the Palas, Pratiharas and Rashtrakutas.","Kalhana wrote the Rajatarangini.","The Vikramashila university was founded by the Pala king Devapala."]),
+ ["1, 2 and 3 only","1 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "Vikramashila was founded by Dharmapala, so 4 is wrong."],
+[ "Which of the following is NOT correct about the Kushana king Kanishka?",
+ ["The Fourth Buddhist Council was held at Kundalavana in Kashmir during his reign","The Saka era of 78 CE is associated with him","Purushapura (Peshawar) was a principal capital","Pataliputra was his chief capital"],3,
+ "Kanishka ruled from Purushapura, with Mathura a second centre. Pataliputra was the Mauryan and Gupta capital."],
+[ L("Consider the following on the Sangam age:",["The Silappadikaram was composed by Kambar.","The tiger was the emblem of the Cholas.","Korkai, a Pandya port, was famed for its pearl fishery."]),
+ ["1 only","1 and 2 only","2 and 3 only","1 and 3 only"],2,
+ "The Silappadikaram was composed by Ilango Adigal. Kambar wrote the Tamil Ramayana (Ramavataram) in the Chola age."],
+[ L("Consider the following on the Cholas:",["Rajaraja I built the Brihadeeswara temple at Thanjavur.","Rajendra I took the title Gangaikonda Chola.","The Uttaramerur inscriptions on village assemblies belong to Rajaraja I.","Rajendra I led a naval expedition against Srivijaya."]),
+ ["1, 2 and 3 only","1, 2 and 4 only","2, 3 and 4 only","1, 3 and 4 only"],1,
+ "The Uttaramerur inscriptions belong to the reign of Parantaka I."],
+[ L("Consider the following on the Delhi Sultanate:",["Balban introduced the practice of Sijda and Paibos.","Firozabad was founded by Muhammad bin Tughlaq.","Alauddin Khalji set up the Diwan-i-Mustakhraj to collect arrears of revenue.","Qutbuddin Aibak began the Adhai-din-ka-Jhonpra at Ajmer."]),
+ ["2 and 4 only","1, 2 and 3 only","1, 2, 3 and 4","1, 3 and 4 only"],3,
+ "Firozabad was founded by Firuz Shah Tughlaq, so 2 is wrong."],
+[ L("Consider the following on the Vijayanagara Empire:",["Harihara and Bukka founded the empire in 1336.","Krishnadevaraya wrote the Amuktamalyada in Telugu.","The Battle of Talikota was fought in 1565.","The Portuguese traveller Nuniz visited during the reign of Deva Raya II."]),
+ ["1, 2 and 3 only","2 and 4 only","1 and 4 only","3 and 4 only"],0,
+ "Nuniz visited during Achyuta Raya’s reign. Abdur Razzak visited under Deva Raya II."],
+[ HC("Consider the following on Krishnadevaraya:",["He built the Hazara Rama temple at Hampi.","The Ashtadiggajas, including Allasani Peddana, adorned his court.","The Battle of Raichur (1520) was fought against Qutb Shah of Golconda.","He was succeeded by Deva Raya II."]),
+ HW,1,
+ "Raichur (1520) was fought against Ismail Adil Shah of Bijapur, and Achyuta Raya succeeded him. Statements 1 and 2 are correct."],
+[ "Mahmud Gawan, the Bahmani prime minister, built a famous madrasa at:",
+ ["Gulbarga","Bijapur","Bidar","Golconda"],2,
+ "The Mahmud Gawan Madrasa stands at Bidar, the later Bahmani capital."],
+[ "The Khajuraho group of temples was built by which dynasty?",
+ ["Chandellas","Paramaras","Chauhans","Gahadavalas"],0,
+ "The Chandellas of Bundelkhand built the Khajuraho temples between about 950 and 1050 CE."],
+[ HC("Consider the following on the Bhakti and Sufi movements:",["Chaitanya Mahaprabhu popularised Krishna bhakti in Bengal.","Ramanuja propounded Vishishtadvaita.","Madhvacharya of Udupi propounded Vishishtadvaita.","Nizamuddin Auliya belonged to the Chishti order."]),
+ HW,2,
+ "Madhvacharya propounded Dvaita, so 3 is wrong."],
+[ L("Consider the following on early Mughal history:",["Babur won the First Battle of Panipat in 1526.","Babur defeated Rana Sanga at Khanwa in 1527.","Humayun defeated Sher Shah at Chausa.","Akbar’s Dahsala system is associated with Todar Mal."]),
+ ["1, 2 and 3 only","2, 3 and 4 only","1, 2 and 4 only","1, 3 and 4 only"],2,
+ "Sher Shah defeated Humayun at Chausa (1539) and Kannauj (1540), so 3 is wrong."],
+[ AR("Akbar abolished the jizya in 1564.","Akbar followed the policy of Sulh-i-kul (universal peace)."),
+ AO,0,"Both are true and R explains A. Akbar had already abolished the pilgrim tax in 1563."],
+[ "Which of the following was NOT built by Shah Jahan?",
+ ["Buland Darwaza, Fatehpur Sikri","Taj Mahal, Agra","Moti Masjid, Agra Fort","Jama Masjid, Delhi"],0,
+ "The Buland Darwaza was built by Akbar to commemorate his Gujarat victory."],
+[ L("Consider the following on the Marathas:",["Shivaji was crowned Chhatrapati at Raigad in 1674.","The Treaty of Purandar was signed in 1665.","The Peshwa was the head of the Ashtapradhan council.","Sardeshmukhi was a levy of one-fourth of the revenue."]),
+ ["1 and 2 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "Chauth was one-fourth and Sardeshmukhi was one-tenth, so 4 is wrong."],
+[ M(["List-I (Traveller or author)","List-II (Work or visit)"],[["A. François Bernier","1. Kitab-ul-Hind"],["B. Al-Biruni","2. Rihla"],["C. Abdur Razzak","3. Visited Vijayanagara under Deva Raya II"],["D. Ibn Battuta","4. Travels in the Mogul Empire"]],"<p>Match the lists.</p>"),
+ ["A-1, B-4, C-3, D-2","A-4, B-1, C-2, D-3","A-3, B-1, C-4, D-2","A-4, B-1, C-3, D-2"],3,
+ "Bernier wrote on the Mughal empire, Al-Biruni the Kitab-ul-Hind, Abdur Razzak visited Vijayanagara, and Ibn Battuta’s Rihla covers Muhammad bin Tughlaq’s reign."],
+[ M(["List-I (Author)","List-II (Work)"],[["A. Kalhana","1. Tarikh-i-Firozshahi"],["B. Banabhatta","2. Rajatarangini"],["C. Amir Khusrau","3. Harshacharita"],["D. Ziauddin Barani","4. Khazain-ul-Futuh"]],"<p>Match the lists.</p>"),
+ ["A-2, B-3, C-4, D-1","A-3, B-2, C-4, D-1","A-2, B-3, C-1, D-4","A-4, B-3, C-2, D-1"],0,
+ "Kalhana wrote the Rajatarangini on Kashmir, Banabhatta the Harshacharita, Amir Khusrau the Khazain-ul-Futuh on Alauddin’s conquests, and Barani the Tarikh-i-Firozshahi."],
+[ "Shahna-i-Mandi, the market superintendent, was part of the market reforms of:",
+ ["Iltutmish","Alauddin Khalji","Muhammad bin Tughlaq","Firuz Shah Tughlaq"],1,
+ "Alauddin fixed prices through Diwan-i-Riyasat and Shahna-i-Mandi."],
+[ "Arrange the following in chronological order: 1. Battle of Talikota 2. First Battle of Panipat 3. Battle of Plassey 4. Third Battle of Panipat",
+ ["1, 2, 3, 4","2, 3, 1, 4","2, 1, 4, 3","2, 1, 3, 4"],3,
+ "First Panipat (1526), Talikota (1565), Plassey (1757), Third Panipat (1761)."],
+[ L("Consider the following on Aurangzeb:",["He reimposed the jizya in 1679.","Guru Tegh Bahadur was executed in 1675.","Bijapur fell in 1686 and Golconda in 1687.","He died at Delhi in 1707."]),
+ ["1, 2 and 3 only","1 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "He died at Ahmednagar in 1707, so 4 is wrong."],
+[ L("Consider the following on the British consolidation in Bengal:",["After Plassey (1757), Mir Jafar was installed as Nawab.","The Treaty of Allahabad (1765) gave the Company the Diwani of Bengal, Bihar and Orissa.","Dual government was introduced by Warren Hastings.","The Permanent Settlement was introduced by Cornwallis in 1793."]),
+ ["1, 2 and 3 only","2, 3 and 4 only","1, 3 and 4 only","1, 2 and 4 only"],3,
+ "Dual government was introduced by Robert Clive, so 3 is wrong."],
+[ L("Consider the following on the Anglo-Mysore Wars:",["The Treaty of Mangalore ended the Third Anglo-Mysore War.","Hyder Ali died during the Third Anglo-Mysore War.","By the Treaty of Srirangapatna (1792), Tipu ceded about half his territory."]),
+ ["1 only","2 only","3 only","1 and 3 only"],2,
+ "The Treaty of Mangalore (1784) ended the Second war, and Hyder Ali died in 1782 during it."],
+[ L("Consider the following on British administrative and social measures:",["The Cornwallis Code (1793) separated revenue administration from the judiciary.","Lord Wellesley founded the College of Fort William in 1800.","William Bentinck abolished sati in 1829.","Macaulay’s Minute of 1835 favoured English as the medium of higher education."]),
+ ["1 and 2 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],3,
+ "All four are correct."],
+[ AR("The Indian Councils Act, 1909 introduced separate electorates for Muslims.","The Act was passed during the Viceroyalty of Lord Curzon."),
+ AO,2,"A is true and R is false. The Morley–Minto reforms were passed under Viceroy Lord Minto, while Curzon had left India in 1905."],
+[ HC("Consider the following on the Revolt of 1857:",["It began at Meerut on 10 May 1857.","Bahadur Shah Zafar was exiled to the Andaman Islands.","Nana Saheb led the revolt at Kanpur.","Rani Lakshmibai led the revolt at Jhansi."]),
+ HW,2,
+ "Bahadur Shah Zafar was exiled to Rangoon, so 2 is wrong."],
+[ M(["List-I (Reformer)","List-II (Organisation or institution)"],[["A. Raja Ram Mohan Roy","1. Satyashodhak Samaj"],["B. Jyotiba Phule","2. Brahmo Samaj"],["C. Dayananda Saraswati","3. Arya Samaj"],["D. Sir Syed Ahmad Khan","4. Muhammadan Anglo-Oriental College"]],"<p>Match the lists.</p>"),
+ ["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-2, B-1, C-3, D-4","A-3, B-1, C-2, D-4"],2,
+ "Roy founded the Brahmo Samaj in 1828, Phule the Satyashodhak Samaj in 1873, Dayananda the Arya Samaj in 1875, and Sir Syed the MAO College at Aligarh."],
+[ L("Consider the following on the Indian National Congress:",["It was founded in 1885, with W. C. Bonnerjee as its first president.","The Congress split at Surat in 1907.","The Lucknow Pact (1916) was between the Congress and the Hindu Mahasabha.","Gandhi presided over the Belgaum session of 1924."]),
+ ["1, 2 and 3 only","1, 2 and 4 only","2 and 3 only","3 and 4 only"],1,
+ "The Lucknow Pact was between the Congress and the Muslim League, so 3 is wrong."],
+[ "Arrange in chronological order: 1. Champaran Satyagraha 2. Non-Cooperation Movement 3. Dandi March 4. Quit India Movement",
+ ["1, 2, 3, 4","1, 3, 2, 4","2, 1, 3, 4","1, 2, 4, 3"],0,
+ "Champaran (1917), Non-Cooperation (1920–22), Dandi March (1930), Quit India (1942)."],
+[ AR("Gandhi suspended the Non-Cooperation Movement in February 1922.","Violence at Chauri Chaura in Gorakhpur district led to the killing of policemen."),
+ AO,0,"Both are true and R explains A. Gandhi insisted on strict non-violence."],
+[ L("Consider the following on the national movement after 1918:",["The Rowlatt Act was passed in 1919.","The Jallianwala Bagh massacre took place at Amritsar on 13 April 1919.","The Hunter Committee was appointed to inquire into the Punjab disturbances.","The Simon Commission (1927) included Indian members."]),
+ ["1 and 2 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The Simon Commission was all-white, which led to the boycott, so 4 is wrong."],
+[ "Who took over the Indian National Army’s leadership and formed the Azad Hind Government in Singapore in 1943?",
+ ["Mohan Singh","Rash Behari Bose","Subhas Chandra Bose","Lakshmi Sahgal"],2,
+ "Mohan Singh raised the first INA in 1942. Rash Behari Bose handed over leadership to Subhas Chandra Bose in July 1943."],
+[ HC("Consider the following on British constitutional measures:",["The Regulating Act of 1773 created the post of Governor-General of Bengal.","Pitt’s India Act of 1784 set up the Board of Control.","The Charter Act of 1813 ended the Company’s trade monopoly completely, including tea and the China trade.","The Indian Councils Act of 1861 introduced separate electorates."]),
+ HW,1,
+ "The 1813 Act ended the monopoly except for tea and the China trade, and the 1833 Act ended it fully. Separate electorates came in 1909."],
+[ M(["List-I (Measure)","List-II (Feature)"],[["A. Indian Councils Act, 1909","1. Dyarchy in the provinces"],["B. Government of India Act, 1919","2. Separate electorates for Muslims"],["C. Government of India Act, 1935","3. Provincial autonomy and a proposed All-India Federation"],["D. Cabinet Mission, 1946","4. Constituent Assembly and an interim government"]],"<p>Match the lists.</p>"),
+ ["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-2, B-3, C-1, D-4","A-2, B-1, C-3, D-4"],3,
+ "The Morley–Minto reforms of 1909 gave separate electorates. The 1919 Act introduced dyarchy in the provinces. The 1935 Act provided provincial autonomy. The Cabinet Mission planned the Constituent Assembly."],
+[ "Which was the first state to accept Lord Wellesley’s Subsidiary Alliance (1798)?",
+ ["Hyderabad","Mysore","Awadh","Poona"],0,
+ "Hyderabad accepted it in 1798. Mysore was defeated in 1799, and Awadh accepted it in 1801."],
+[ "All of the following were associated with the Revolt of 1857 EXCEPT:",
+ ["Kunwar Singh","Tantia Tope","Azimullah Khan","Birsa Munda"],3,
+ "Birsa Munda led the Ulgulan of 1899–1900."],
+[ L("Consider the following on economic nationalism and Swadeshi:",["Dadabhai Naoroji propounded the Drain of Wealth theory.","The Partition of Bengal was announced in 1905 by Lord Minto.","The Swadeshi movement was launched in 1905."]),
+ ["1 only","1 and 3 only","2 only","2 and 3 only"],1,
+ "The Partition of Bengal was announced by Lord Curzon, so 2 is wrong."],
+[ L("Consider the following on the road to Independence:",["The Cripps Mission (1942) offered Dominion status after the war.","The Cabinet Mission (1946) recommended the creation of Pakistan.","The Mountbatten Plan was announced on 3 June 1947."]),
+ ["1 and 3 only","1 and 2 only","2 and 3 only","3 only"],0,
+ "The Cabinet Mission rejected a separate Pakistan and proposed a three-tier federal union."],
+[ L("Consider the following on Lord Dalhousie’s period:",["Satara (1848) was the first state annexed under the Doctrine of Lapse.","The first railway line from Bombay to Thane opened in 1853.","Wood’s Despatch was issued in 1854.","The Vernacular Press Act was passed in 1878."]),
+ ["1 and 4 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The Vernacular Press Act was passed under Lord Lytton, so 4 is wrong."],
+[ HC("Consider the following on tribal and peasant movements:",["The Santhal Hul of 1855–56 was led by Sido and Kanhu.","The Indigo revolt took place in Bengal in 1859–60.","The Munda Ulgulan was led by Birsa Munda.","The Moplah rebellion of 1921 took place in Malabar."]),
+ HW,3,
+ "All four are correct."],
+[ "The Servants of India Society was founded in 1905 by:",
+ ["Dadabhai Naoroji","Bal Gangadhar Tilak","Lala Lajpat Rai","Gopal Krishna Gokhale"],3,
+ "Gokhale founded it in Pune to train public workers for national service."],
+[ AR("Under the Poona Pact (1932), depressed classes were given separate electorates.","Gandhi fasted unto death at Yerwada jail in September 1932."),
+ AO,3,"A is false and R is true. The Pact gave reserved seats within the general electorate and raised them from 71 to 147."]
+];
+const N=Q.length,TOTAL=50*60;
+let cur=0,ans=Array(N).fill(-1),st=Array(N).fill(0),left=TOTAL,tick=null,done=false;
+// st: 0 not visited,1 not answered,2 answered,3 marked,4 answered+marked
+const $=id=>document.getElementById(id);
+const L2=["a","b","c","d"];
+function show(id){["intro","test","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));window.scrollTo(0,0)}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function render(){
+  const q=Q[cur];
+  if(st[cur]===0)st[cur]=1;
+  $("qno").textContent="Question "+(cur+1)+" of "+N;
+  let h="<div>"+q[0]+"</div>";
+  q[1].forEach((o,i)=>{h+="<label class=\"opt"+(ans[cur]===i?" sel":"")+"\"><input type=\"radio\" name=\"o\" value=\""+i+"\""+(ans[cur]===i?" checked":"")+"><span>("+L2[i]+") "+o+"</span></label>"});
+  $("qbody").innerHTML=h;
+  $("qbody").querySelectorAll("input").forEach(r=>r.addEventListener("change",()=>{ans[cur]=+r.value;render()}));
+  pal();
+}
+function pal(){
+  let h="";for(let i=0;i<N;i++)h+="<button class=\"s"+st[i]+(i===cur?" cur":"")+"\" data-i=\""+i+"\" aria-label=\"Question "+(i+1)+"\">"+(i+1)+"</button>";
+  $("pal").innerHTML=h;
+  $("pal").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;render()}));
+  const c=[0,0,0,0,0];st.forEach(s=>c[s]++);
+  $("sum").innerHTML="<span><b>"+c[2]+"</b> answered</span><span><b>"+c[1]+"</b> not answered</span><span><b>"+(c[3]+c[4])+"</b> marked</span><span><b>"+c[0]+"</b> not visited</span>";
+}
+function save(mark){
+  st[cur]=ans[cur]>=0?(mark?4:2):(mark?3:1);
+  if(cur<N-1)cur++;
+  render();
+}
+function submit(auto){
+  if(done)return;
+  if(!auto&&!confirm("Submit the test? You cannot change answers afterwards."))return;
+  done=true;clearInterval(tick);$("timer").classList.add("hide");
+  let c=0,w=0,u=0;
+  Q.forEach((q,i)=>{if(ans[i]<0)u++;else if(ans[i]===q[2])c++;else w++});
+  const sc=Math.round((c-w/4)*100)/100;
+  $("score").innerHTML="<div><b>"+sc+" / "+N+"</b>Net score</div><div><b>"+c+"</b>Correct</div><div><b>"+w+"</b>Wrong</div><div><b>"+u+"</b>Unanswered</div><div><b>"+(c+w?Math.round(100*c/(c+w)):0)+"%</b>Accuracy</div><div><b>"+fmt(TOTAL-left)+"</b>Time used</div>";
+  buildReview(false);show("result");
+}
+function buildReview(onlyBad){
+  let h="";
+  Q.forEach((q,i)=>{
+    const ok=ans[i]===q[2],un=ans[i]<0;
+    if(onlyBad&&ok)return;
+    h+="<div class=\"card rv\"><div class=\"tag\" style=\"color:var(--"+(ok?"ok":un?"mute":"bad")+")\">Q"+(i+1)+" · "+(ok?"Correct":un?"Not answered":"Wrong")+"</div><div>"+q[0]+"</div>";
+    q[1].forEach((o,j)=>{h+="<div class=\"opt "+(j===q[2]?"ok":(j===ans[i]?"no":""))+"\" style=\"cursor:default\"><span>("+L2[j]+") "+o+(j===q[2]?" ✔":"")+(j===ans[i]&&j!==q[2]?" (your answer)":"")+"</span></div>"});
+    h+="<div class=\"ex\"><b>Correct answer: ("+L2[q[2]]+").</b> "+q[3]+"</div></div>";
+  });
+  $("review").innerHTML=h||"<div class=\"card rv\">Nothing to show: every question is correct.</div>";
+}
+let bad=false;
+$("filter").addEventListener("click",()=>{bad=!bad;$("filter").textContent=bad?"Show all questions":"Show only wrong / unanswered";buildReview(bad)});
+$("start").addEventListener("click",()=>{
+  show("test");$("timer").classList.remove("hide");render();
+  tick=setInterval(()=>{left--;$("timer").textContent=fmt(left);if(left<=300)$("timer").style.background="var(--red)";if(left<=0)submit(true)},1000);
+});
+$("bnext").addEventListener("click",()=>save(false));
+$("bmark").addEventListener("click",()=>save(true));
+$("bclear").addEventListener("click",()=>{ans[cur]=-1;st[cur]=1;render()});
+$("bprev").addEventListener("click",()=>{if(cur>0){cur--;render()}});
+$("submit").addEventListener("click",()=>submit(false));
+</script>
+</body>
+</html>
