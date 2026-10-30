@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Indian Geography Special Test | Karnataka e-Exam</title>
+<style>
+:root{--navy:#1b2a5c;--red:#c8202e;--bg:#eef1f7;--card:#fff;--ink:#1c2233;--mute:#5b6478;--line:#d5dae6;--ok:#1e8e4e;--bad:#c8202e;--mark:#6a3fb5;--na:#dfe3ee;--hdr:#1b2a5c;--hdrink:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141f;--card:#1a2030;--ink:#e8ebf4;--mute:#a1a9bd;--line:#2c3550;--na:#2c3550;--hdr:#141c36;--red:#ee4a58;--mark:#a583ee;--ok:#3fbf78;--bad:#ee4a58;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141f;--card:#1a2030;--ink:#e8ebf4;--mute:#a1a9bd;--line:#2c3550;--na:#2c3550;--hdr:#141c36;--red:#ee4a58;--mark:#a583ee;--ok:#3fbf78;--bad:#ee4a58;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+a{color:var(--red)}
+.top{background:var(--hdr);color:var(--hdrink);display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:4px solid var(--red)}
+.top img{width:52px;height:52px;border-radius:50%;background:#fff}
+.top h1{font-size:1.05rem;margin:0;line-height:1.25}
+.top small{opacity:.85;display:block;font-size:.8rem}
+.top .sp{flex:1}
+.timer{background:rgba(255,255,255,.12);border-radius:6px;padding:6px 12px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tg{color:#fff;font-size:.85rem;white-space:nowrap}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px}
+.intro{padding:24px;max-width:820px;margin:20px auto}
+.intro h2{margin-top:0}
+.intro ul{padding-left:20px}
+.btn{border:1px solid var(--navy);background:var(--card);color:var(--navy);padding:9px 16px;border-radius:4px;font-weight:600}
+.btn.pri{background:var(--navy);color:#fff}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.mk{border-color:var(--mark);color:var(--mark)}
+:root[data-theme="dark"] .btn.pri,:root:not([data-theme="light"]) .btn.pri{border-color:var(--line)}
+.btn:focus-visible,.opt:focus-within,.pal button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.main{display:grid;grid-template-columns:1fr 290px;gap:16px;align-items:start}
+.qhead{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-weight:700;color:var(--navy)}
+:root[data-theme="dark"] .qhead,:root:not([data-theme="light"]) .qhead{color:var(--ink)}
+.qhead span{font-weight:400;color:var(--mute);font-size:.88rem}
+.qbody{padding:18px 20px}
+.qbody ol{margin:.5em 0 .5em 1.2em;padding-left:.6em}
+.qbody li{margin:.3em 0}
+table.m{border-collapse:collapse;margin:.6em 0;width:100%;max-width:640px}
+table.m th,table.m td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+table.m th{background:var(--na)}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:5px;padding:10px 12px;margin:9px 0;cursor:pointer}
+.opt:hover{border-color:var(--navy)}
+.opt.sel{background:rgba(27,42,92,.09);border-color:var(--navy)}
+.opt input{margin-top:5px;accent-color:var(--navy)}
+.opt.ok{border-color:var(--ok);background:rgba(30,142,78,.12)}
+.opt.no{border-color:var(--bad);background:rgba(200,32,46,.1)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px;border-top:1px solid var(--line)}
+.bar .sp{flex:1}
+.side{padding:12px}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;font-size:.78rem;color:var(--mute);margin-bottom:10px}
+.legend i,.pal button{display:inline-block;width:34px;height:34px;border-radius:5px;text-align:center;line-height:34px;font-style:normal;font-weight:700;font-size:.85rem;border:0;color:#fff;position:relative}
+.legend i{width:22px;height:22px;line-height:22px;font-size:.7rem;margin-right:6px;vertical-align:middle}
+.s0{background:var(--na);color:var(--ink)!important}
+.s1{background:var(--red)}
+.s2{background:var(--ok)}
+.s3{background:var(--mark)}
+.s4{background:var(--mark)}
+.s4::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--ok);border:2px solid var(--card)}
+.pal{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;justify-items:center}
+.pal button.cur{outline:3px solid var(--navy);outline-offset:1px}
+:root[data-theme="dark"] .pal button.cur,:root:not([data-theme="light"]) .pal button.cur{outline-color:#fff}
+.sum{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;margin-bottom:10px}
+.res{padding:24px;margin:16px auto;max-width:900px}
+.score{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.score div{flex:1 1 130px;border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+.score b{display:block;font-size:1.5rem;color:var(--navy)}
+:root[data-theme="dark"] .score b,:root:not([data-theme="light"]) .score b{color:var(--ink)}
+.rv{padding:16px 20px;margin:14px 0}
+.rv .tag{font-weight:700;font-size:.85rem}
+.rv .ex{margin-top:10px;padding:10px 12px;background:var(--na);border-left:4px solid var(--navy);border-radius:3px;font-size:.93rem}
+.foot{text-align:center;color:var(--mute);font-size:.85rem;padding:18px}
+.hide{display:none!important}
+@media (max-width:860px){.main{grid-template-columns:1fr}.top{flex-wrap:wrap}.tg{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="data:image/jpeg;base64,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" alt="Karnataka e-Exam Test Series logo">
+  <div><h1>KARNATAKA e-EXAM | INDIAN GEOGRAPHY SPECIAL TEST</h1><small>Indian Geography: static (KEA · KPSC pattern) + current affairs (Jan 2025 – Oct 2026) · Q1–50</small></div>
+  <div class="sp" style="flex:1"></div>
+  <a class="tg" href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a>
+  <div class="timer hide" id="timer">50:00</div>
+</header>
+
+<section id="intro" class="wrap">
+  <div class="card intro">
+    <h2>General instructions</h2>
+    <ul>
+      <li>50 questions, 50 minutes. Each correct answer gives +1; each wrong answer deducts ¼. Unanswered questions carry no penalty.</li>
+      <li>Use the question palette on the right to jump to any question. Colours show your status for each one.</li>
+      <li><b>Save &amp; Next</b> records your answer. <b>Mark for Review &amp; Next</b> flags the question for a second look. Marked questions that you have answered are still evaluated.</li>
+      <li>When time ends, the test submits automatically. After submitting you get your score, a full review, and explanations for every question.</li>
+    </ul>
+    <p>Join the channel for more mocks: <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a></p>
+    <button class="btn pri" id="start">Start test</button>
+  </div>
+</section>
+
+<section id="test" class="wrap hide">
+  <div class="main">
+    <div class="card">
+      <div class="qhead"><div id="qno">Question 1</div><span>Marks: +1 / −¼</span></div>
+      <div class="qbody" id="qbody"></div>
+      <div class="bar">
+        <button class="btn mk" id="bmark">Mark for Review &amp; Next</button>
+        <button class="btn" id="bclear">Clear Response</button>
+        <div class="sp"></div>
+        <button class="btn" id="bprev">Previous</button>
+        <button class="btn pri" id="bnext">Save &amp; Next</button>
+      </div>
+    </div>
+    <aside class="card side">
+      <div class="legend"><span><i class="s0">0</i>Not visited</span><span><i class="s1">0</i>Not answered</span><span><i class="s2">0</i>Answered</span><span><i class="s3">0</i>Marked</span></div>
+      <div class="sum" id="sum"></div>
+      <div class="pal" id="pal"></div>
+      <p style="margin:14px 0 0"><button class="btn red" id="submit" style="width:100%">Submit test</button></p>
+    </aside>
+  </div>
+</section>
+
+<section id="result" class="wrap hide">
+  <div class="card res">
+    <h2 style="margin-top:0">Result</h2>
+    <div class="score" id="score"></div>
+    <p>Want more? Join <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a> for the next part and daily mocks.</p>
+    <button class="btn" id="filter">Show only wrong / unanswered</button>
+  </div>
+  <div id="review"></div>
+</section>
+
+<div class="foot">Karnataka e-Exam Test Series · CBT Mocks · <a href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">t.me/karnatakaeExamseries</a></div>
+
+<script>
+const AR=(a,r)=>"<b>Assertion (A):</b> "+a+"<br><b>Reason (R):</b> "+r;
+const AO=["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"];
+const M=(h,rows,tail)=>"<table class=\"m\"><tr><th>"+h[0]+"</th><th>"+h[1]+"</th></tr>"+rows.map(r=>"<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>").join("")+"</table>"+(tail||"");
+const L=(i,s)=>i+"<ol>"+s.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>Which of the statements given above are correct?</p>";
+const MO=(a)=>a.map(x=>x.replace(/A-(\d) B-(\d) C-(\d) D-(\d)/,"A-$1, B-$2, C-$3, D-$4"));
+const HC=(i,s)=>i+"<ol>"+s.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>How many of the above statements are correct?</p>";
+const HW=["Only one","Only two","Only three","All four"];
+const Q=[
+[ "Which of the following States is NOT crossed by the Tropic of Cancer?",
+ ["Chhattisgarh","Jharkhand","Tripura","Odisha"],3,
+ "The Tropic of Cancer crosses eight States: Gujarat, Rajasthan, Madhya Pradesh, Chhattisgarh, Jharkhand, West Bengal, Tripura and Mizoram. Odisha lies south of it."],
+[ L("Consider the following on India’s location:",["The mainland extends from about 8°4′N to 37°6′N.","The standard meridian of 82°30′E passes through Mirzapur in Uttar Pradesh and fixes IST at GMT +5:30.","India’s longest land border is with China.","India shares a land boundary with seven countries."]),
+ ["1 and 3 only","2, 3 and 4 only","1, 2 and 4 only","1, 2, 3 and 4"],2,
+ "The longest land border is with Bangladesh (about 4,096.7 km), so 3 is wrong. The seven land neighbours are Pakistan, Afghanistan, China, Nepal, Bhutan, Bangladesh and Myanmar."],
+[ M(["List-I (Pass)","List-II (Region)"],[["A. Shipki La","1. Sikkim"],["B. Nathu La","2. Himachal Pradesh"],["C. Zoji La","3. Arunachal Pradesh"],["D. Bomdi La","4. On the Srinagar–Leh route (J&K and Ladakh)"]],"<p>Match the lists.</p>"),
+ ["A-1, B-2, C-4, D-3","A-2, B-1, C-4, D-3","A-2, B-1, C-3, D-4","A-4, B-1, C-2, D-3"],1,
+ "Shipki La lets the Sutlej enter India from Tibet. Nathu La and Jelep La are in Sikkim. Zoji La links Srinagar and Leh via Kargil. Bomdi La is in Arunachal Pradesh."],
+[ HC("Consider the following on the Himalayas:",["Kanchenjunga (8,586 m) is the highest peak in India.","Nanda Devi (7,816 m) is the highest peak lying wholly within India.","The Shiwaliks are the oldest and innermost Himalayan range.","The Himadri (Greater Himalaya) has the highest average elevation among the ranges."]),
+ HW,2,
+ "The Shiwaliks are the youngest and outermost range, so 3 is wrong. The Himadri averages about 6,000 m."],
+[ "Guru Shikhar, the highest peak of the Aravalli range, is located in:",
+ ["Mount Abu, Rajasthan","Pushkar, Rajasthan","Jhunjhunu, Rajasthan","Gurugram, Haryana"],0,
+ "Guru Shikhar (about 1,722 m) is on Mount Abu. The Aravalli, one of the oldest fold ranges, runs from Gujarat through Rajasthan and Haryana to Delhi."],
+[ L("Consider the Supreme Court’s Aravalli judgment of 20 November 2025:",["It accepted a definition of an Aravalli Hill as a landform in the Aravalli districts rising 100 metres or more above local relief.","An Aravalli Range was defined as two or more such hills within 500 metres of each other.","The Aravalli districts span Rajasthan, Haryana, Delhi and Gujarat.","The directions remain in full force and have never been stayed."]),
+ ["1 and 2 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The Court itself put its directions in abeyance on 29 December 2025 after criticism that the 100 m test left lower hills unprotected, so 4 is wrong."],
+[ L("Consider the following on the Western Ghats:",["They were inscribed as a UNESCO World Heritage Site in 2012.","Anai Mudi (2,695 m) in Kerala is the highest peak of peninsular India.","The Thal Ghat connects Mumbai with Nashik.","The Eastern Ghats are continuous and higher than the Western Ghats."]),
+ ["2 and 4 only","1 and 4 only","3 and 4 only","1, 2 and 3 only"],3,
+ "The Eastern Ghats are discontinuous and lower, cut by the Godavari, Mahanadi, Krishna and Kaveri, so 4 is wrong."],
+[ "The Palghat Gap in the Western Ghats connects Kerala with:",
+ ["Tamil Nadu","Karnataka","Maharashtra","Andhra Pradesh"],0,
+ "The Palghat Gap lies between the Nilgiris and the Anamalai hills and links Palakkad in Kerala with Coimbatore in Tamil Nadu."],
+[ M(["List-I (Lake)","List-II (Feature)"],[["A. Wular","1. Largest inland saline lake (Rajasthan)"],["B. Chilika","2. Largest freshwater lake of India (Jammu and Kashmir)"],["C. Sambhar","3. Longest lake, in Kerala"],["D. Vembanad","4. Largest brackish-water lagoon (Odisha)"]],"<p>Match the lists.</p>"),
+ ["A-2, B-1, C-4, D-3","A-4, B-2, C-1, D-3","A-2, B-4, C-1, D-3","A-2, B-4, C-3, D-1"],2,
+ "Wular lies on the Jhelum, Chilika is a lagoon in Odisha, Sambhar is a saline lake in Rajasthan, and Vembanad is the longest lake and a Ramsar site."],
+[ L("Consider the following on India’s Ramsar sites:",["India’s network reached 98 sites in early 2026 with the addition of Patna Bird Sanctuary (Uttar Pradesh) and Chhari-Dhand (Gujarat).","Tamil Nadu has the most Ramsar sites, 20.","Chilika Lake and Keoladeo National Park were India’s first Ramsar sites (1981).","The Montreux Record lists sites where positive ecological change has occurred."]),
+ ["1 and 2 only","2 and 4 only","1, 3 and 4 only","1, 2 and 3 only"],3,
+ "The Montreux Record lists sites facing adverse ecological change, so 4 is wrong. Loktak (Manipur) is on the Record."],
+[ "Keibul Lamjao, the world’s only floating national park, lies in which State?",
+ ["Meghalaya","Manipur","Mizoram","Nagaland"],1,
+ "It sits on Loktak Lake, built on phumdis (floating biomass), and protects the Sangai or brow-antlered deer."],
+[ L("Consider the following on the Indus Waters Treaty:",["India placed it in abeyance on 23 April 2025, a day after the Pahalgam attack.","It allots the eastern rivers Ravi, Beas and Sutlej to India.","The western rivers Indus, Jhelum and Chenab were largely allotted to Pakistan, with limited Indian use.","It was signed at Tashkent in 1965."]),
+ ["1, 2 and 3 only","1 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "The treaty was signed at Karachi on 19 September 1960 with World Bank mediation, so 4 is wrong."],
+[ M(["List-I (River)","List-II (Source)"],[["A. Indus","1. Verinag spring, Kashmir"],["B. Sutlej","2. Bara Lacha Pass (Chandra and Bhaga)"],["C. Jhelum","3. Rakshastal, near Mansarovar"],["D. Chenab","4. Near Mansarovar in Tibet"]],"<p>Match the lists.</p>"),
+ ["A-3, B-4, C-1, D-2","A-4, B-3, C-2, D-1","A-4, B-1, C-3, D-2","A-4, B-3, C-1, D-2"],3,
+ "The Chenab is formed by the Chandra and Bhaga at Tandi in Himachal Pradesh."],
+[ "The Tulbul Navigation Project, which India has moved to revive after the Indus Waters Treaty abeyance, lies:",
+ ["on the Chenab near Kishtwar","on the Ravi near Pathankot","at the mouth of Wular Lake on the Jhelum","on the Beas near Mandi"],2,
+ "The project at the outlet of Wular Lake was stalled in 1987 over Pakistani objections."],
+[ L("Consider the following on hydro projects in the Indus basin:",["Sawalkot (1,856 MW), Pakal Dul, Kiru and Ratle lie in the Chenab basin.","Kishanganga diverts water from a tributary of the Jhelum.","The Salal project is on the Jhelum.","Dulhasti is on the Chenab."]),
+ ["1 and 3 only","1, 2 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "Salal and Baglihar are on the Chenab, so 3 is wrong. Pakal Dul (1,000 MW) is on the Marusudar, a Chenab tributary."],
+[ AR("The Brahmaputra is called the Yarlung Tsangpo in Tibet and the Siang in Arunachal Pradesh.","The river makes a sharp U-turn around Namcha Barwa at the Great Bend before entering India."),
+ AO,1,"Both are true, but the U-turn does not explain the change in names."],
+[ L("Consider the following on the Brahmaputra:",["China began building the Medog hydropower project near the Great Bend on 19 July 2025.","India has proposed the 11,000 MW Siang Upper Multipurpose Project in Arunachal Pradesh.","The river rises in Tibet near Mansarovar (Chemayungdung glacier).","In Assam it is called the Dihang."]),
+ ["1, 2 and 3 only","1 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "The Dihang (Siang) is the Arunachal stretch, so 4 is wrong. China approved Medog in December 2024."],
+[ "The longest river of peninsular India is:",
+ ["Krishna","Narmada","Godavari","Mahanadi"],2,
+ "The Godavari (about 1,465 km) is called Dakshina Ganga."],
+[ L("Consider the following on peninsular rivers:",["The Narmada and Tapi flow westwards through rift valleys.","The Godavari is called the Dakshina Ganga.","The Mahanadi rises in the Western Ghats.","The Krishna rises near Mahabaleshwar."]),
+ ["1 and 3 only","2 and 3 only","3 and 4 only","1, 2 and 4 only"],3,
+ "The Mahanadi rises near Sihawa in Chhattisgarh, so 3 is wrong."],
+[ L("Consider the following on Cyclone Montha (October 2025):",["It was named by Thailand and made landfall near Kakinada in Andhra Pradesh on 28 October 2025.","North Indian Ocean cyclones are named under the WMO/ESCAP Panel on Tropical Cyclones, with RSMC New Delhi as the naming authority.","A system is given a name once winds reach 34 knots.","The Arabian Sea has more cyclones than the Bay of Bengal."]),
+ ["1 and 2 only","1, 2 and 3 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The Bay of Bengal has more cyclones, so 4 is wrong. The panel has 13 member countries."],
+[ M(["List-I (Local wind or rain)","List-II (Description)"],[["A. Loo","1. Pre-monsoon showers helping mangoes in Kerala"],["B. Kalbaishakhi","2. Winter rain from western disturbances in north India"],["C. Mango showers","3. Hot dry summer wind of the northern plains"],["D. Mahawat","4. Pre-monsoon thunderstorm of West Bengal"]],"<p>Match the lists.</p>"),
+ ["A-3, B-1, C-4, D-2","A-4, B-3, C-1, D-2","A-3, B-4, C-1, D-2","A-3, B-4, C-2, D-1"],2,
+ "Loo is the hot dry summer wind, Kalbaishakhi the Nor’wester of Bengal and Assam, mango showers the pre-monsoon rain of Kerala and Karnataka, and mahawat the winter rain of the north."],
+[ L("Consider the following on the 2025 southwest monsoon:",["It set in over Kerala on 24 May 2025, eight days before the normal date, the earliest since 2009.","It covered the whole country on 29 June 2025, ahead of the normal 8 July.","Rainfall for the season was about 90% of the long-period average."]),
+ ["1 and 2 only","2 and 3 only","1 and 3 only","3 only"],0,
+ "Seasonal rainfall was about 108% of the long-period average, so 3 is wrong."],
+[ AR("The southwest monsoon brings about three-fourths of India’s annual rainfall.","Western disturbances bring winter rain to north-western India."),
+ AO,1,"Both are true, but western disturbances are a separate winter system and do not explain the monsoon’s share."],
+[ "The Tamil Nadu coast gets most of its rainfall in October–December from the:",
+ ["Southwest monsoon","Western disturbances","Mango showers","Retreating (northeast) monsoon"],3,
+ "The Coromandel Coast lies in the rain shadow in summer. Cyclones such as Montha in October 2025 also form in this season."],
+[ L("Consider the following on the Dharali flash flood of 5 August 2025:",["It hit Dharali in Uttarkashi district on the Kheer Ganga, on the route to Gangotri.","The Kheer Ganga is a tributary of the Bhagirathi.","The Bhagirathi and Alaknanda meet at Devprayag to form the Ganga.","The Alaknanda rises from the Gangotri glacier."]),
+ ["1 and 2 only","1 and 4 only","1, 2 and 3 only","2, 3 and 4 only"],2,
+ "The Bhagirathi rises from the Gangotri glacier at Gaumukh, so 4 is wrong. The Alaknanda rises near the Satopanth glacier."],
+[ "The confluence of the Alaknanda and the Mandakini is at:",
+ ["Rudraprayag","Devprayag","Karnaprayag","Nandprayag"],0,
+ "Rudraprayag is one of the five Prayags. Devprayag is the Alaknanda–Bhagirathi confluence."],
+[ "Which of the following is NOT a tributary of the Ganga?",
+ ["Gandak","Kosi","Son","Luni"],3,
+ "The Luni of Rajasthan is an inland-drainage river that ends in the Rann of Kutch."],
+[ L("Consider the following on Punjab’s rivers and dams:",["Bhakra Dam is on the Beas.","Pong Dam is on the Beas.","Ranjit Sagar (Thein) Dam is on the Ravi.","The Punjab floods of 2025 were the worst since 1988."]),
+ ["1, 2 and 3 only","2, 3 and 4 only","1 and 4 only","3 and 4 only"],1,
+ "Bhakra Dam is on the Sutlej, so 1 is wrong."],
+[ AR("Black soils are called regur and are ideal for cotton.","Black soils are formed by the weathering of granite and gneiss."),
+ AO,2,"A is true and R is false. They form from basalt of the Deccan Trap and retain moisture."],
+[ M(["List-I (Soil term)","List-II (Feature)"],[["A. Khadar","1. Old alluvium with kankar nodules"],["B. Bhangar","2. New alluvium of flood plains"],["C. Regur","3. Black soil from basalt"],["D. Laterite","4. Formed by leaching under heavy rainfall"]],"<p>Match the lists.</p>"),
+ ["A-2, B-1, C-3, D-4","A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-2, B-3, C-1, D-4"],0,
+ "Khadar is new and fertile, bhangar is old, regur is black soil, and laterite suits cashew and tapioca."],
+[ HC("Consider the following on mangroves:",["The Sundarbans in West Bengal is India’s largest mangrove forest.","It is named after the Sundari tree.","Bhitarkanika in Odisha is a mangrove Ramsar site.","Mangroves are typical of the Thar desert."]),
+ HW,2,
+ "Mangroves grow in tidal deltas and estuaries, not in deserts, so 4 is wrong."],
+[ "India’s first biosphere reserve (1986) was:",
+ ["Sundarbans","Nanda Devi","Gulf of Mannar","Nilgiri"],3,
+ "The Nilgiri Biosphere Reserve was set up in 1986 and covers Tamil Nadu, Kerala and Karnataka."],
+[ L("Consider the following on Census 2027:",["It has two phases: houselisting and population enumeration.","The reference date is 1 March 2027 for most of the country.","India’s first synchronous Census was held in 1872.","The 2011 Census recorded a sex ratio of 943."]),
+ ["1 and 3 only","1, 2 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],1,
+ "The first synchronous Census was in 1881 (1872 was non-synchronous), so 3 is wrong. Houselisting ran from April 2026."],
+[ "Which State has the highest sex ratio, 1,084, per the 2011 Census?",
+ ["Kerala","Tamil Nadu","Andhra Pradesh","Goa"],0,
+ "Kerala is highest and Haryana among the lowest. Kerala also has the highest literacy."],
+[ M(["List-I (Mineral centre)","List-II (Mineral and State)"],[["A. Khetri","1. Uranium, Jharkhand"],["B. Malanjkhand","2. Copper, Madhya Pradesh"],["C. Jadugoda","3. Copper, Rajasthan"],["D. Digboi","4. Petroleum, Assam"]],"<p>Match the lists.</p>"),
+ ["A-2, B-3, C-1, D-4","A-3, B-2, C-4, D-1","A-1, B-2, C-3, D-4","A-3, B-2, C-1, D-4"],3,
+ "Digboi is India’s oldest oil field, in Assam."],
+[ L("Consider the following on rare earths:",["Budget 2026-27 announced rare earth mineral corridors in Odisha, Kerala, Andhra Pradesh and Tamil Nadu.","Monazite beach sands carry thorium and rare earths.","India has among the world’s largest thorium reserves.","Chhattisgarh has India’s largest iron ore reserves."]),
+ ["1 and 4 only","2 and 4 only","1, 2 and 3 only","1, 2, 3 and 4"],2,
+ "Odisha has the largest iron ore reserves, so 4 is wrong. Monazite is found along the Kerala, Odisha, Tamil Nadu and Andhra coasts."],
+[ "The Jharia coalfield, India’s largest coking coal field, is in:",
+ ["Odisha","Jharkhand","West Bengal","Chhattisgarh"],1,
+ "Jharia is in the Damodar valley near Dhanbad."],
+[ L("Consider the following on India’s steel plants:",["The Tata Iron and Steel Company began at Sakchi (Jamshedpur) in 1907.","Rourkela was built with German collaboration.","Bhilai was built with Soviet collaboration.","Bokaro was built with American collaboration."]),
+ ["1, 2 and 3 only","1 and 4 only","2, 3 and 4 only","1, 2, 3 and 4"],0,
+ "Bokaro was built with Soviet help, so 4 is wrong. Durgapur was built with British help."],
+[ "Among India’s major (government-owned) ports, the largest container port is:",
+ ["Kandla (Deendayal)","Paradip","Visakhapatnam","Jawaharlal Nehru Port (Nhava Sheva)"],3,
+ "JNPT is in Navi Mumbai. Kandla is a tidal port in Gujarat."],
+[ L("Consider the following on the Vizhinjam port:",["It was commissioned on 2 May 2025 as India’s first deepwater container transshipment port.","It lies in Thiruvananthapuram district, about 10 nautical miles from the east–west shipping route.","It has a natural depth of about 20 metres.","It is a major port on the Bay of Bengal."]),
+ ["1 and 2 only","1 and 4 only","1, 2 and 3 only","2, 3 and 4 only"],2,
+ "Vizhinjam is on the Arabian Sea coast, so 4 is wrong. It cost about ₹8,800 crore and was built as a public-private partnership."],
+[ "India’s longest national highway, from Srinagar to Kanyakumari, is:",
+ ["NH-44","NH-48","NH-27","NH-16"],0,
+ "NH-44 runs about 3,745 km via Delhi, Nagpur and Bengaluru."],
+[ HC("Consider the following on inland waterways:",["NW-1 runs on the Ganga from Haldia to Prayagraj.","NW-2 runs on the Brahmaputra from Sadiya to Dhubri.","NW-3, the West Coast Canal, lies on India’s east coast.","NW-1 is on the Godavari."]),
+ HW,1,
+ "NW-3 lies on the Kerala coast (Kottapuram–Kollam), and NW-1 is on the Ganga, so 3 and 4 are wrong."],
+[ M(["List-I (Crop)","List-II (Leading State)"],[["A. Jute","1. Assam"],["B. Rubber","2. Kerala"],["C. Tea","3. West Bengal"],["D. Coffee","4. Karnataka"]],"<p>Match the lists.</p>"),
+ ["A-2, B-3, C-1, D-4","A-3, B-1, C-2, D-4","A-1, B-2, C-3, D-4","A-3, B-2, C-1, D-4"],3,
+ "Jute is led by West Bengal, rubber by Kerala, tea by Assam and coffee by Karnataka."],
+[ L("Consider the following on cropping seasons:",["Rice is mainly a kharif crop.","Wheat is a kharif crop.","Watermelon and cucumber are zaid crops.","Cotton is a rabi crop."]),
+ ["1 and 3 only","2 and 4 only","1, 3 and 4 only","1, 2 and 3 only"],0,
+ "Wheat is a rabi crop and cotton a kharif crop, so 2 and 4 are wrong."],
+[ AR("Operation Flood was launched in 1951.","It was implemented by the National Dairy Development Board, set up in 1965."),
+ AO,3,"A is false and R is true. Operation Flood began in 1970 under Verghese Kurien and made India a leading milk producer."],
+[ AR("Tank irrigation is common in the Peninsular plateau.","The undulating terrain and hard impervious rocks suit storing rainwater."),
+ AO,0,"Both are true and R explains A. Tamil Nadu, Andhra Pradesh and Telangana have many tanks."],
+[ "All of the following are in the Andaman and Nicobar Islands EXCEPT:",
+ ["Barren Island","Minicoy","Narcondam Island","Havelock Island"],1,
+ "Minicoy is in Lakshadweep. Barren Island is India’s only active volcano."],
+[ L("Consider the following on island channels:",["The Ten Degree Channel separates the Andaman and Nicobar islands.","The Eight Degree Channel separates Minicoy from the Maldives.","The Nine Degree Channel separates Minicoy from the rest of Lakshadweep.","The Duncan Passage separates Great Nicobar from Sumatra."]),
+ ["1 and 2 only","1 and 4 only","1, 2 and 3 only","2, 3 and 4 only"],2,
+ "The Duncan Passage lies between South Andaman and Little Andaman, so 4 is wrong."],
+[ "Arrange the following rivers in descending order of length within India: 1. Mahanadi 2. Narmada 3. Godavari 4. Krishna",
+ ["3, 4, 1, 2","4, 3, 2, 1","3, 2, 4, 1","3, 4, 2, 1"],3,
+ "Godavari (about 1,465 km), Krishna (1,400 km), Narmada (1,312 km) and Mahanadi (858 km)."],
+[ "The largest tiger reserve of India by area is:",
+ ["Sundarbans","Nagarjunsagar–Srisailam","Manas","Corbett"],1,
+ "Nagarjunsagar–Srisailam in Andhra Pradesh and Telangana covers about 3,296 sq km."]
+];
+const N=Q.length,TOTAL=50*60;
+let cur=0,ans=Array(N).fill(-1),st=Array(N).fill(0),left=TOTAL,tick=null,done=false;
+// st: 0 not visited,1 not answered,2 answered,3 marked,4 answered+marked
+const $=id=>document.getElementById(id);
+const L2=["a","b","c","d"];
+function show(id){["intro","test","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));window.scrollTo(0,0)}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function render(){
+  const q=Q[cur];
+  if(st[cur]===0)st[cur]=1;
+  $("qno").textContent="Question "+(cur+1)+" of "+N;
+  let h="<div>"+q[0]+"</div>";
+  q[1].forEach((o,i)=>{h+="<label class=\"opt"+(ans[cur]===i?" sel":"")+"\"><input type=\"radio\" name=\"o\" value=\""+i+"\""+(ans[cur]===i?" checked":"")+"><span>("+L2[i]+") "+o+"</span></label>"});
+  $("qbody").innerHTML=h;
+  $("qbody").querySelectorAll("input").forEach(r=>r.addEventListener("change",()=>{ans[cur]=+r.value;render()}));
+  pal();
+}
+function pal(){
+  let h="";for(let i=0;i<N;i++)h+="<button class=\"s"+st[i]+(i===cur?" cur":"")+"\" data-i=\""+i+"\" aria-label=\"Question "+(i+1)+"\">"+(i+1)+"</button>";
+  $("pal").innerHTML=h;
+  $("pal").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;render()}));
+  const c=[0,0,0,0,0];st.forEach(s=>c[s]++);
+  $("sum").innerHTML="<span><b>"+c[2]+"</b> answered</span><span><b>"+c[1]+"</b> not answered</span><span><b>"+(c[3]+c[4])+"</b> marked</span><span><b>"+c[0]+"</b> not visited</span>";
+}
+function save(mark){
+  st[cur]=ans[cur]>=0?(mark?4:2):(mark?3:1);
+  if(cur<N-1)cur++;
+  render();
+}
+function submit(auto){
+  if(done)return;
+  if(!auto&&!confirm("Submit the test? You cannot change answers afterwards."))return;
+  done=true;clearInterval(tick);$("timer").classList.add("hide");
+  let c=0,w=0,u=0;
+  Q.forEach((q,i)=>{if(ans[i]<0)u++;else if(ans[i]===q[2])c++;else w++});
+  const sc=Math.round((c-w/4)*100)/100;
+  $("score").innerHTML="<div><b>"+sc+" / "+N+"</b>Net score</div><div><b>"+c+"</b>Correct</div><div><b>"+w+"</b>Wrong</div><div><b>"+u+"</b>Unanswered</div><div><b>"+(c+w?Math.round(100*c/(c+w)):0)+"%</b>Accuracy</div><div><b>"+fmt(TOTAL-left)+"</b>Time used</div>";
+  buildReview(false);show("result");
+}
+function buildReview(onlyBad){
+  let h="";
+  Q.forEach((q,i)=>{
+    const ok=ans[i]===q[2],un=ans[i]<0;
+    if(onlyBad&&ok)return;
+    h+="<div class=\"card rv\"><div class=\"tag\" style=\"color:var(--"+(ok?"ok":un?"mute":"bad")+")\">Q"+(i+1)+" · "+(ok?"Correct":un?"Not answered":"Wrong")+"</div><div>"+q[0]+"</div>";
+    q[1].forEach((o,j)=>{h+="<div class=\"opt "+(j===q[2]?"ok":(j===ans[i]?"no":""))+"\" style=\"cursor:default\"><span>("+L2[j]+") "+o+(j===q[2]?" ✔":"")+(j===ans[i]&&j!==q[2]?" (your answer)":"")+"</span></div>"});
+    h+="<div class=\"ex\"><b>Correct answer: ("+L2[q[2]]+").</b> "+q[3]+"</div></div>";
+  });
+  $("review").innerHTML=h||"<div class=\"card rv\">Nothing to show: every question is correct.</div>";
+}
+let bad=false;
+$("filter").addEventListener("click",()=>{bad=!bad;$("filter").textContent=bad?"Show all questions":"Show only wrong / unanswered";buildReview(bad)});
+$("start").addEventListener("click",()=>{
+  show("test");$("timer").classList.remove("hide");render();
+  tick=setInterval(()=>{left--;$("timer").textContent=fmt(left);if(left<=300)$("timer").style.background="var(--red)";if(left<=0)submit(true)},1000);
+});
+$("bnext").addEventListener("click",()=>save(false));
+$("bmark").addEventListener("click",()=>save(true));
+$("bclear").addEventListener("click",()=>{ans[cur]=-1;st[cur]=1;render()});
+$("bprev").addEventListener("click",()=>{if(cur>0){cur--;render()}});
+$("submit").addEventListener("click",()=>submit(false));
+</script>
+</body>
+</html>
